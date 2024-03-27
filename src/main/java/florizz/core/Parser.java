@@ -16,6 +16,9 @@ import florizz.objects.Bouquet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Parses user input and generates appropriate Command objects.
+ */
 public class Parser {
     private static Logger logger = Logger.getLogger(Florizz.class.getName());
     // prefixes to parse input
@@ -110,7 +113,13 @@ public class Parser {
     private static String removePrefix(String input, String prefix) {
         return input.replace(prefix, "");
     }
-  
+
+    /**
+     * Handles the parsing and creation of an AddBouquetCommand object based on user input.
+     * @param input The user input to be parsed.
+     * @return An AddBouquetCommand object corresponding to the parsed input.
+     * @throws FlorizzException If the input does not contain the required bouquet information.
+     */
     private static AddBouquetCommand handleAddBouquet(String input) throws FlorizzException{
         if (!input.contains(" ")){
             throw new FlorizzException("Did not include bouquet to add");
@@ -119,6 +128,12 @@ public class Parser {
         return new AddBouquetCommand(new Bouquet(newBouquetName));
     }
 
+    /**
+     * Handles the parsing and creation of a DeleteBouquetCommand object based on user input.
+     * @param input The user input to be parsed.
+     * @return A DeleteBouquetCommand object corresponding to the parsed input.
+     * @throws FlorizzException If the input does not contain the required bouquet information.
+     */
     private static DeleteBouquetCommand handleDeleteBouquet(String input) throws FlorizzException{
         if (!input.contains(" ")){
             throw new FlorizzException("Did not include bouquet to delete");
@@ -128,11 +143,22 @@ public class Parser {
         return new DeleteBouquetCommand(new Bouquet(bouquetToDelete));
     }
 
+    /**
+     * Handles the parsing and creation of a FlowerCommand object based on user input.
+     * @param input The user input to be parsed.
+     * @return A FlowerCommand object corresponding to the parsed input.
+     */
     private static FlowerCommand handleFlowerCommand(String input) {
         String occasion  = (input.length() == 7) ? " " : input.substring(input.indexOf(" ") + 1);
         return new FlowerCommand(occasion);
     }
 
+    /**
+     * Handles the parsing and creation of an AddFlowerCommand object based on user input.
+     * @param argument The user input to be parsed.
+     * @return An AddFlowerCommand object corresponding to the parsed input.
+     * @throws FlorizzException If the input does not match the required format.
+     */
     private static AddFlowerCommand handleAddFlower(String argument) throws FlorizzException {
         if (argument == null) {
             throw new FlorizzException("No argument detected! " +
@@ -158,6 +184,12 @@ public class Parser {
         return new AddFlowerCommand(flowerName, quantity, bouquetName);
     }
 
+    /**
+     * Handles the parsing and creation of a RemoveFlowerCommand object based on user input.
+     * @param argument The user input to be parsed.
+     * @return A RemoveFlowerCommand object corresponding to the parsed input.
+     * @throws FlorizzException If the input does not match the required format.
+     */
     private static RemoveFlowerCommand handleRemoveFlower(String argument) throws FlorizzException {
         if (argument == null) {
             throw new FlorizzException("No argument detected! " +
@@ -184,6 +216,11 @@ public class Parser {
         return new RemoveFlowerCommand(flowerName, quantity, bouquetName);
     }
 
+    /**
+     * Handles the parsing and creation of an InfoCommand object based on user input.
+     * @param input The user input to be parsed.
+     * @return An InfoCommand object corresponding to the parsed input.
+     */
     private static InfoCommand handleInfoCommand(String input) {
         String flowerName = input.substring(input.indexOf(" ") + 1);
         assert !flowerName.isEmpty() : "This string is empty";
