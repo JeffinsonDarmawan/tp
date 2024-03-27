@@ -24,7 +24,7 @@ public class FlowerDictionary {
         for (String occasion : occasions){
             occasionsArrayList.add(Flower.Occasion.valueOf(occasion.replaceAll(" ", "_").toUpperCase()));
         }
-        flowerDict.add(new Flower(name, colourEnum, occasionsArrayList, price));
+        flowerDict.add(new Flower(name, colourEnum, occasionsArrayList, Double.valueOf(price.replace("$", ""))));
     }
 
     /**
