@@ -7,6 +7,7 @@ public class Flower {
     private ArrayList<Occasion> occasions = null;
     private Colour colour = null;
     private String price = "";
+    private ArrayList<String> meanings = null;
 
     public enum Colour {
         WHITE, BLUE, RED, PINK
@@ -20,11 +21,12 @@ public class Flower {
         this.name = "";
     }
 
-    public Flower(String name, Colour colour, ArrayList<Occasion> occasion, String price) {
+    public Flower(String name, Colour colour, ArrayList<Occasion> occasion, String price, ArrayList<String> meanings) {
         this.name = name;
         this.occasions = occasion;
         this.colour = colour;
         this.price = price;
+        this.meanings = meanings;
     }
     public Flower(String name, Colour colour, Occasion occasion, String price) {
         this.name = name;

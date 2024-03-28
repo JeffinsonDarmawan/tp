@@ -17,28 +17,33 @@ public class FlowerDictionary {
      * @param colour Colour of flower to be added
      * @param occasions Occasions that the flower can be bought for
      */
-    private static void add(String name, String colour, String[] occasions, String price) {
+    private static void add(String name, String colour, String[] occasions, String price,String[] meanings) {
 
         Flower.Colour colourEnum = Flower.Colour.valueOf(colour.replaceAll(" ", "_").toUpperCase());
         ArrayList<Flower.Occasion> occasionsArrayList = new ArrayList<>();
         for (String occasion : occasions){
             occasionsArrayList.add(Flower.Occasion.valueOf(occasion.replaceAll(" ", "_").toUpperCase()));
         }
-        flowerDict.add(new Flower(name, colourEnum, occasionsArrayList, price));
+        ArrayList<String> meaningsArrayList = new ArrayList<>();
+        for (String meaning : meanings){
+            meaningsArrayList.add(meaning);
+        }
+        flowerDict.add(new Flower(name, colourEnum, occasionsArrayList, price, meaningsArrayList));
     }
 
     /**
      * Adds flowers to the dictionary when florizz starts up (temporary)
      */
     public static void startup() {
-        add("Orchid", "White", new String[]{"Wedding"}, "$10.00");
-        add("Rose", "Red", new String[]{"Valentines", "Wedding"}, "$2.00");
-        add("Lily", "White", new String[]{"Funeral"}, "$2.50");
-        add("Daisy", "White", new String[]{"Valentines"}, "$0.50");
-        add("Baby Breath", "White", new String[] {"Wedding"}, "$1.00");
-        add("Chrysanthemum", "White", new String[]{"Funeral"}, "$1.00");
-        add("Hydrangea", "Blue", new String[] {"Wedding"}, "$9.00");
-        add("Carnation", "Pink", new String[] {"Mothers Day"}, "$2.00");
+        add("Orchid", "White", new String[]{"Wedding"}, "$10.00", new String[]{"Innocence","Respect","Beauty"});
+        add("Rose", "Red", new String[]{"Valentines", "Wedding", "Mothers Day"}, "$2.00", new String[]{"Love"});
+        add("Lily", "White", new String[]{"Funeral", "Wedding"}, "$2.50", new String[]{"Innocence"});
+        add("Daisy", "White", new String[]{"Valentines"}, "$0.50", new String[]{"Innocence"});
+        add("Baby Breath", "White", new String[] {"Wedding"}, "$1.00",
+                new String[]{"Innocence", "Kindness", "Care", "Humble"});
+        add("Chrysanthemum", "White", new String[]{"Funeral"}, "$1.00", new String[]{"Love", "Loyalty", "Innocence"});
+        add("Hydrangea", "Blue", new String[] {"Wedding"}, "$9.00", new String[]{"Forgiveness", "Gratitude"});
+        add("Carnation", "Pink", new String[] {"Mothers Day"}, "$2.00", new String[]{"Gratitude", "Love"});
     }
 
     /**
