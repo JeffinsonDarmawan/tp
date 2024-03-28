@@ -1,5 +1,12 @@
-1::Parser::parse::Thu Mar 28 00:42:37 SGT 2024::RETURN
-1::florizz.core.Florizz::main::Thu Mar 28 00:42:37 SGT 2024::Entered isRunning while loop in Florizz.java
-1::Parser::parse::Thu Mar 28 00:42:40 SGT 2024::ENTRY
-1::florizz.core.Parser::parse::Thu Mar 28 00:42:40 SGT 2024::Command parsed successfully
-1::Parser::parse::Thu Mar 28 00:42:40 SGT 2024::RETURN
+1::florizz.core.Florizz::main::Fri Mar 29 03:20:41 SGT 2024::Entered isRunning while loop in Florizz.java
+1::Parser::parse::Fri Mar 29 03:20:46 SGT 2024::ENTRY
+1::florizz.core.Parser::parse::Fri Mar 29 03:20:46 SGT 2024::Exception occurred while parsing command: No argument detected! Please use the correct format of 'add <flowerName> /q <quantity> /to <bouquetName>
+1::Parser::parse::Fri Mar 29 03:20:47 SGT 2024::RETURN
+1::florizz.core.Florizz::main::Fri Mar 29 03:20:47 SGT 2024::Entered isRunning while loop in Florizz.java
+1::Parser::parse::Fri Mar 29 03:20:59 SGT 2024::ENTRY
+1::florizz.core.Parser::parse::Fri Mar 29 03:20:59 SGT 2024::Command parsed successfully
+1::Parser::parse::Fri Mar 29 03:20:59 SGT 2024::RETURN
+1::florizz.core.Florizz::main::Fri Mar 29 03:20:59 SGT 2024::Entered isRunning while loop in Florizz.java
+1::Parser::parse::Fri Mar 29 03:21:18 SGT 2024::ENTRY
+1::florizz.core.Parser::parse::Fri Mar 29 03:21:18 SGT 2024::Command parsed successfully
+1::Parser::parse::Fri Mar 29 03:21:18 SGT 2024::RETURN
