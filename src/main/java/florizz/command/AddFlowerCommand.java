@@ -8,7 +8,6 @@ import florizz.objects.Flower;
 
 import java.util.ArrayList;
 
-
 public class AddFlowerCommand extends Command{
     private String flowerName;
 
