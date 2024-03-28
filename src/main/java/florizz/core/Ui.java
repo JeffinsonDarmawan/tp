@@ -68,16 +68,16 @@ public class Ui {
     public void printAllBouquets(ArrayList<Bouquet> bouquetList){
         System.out.println("Here are the list of your saved bouquets:");
         int i = 1;
-        int totalPrice = 0;
+        double totalPrice = 0;
         for (Bouquet bouquet : bouquetList){
             System.out.println(i++ + ". " + bouquet + " :");
             HashMap<Flower, Integer> flowerHashMap = bouquet.getFlowerHashMap();
             if (!flowerHashMap.isEmpty()) {
                 for (Flower j : flowerHashMap.keySet()) {
                     System.out.println("    - " + flowerHashMap.get(j) + " x " + j.getFlowerName());
-                    totalPrice += flowerHashMap.get(j);
+                    totalPrice += (flowerHashMap.get(j) * j.getPrice());
                 }
-                System.out.println("  Total estimated price = $" + totalPrice);
+                System.out.println("  Total estimated price = $" + String.format("%.2f", (double) totalPrice));
             } else {
                 System.out.println("      No flowers added so far");
             }
