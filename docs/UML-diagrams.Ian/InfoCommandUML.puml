@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include Ijaaz-style.puml
+
+actor "user" as user
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant "a:InfoCommand" as InfoCommand LOGIC_COLOUR_T1
+participant "b:FlowerDictionary" as FlowerDictionary LOGIC_COLOUR_T1
+end box
+
+box Ui UI_COLOUR
+participant ":UI" as Ui UI_COLOUR_T1
+end box
+
+[-> Florizz : execute("info rose")
+activate Florizz
+
+Florizz -> Parser : parse("info rose")
+activate Parser
+
+create InfoCommand
+Parser -> InfoCommand : InfoCommand("rose")
+activate InfoCommand
+
+InfoCommand --> Parser : a
+deactivate InfoCommand
+
+Parser --> Florizz : a
+deactivate Parser
+
+Florizz -> InfoCommand : execute()
+activate InfoCommand
+
+InfoCommand -> Ui : printFlowerInfo("rose")
+activate Ui
+
+Ui -> FlowerDictionary : get("rose")
+activate FlowerDictionary
+FlowerDictionary ---> Ui
+deactivate FlowerDictionary
+
+Ui --> InfoCommand
+deactivate Ui
+
+InfoCommand --> Florizz
+deactivate InfoCommand
+
+<--Florizz
+@enduml
