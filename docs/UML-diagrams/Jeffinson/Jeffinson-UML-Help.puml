@@ -1,0 +1,46 @@
+@startuml
+!include Jeffinson-style.puml
+
+actor "user" as user
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant "HelpCommand" as HelpCommand LOGIC_COLOUR_T1
+end box
+
+box Model MODEL_COLOUR
+participant ":Model" as Model MODEL_COLOUR_T1
+end box
+
+user -> Florizz : execute("help")
+activate Florizz
+
+Florizz -> Parser : parse("help")
+activate Parser
+
+create HelpCommand
+Parser -> HelpCommand : HelpCommand()
+activate HelpCommand
+
+HelpCommand --> Parser : a
+deactivate HelpCommand
+
+Parser --> Florizz : a
+deactivate Parser
+
+Florizz -> HelpCommand : execute()
+activate HelpCommand
+
+HelpCommand -> Model : getHelpMessage()
+activate Model
+
+Model --> HelpCommand
+deactivate Model
+
+HelpCommand --> Florizz
+deactivate HelpCommand
+
+Florizz --> user : Print help message
+deactivate Florizz
+
+@enduml

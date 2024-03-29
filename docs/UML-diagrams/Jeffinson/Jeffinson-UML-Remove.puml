@@ -1,0 +1,45 @@
+@startuml
+!include Jeffinson-style.puml
+
+actor "user" as user
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant "RemoveFlowerCommand" as RemoveFlowerCommand LOGIC_COLOUR_T1
+end box
+
+box Model MODEL_COLOUR
+participant ":Model" as Model MODEL_COLOUR_T1
+end box
+
+user -> Florizz : execute("remove rose /q 1 /from mybouquet1")
+activate Florizz
+
+Florizz -> Parser : parse("remove rose /q 1 /from mybouquet1")
+activate Parser
+
+create RemoveFlowerCommand
+Parser -> RemoveFlowerCommand : RemoveFlowerCommand("rose", 1, "mybouquet1")
+activate RemoveFlowerCommand
+
+RemoveFlowerCommand --> Parser : a
+deactivate RemoveFlowerCommand
+
+Parser --> Florizz : a
+deactivate Parser
+
+Florizz -> RemoveFlowerCommand : execute()
+activate RemoveFlowerCommand
+
+RemoveFlowerCommand -> Model : removeFlower("rose", 1)
+activate Model
+
+Model --> RemoveFlowerCommand
+deactivate Model
+
+RemoveFlowerCommand --> Florizz
+deactivate RemoveFlowerCommand
+
+Florizz --> user : Print remove message and final state of bouquet
+deactivate Florizz
+@enduml

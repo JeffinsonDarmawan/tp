@@ -1,0 +1,46 @@
+@startuml
+!include Jeffinson-style.puml
+
+actor "user" as user
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant "ListOccasionCommand" as ListOccasionCommand LOGIC_COLOUR_T1
+end box
+
+box Model MODEL_COLOUR
+participant ":Model" as Model MODEL_COLOUR_T1
+end box
+
+user -> Florizz : execute("occasion")
+activate Florizz
+
+Florizz -> Parser : parse("occasion")
+activate Parser
+
+create ListOccasionCommand
+Parser -> ListOccasionCommand : ListOccasionCommand()
+activate ListOccasionCommand
+
+ListOccasionCommand --> Parser : a
+deactivate ListOccasionCommand
+
+Parser --> Florizz : a
+deactivate Parser
+
+Florizz -> ListOccasionCommand : execute()
+activate ListOccasionCommand
+
+ListOccasionCommand -> Model : getOccasions()
+activate Model
+
+Model --> ListOccasionCommand
+deactivate Model
+
+ListOccasionCommand --> Florizz
+deactivate ListOccasionCommand
+
+Florizz --> user : Print list of occasions
+deactivate Florizz
+
+@enduml
