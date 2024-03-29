@@ -16,6 +16,8 @@ import florizz.objects.Bouquet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static florizz.core.FuzzyLogic.detectCommand;
+
 /**
  * Parses user input and generates appropriate Command objects.
  */
@@ -88,16 +90,16 @@ public class Parser {
      * @param input
      * @return String[] output; output[0] = command ; output[1] arguments
      */
-    private static String[] commandHandler(String input) {
+    private static String[] commandHandler(String input) throws FlorizzException {
         String[] output = new String[2];
         String trimmedInput = input.trim();
         int firstWhitespace = trimmedInput.indexOf(" ");
         if (firstWhitespace != -1) {
             // input have arguments
-            output[0] = trimmedInput.substring(0,firstWhitespace).toLowerCase();
+            output[0] = detectCommand(trimmedInput.substring(0,firstWhitespace).toLowerCase());
             output[1] = trimmedInput.substring(firstWhitespace).trim();
         } else {
-            output[0] = trimmedInput.toLowerCase();
+            output[0] = detectCommand(trimmedInput.toLowerCase());
         }
         return output;
     }
