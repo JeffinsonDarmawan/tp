@@ -22,6 +22,37 @@ Step 3: `InfoCommand` class will call `printFlowerInfo()` method of `Ui` class
 
 Step 4: `get()` of `FlowerDictionary` class will then be called in order to retrive information about the specified flower. This information will be printed by the `Ui` class
 
+### Flower Remove Command
+
+`remove <flowerName> /q <quantity> /from <bouquetName>` removes flower(s) from a bouquet
+
+![Remove Command Sequence Diagram](UML-diagrams/Jeffinson/Jeffinson-UML-Remove.png);
+
+Removing flowers utilise the `parser` class to parse user command to identify which flower to remove,
+how much to remove and from which bouquet to remove.
+
+**Step 1:** User will input the flower name, quantity and bouquet name into the `Parser.parser()` method, after which `RemoveFlowerCommand`
+class will be instantiated and run its `execute()` method.
+
+**Step 2:** An object of type `RemoveFlowerCommand` is returned which contains the name, quantity of the flower to be added, and the target bouquet
+
+**Step 3:** Within the `RemoveFlowerCommand`, `execute()` method is called to execute the removal of flower command
+
+**Step 4:** The flowers are removed and a confirmation message is sent back to the user
+
+### Flower Help Command
+
+`help` Shows a list of valid commands
+
+![Help Command Sequence Diagram](UML-diagrams/Jeffinson/Jeffinson-UML-Help.png);
+
+Help command utilises the `parser` class to identify the keyword `help`
+
+**Step 1: ** User will write `help` and `HelpCommand` class will be instantiated and `execute()` method will run.
+
+**Step 2:** `HelpCommand` class will call `printHelpMessage()` method of `Ui` class
+
+**Step 3:** The list of valid commands will be printed by the `Ui` class
 
 ### [Proposed] Storage
 
