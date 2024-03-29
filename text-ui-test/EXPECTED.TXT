@@ -9,6 +9,7 @@ Hello from
 
 
 What can I do for you?
+--> Detected command: [help]
 Here are the list of commands you can use:
 1. new <bouquetName> - Add a bouquet
 2. delete <bouquetName> - Delete a bouquets
@@ -22,5 +23,6 @@ Here are the list of commands you can use:
 10. bye - Exits the programme
 ____________________________________________________________
 What can I do for you?
+--> Detected command: [bye]
 Enjoy your bouquet! Thank you for using Florizz
 ____________________________________________________________
