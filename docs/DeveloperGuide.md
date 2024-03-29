@@ -6,19 +6,44 @@
 
 ## Design & implementation
 
-### Flower Removal Command
+{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
 
-![Help Command Sequence Diagram](UML-diagrams/Jeffinson/Jeffinson-UML-Remove.png)
+### Flower Information Command
 
-**Step 1:** Removing flowers utilise the `parser` class to parse user command to identify which flower to remove,
-how much to remove and from which bouquet to remove.
+`info <flowerName>` command prints information about the sepcified flower
 
-**Step 2:** User will input `remove <flowerName> /q <quantity> /from <bouquetName>` and once `parser` identifies the
-appropriate keywords, it will instantiate the `HelpCommand` class and run its `execute()` method.
+![Info Command Sequence Diagram](..\docs\UML-diagrams.Ian\InfoCommandUML.png)
 
-**Step 3:** `HelpCommand` class will call `printHelpMessage()` method of `Ui` class
+Step 1: Flower information mechanism utilize the `parser` class to parse user command for a specific flower name inputted.
 
-**Step 4:** The list of valid commands will be printed by the `Ui` class
+Step 2: Once `parser` detect that `info` keyword is used, it will instantiate `InfoCommand` class and run its `execute()` method.
+
+Step 3: `InfoCommand` class will call `printFlowerInfo()` method of `Ui` class
+
+Step 4: `get()` of `FlowerDictionary` class will then be called in order to retrive information about the specified flower. This information will be printed by the `Ui` class
+
+
+### [Proposed] Storage
+
+#### Proposed Implementation:
+
+The proposed storage mechanism will utilize a class `storage` who is in charge of getting the file, `encoder` which will encode current model into a .txt file format, `decoder` which will decode .txt file into a usable model.
+
+![Storage Class Diagram](..z\docs\UML-diagrams.Ian\storage.png)
+
+#### Design Considerations:
+- Alternative 1 (current choice): use .txt files as storage
+    - Pros:
+        - Easier to implement
+        - .txt file is very readable even outside of programme
+    - Cons:
+        - .txt file can be easily changed outside of programme, making storage of model prone to parsing failure
+- Alternative 2: use .csv files as storage
+    - Pros:
+        - A more standardize format that is easily accepted by other 3rd party software
+    - Cons:
+        - More difficulty to set up the decoder
+        - .csv file can be easily changed outside of programme, making storage of model prone to parsing failure
 
 # Appendix: Requirements
 
@@ -59,7 +84,7 @@ Priorities: High (must have) `* * *`, Medium (nice to have) `* *`, Low (unlikely
 
 ## Use cases
 
-(For all use cases below, the System is `Florizz` and the Actor is the `user`, unless specified otherwise)
+(For all all use cases below, the System is `Florizz` and the Actor is the `user`, unless specified otherwise)
 
 **Use case: Create a new bouquet named "for valentine" and add 3 stalks of rose into the bouquet**
 
