@@ -1,20 +1,40 @@
-# Developer Guide
+# Design & Implementation
 
-## Acknowledgements
+## Adding / Removing Flowers from Bouquet
+Adding and Removing Flowers mechanism is facilitated by `AddFlowerCommand`
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
-## Design & implementation
+## [Proposed] Storage
 
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+In order to make database of flowers more robust and extensible, 
+an SQL database can be used instead of current implementation of in-built data structure.
 
+### Proposed Implementation:
+
+The proposed storage mechanism will utilize a new interface `storage` 
+which will define the behaviour of multiple storage classes. These classes include `fileHandler`, `querier`, `
+
+
+### Design Considerations:
+- Alternative 1 (current choice): use .txt files as storage
+  - Pros:
+    - Easier to implement
+    - User can easily view .txt file outside of programme
+  - Cons:
+    - .txt file can be easily changed outside of programme, making storage of model prone to parsing failure
+- Alternative 1 (current choice): use .txt file storage
+    - Pros:
+        - Use of SQL database instead of storing data in .txt files allows database to be more robust and less prone to external changes
+        - Use of SQL database allows easier querying of needed data from the programme, skipping the parsing of .txt files when the programme starts
+    - Cons:
+        - Use of SQL database might be unfriendly to users who wants to access their data outside of the programme. Thus, an exporting to .txt feature is considered
 # Appendix: Requirements
 
 ## Product scope
 
 ### Target user profile:
 - has a need of purchasing a bouquet
-- prefers desktop apps over other types
+- prefers desktop apps over other types 
 - can type reasonably fast
 - prefers typing to mouse interactions
 - is comfortable using CLI apps
@@ -67,11 +87,12 @@ Main Success Scenario (MSS):
 
 **Extensions**
 - 1a. The bouquet named "for valentine" does not exist
-    - 1a. Florizz shows an error message
+  - 1a. Florizz shows an error message
 
       Use case ends.
 
 - 2a. There are less than 5 stalks of rose in the specified bouquet
-    - 2a1. Florizz shows an error message
+  - 2a1. Florizz shows an error message
 
       Use case ends. 
+
