@@ -53,9 +53,12 @@ public class FuzzyLogic {
         }
 
         // If the best match is within threshold, return it; otherwise, return null
-        if (bestDistance <= SIMILARITY_THRESHOLD) {
+        if (bestDistance <= SIMILARITY_THRESHOLD && bestDistance != 0) {
             logger.log(Level.INFO, "--> Detected command: [{0}]", bestMatch);
-            System.out.println("--> Detected command: [" + bestMatch + "]");
+            System.out.println("--> Your input is [" + userInput
+                    + "] but I am guessing you mean [" + bestMatch + "]");
+            return bestMatch;
+        } else if (bestDistance == 0) {
             return bestMatch;
         } else {
             logger.log(Level.WARNING, "No matching command found for input: {0}", userInput);

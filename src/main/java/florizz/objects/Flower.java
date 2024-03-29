@@ -138,6 +138,6 @@ public class Flower {
     @Override
     public String toString() {
         return ("Name: " + name + "\n" + "Colours: " + colour.toString() + "\n" + "Occasions: " + occasions.toString()
-            + "\n" + "Price: $" + String.format("%.2f", price));
+            + "\n" + "Price: $" + String.format("%.2f", price) + "\n" + "Meanings: " + meanings.toString());
     }
 }
