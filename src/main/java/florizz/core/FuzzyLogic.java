@@ -10,41 +10,54 @@ import java.util.logging.Logger;
  * and computing Levenshtein Distance between strings.
  */
 public class FuzzyLogic {
-    private static final Map<String, String> COMMANDS = new HashMap<>();
-    private static final int SIMILARITY_THRESHOLD = 3;
 
+    private static final Map<String, String> ITEMS = new HashMap<>();
+    private static final int SIMILARITY_THRESHOLD = 3;
     private static final Logger logger = Logger.getLogger(FuzzyLogic.class.getName());
 
     static {
-        COMMANDS.put("new", "Add a new bouquet");
-        COMMANDS.put("delete", "Delete a bouquet");
-        COMMANDS.put("mybouquet", "List all bouquets");
-        COMMANDS.put("info", "Get information about a flower");
-        COMMANDS.put("bye", "Exits the programme");
-        COMMANDS.put("flowers", "List all flowers");
-        COMMANDS.put("remove","Remove flower(s) from a bouquet");
-        COMMANDS.put("occasion", "List flowers of specified occasion");
-        COMMANDS.put("add", "Add flower(s) to a bouquet");
-        COMMANDS.put("help", "List available commands");
+        ITEMS.put("new", "Command: Add a new bouquet");
+        ITEMS.put("delete", "Command: Delete a bouquet");
+        ITEMS.put("mybouquets", "Command: List all bouquets");
+        ITEMS.put("info", "Command: Get information about a flower");
+        ITEMS.put("bye", "Command: Exits the programme");
+        ITEMS.put("flowers", "Command: List all flowers");
+        ITEMS.put("remove","Command: Remove flower(s) from a bouquet");
+        ITEMS.put("occasion", "Command: List flowers of specified occasion");
+        ITEMS.put("add", "Command: Add flower(s) to a bouquet");
+        ITEMS.put("help", "Command: List available commands");
+        ITEMS.put("Orchid", "Flower");
+        ITEMS.put("Rose", "Flower");
+        ITEMS.put("Lily", "Flower");
+        ITEMS.put("Daisy", "Flower");
+        ITEMS.put("Baby Breath", "Flower");
+        ITEMS.put("Chrysanthemum", "Flower");
+        ITEMS.put("Hydrangea", "Flower");
+        ITEMS.put("Carnation", "Flower");
+        ITEMS.put("Wedding", "Occasion");
+        ITEMS.put("Valentines", "Occasion");
+        ITEMS.put("Mothers Day", "Occasion");
+        ITEMS.put("Funeral", "Occasion");
     }
 
     /**
-     * Detects the closest predefined command based on user input.
+     * Detects the closest predefined command/item/occasion based on user input.
      *
-     * @param userInput The user input to be matched with predefined commands.
-     * @return The closest matching command.
-     * @throws FlorizzException if the input is null or no matching command is found.
+     * @param userInput The user input to be matched with predefined command/item/occasion.
+     * @return The closest matching command/item/occasion.
+     * @throws FlorizzException if the input is null or no matching command/item/occasion is found.
      */
-    public static String detectCommand(String userInput) throws FlorizzException {
+    public static String detectItem(String userInput) throws FlorizzException {
         if (userInput == null) {
             throw new FlorizzException("Input cannot be null");
         }
 
         String bestMatch = null;
         int bestDistance = Integer.MAX_VALUE;
+        Ui uiFuzzy = new Ui();
 
         // Iterate over predefined commands
-        for (String command : COMMANDS.keySet()) {
+        for (String command : ITEMS.keySet()) {
             int distance = computeLevenshteinDistance(command, userInput);
             if (distance < bestDistance) {
                 bestDistance = distance;
@@ -54,15 +67,14 @@ public class FuzzyLogic {
 
         // If the best match is within threshold, return it; otherwise, return null
         if (bestDistance <= SIMILARITY_THRESHOLD && bestDistance != 0) {
-            logger.log(Level.INFO, "--> Detected command: [{0}]", bestMatch);
-            System.out.println("--> Your input is [" + userInput
-                    + "] but I am guessing you mean [" + bestMatch + "]");
+            logger.log(Level.INFO, "--> Detected input: [{0}]", bestMatch);
+            uiFuzzy.printFuzzyInputDetection(userInput, bestMatch);
             return bestMatch;
         } else if (bestDistance == 0) {
             return bestMatch;
         } else {
-            logger.log(Level.WARNING, "No matching command found for input: {0}", userInput);
-            throw new FlorizzException("No matching command found for input: " + userInput);
+            logger.log(Level.WARNING, "No matching command/item/occasion found for input: {0}", userInput);
+            throw new FlorizzException("No matching command/item/occasion found for input: " + userInput);
         }
     }
 

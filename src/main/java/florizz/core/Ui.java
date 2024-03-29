@@ -215,6 +215,11 @@ public class Ui {
         printAllBouquets(bouquetList);
     }
 
+    public void printFuzzyInputDetection (String userInput, String bestMatch) {
+        System.out.println("--> Your input is [" + userInput
+                + "] but I am guessing you mean [" + bestMatch + "]");
+    }
+
     /**
      * print if IOException is caught in a try catch block
      */
