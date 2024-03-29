@@ -9,7 +9,6 @@ Florizz consists of four components, Ui, Logic, Model and Storage. These compone
 
 App initialisation: Initialises the various components, then begins reading inputs from the user
 
-
 ![Architecture](UML-diagrams/Samuel/Architecture.png)
 
 `Ui`: takes in user inputs from the CLI and sends it to the Logic component. Also handles all writing of messages to the user
@@ -34,7 +33,8 @@ so we can simply call BouquetList.remove(BouquetToRemove) and the correct bouque
 
 After adding the `Bouquet` to `BouquetList`, the new `Bouquet` is then sent to `ui.printBouquetAdded`, where a confirmation message will be printed to the user. 
 
-Removing Bouquets follows a similar logic, just that instead of calling `BouquetList.add(Bouquet)`, executing `DeleteBouquetCommand` calls `BouquetList.remove(Bouquet)`, removing the `Bouquet` as mentioned above. 
+Removing Bouquets follows a similar logic, just that instead of calling `BouquetList.add(Bouquet)`, executing `DeleteBouquetCommand` calls `BouquetList.remove(Bouquet)`, removing the `Bouquet` as mentioned above.
+
 ### Flower Information Command
 
 `info <flowerName>` command prints information about the specified flower
@@ -48,6 +48,22 @@ Step 2: Once `parser` detect that `info` keyword is used, it will instantiate `I
 Step 3: `InfoCommand` class will call `printFlowerInfo()` method of `Ui` class
 
 Step 4: `get()` of `FlowerDictionary` class will then be called in order to retrive information about the specified flower. This information will be printed by the `Ui` class
+
+### Add Flower Command
+
+`add <flower> /q <quantity> /to <targetBouquet>` command adds specified number of flower to a bouquet
+
+![Add Flower Command Diagram](/docs/UML-diagrams/Ijaaz/Ijaaz-UML.png)
+
+Step 1: Firstly the input is put into the `Parser.parse()` method to identify that it is infact an add flower command.
+
+Step 2: Then an object of type `AddFlowerCommand` is returned which contains the name, quantity of the flower to be added, as well as the target bouquet
+
+Step 3: The `execute()` method is called to execute the add flower command 
+
+Step 4: The target bouquet, which is under model, is updated accordingly
+
+Step 5: A confirmation message is then sent back to the user
 
 
 ### [Proposed] Storage
