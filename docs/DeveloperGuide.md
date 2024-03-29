@@ -22,6 +22,22 @@ Step 3: `InfoCommand` class will call `printFlowerInfo()` method of `Ui` class
 
 Step 4: `get()` of `FlowerDictionary` class will then be called in order to retrive information about the specified flower. This information will be printed by the `Ui` class
 
+### Add Flower Command
+
+`add <flower> /q <quantity> /to <targetBouquet>` command adds specified number of flower to a bouquet
+
+![Add Flower Command Diagram](/docs/UML-diagrams/Ijaaz/Ijaaz-UML.png)
+
+Step 1: Firstly the input is put into the `Parser.parse()` method to identify that it is infact an add flower command.
+
+Step 2: Then an object of type `AddFlowerCommand` is returned which contains the name, quantity of the flower to be added, as well as the target bouquet
+
+Step 3: The `execute()` method is called to execute the add flower command 
+
+Step 4: The target bouquet, which is under model, is updated accordingly
+
+Step 5: A confirmation message is then sent back to the user
+
 
 ### [Proposed] Storage
 
