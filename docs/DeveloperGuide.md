@@ -39,7 +39,7 @@ Removing Bouquets follows a similar logic, just that instead of calling `Bouquet
 
 `info <flowerName>` command prints information about the specified flower
 
-![Info Command Sequence Diagram](..\docs\UML-diagrams.Ian\InfoCommandUML.png)
+![Info Command Sequence Diagram](/docs/UML-diagrams/Ian/InfoCommandUML.png)
 
 Step 1: Flower information mechanism utilize the `parser` class to parse user command for a specific flower name inputted.
 
@@ -72,7 +72,7 @@ Step 5: A confirmation message is then sent back to the user
 
 The proposed storage mechanism will utilize a class `storage` who is in charge of getting the file, `encoder` which will encode current model into a .txt file format, `decoder` which will decode .txt file into a usable model.
 
-![Storage Class Diagram](..z\docs\UML-diagrams.Ian\storage.png)
+![Storage Class Diagram](/docs/UML-diagrams/Ian/storage.png)
 
 #### Design Considerations:
 - Alternative 1 (current choice): use .txt files as storage
