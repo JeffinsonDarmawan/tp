@@ -65,7 +65,7 @@ public class FlowerDictionary {
         return flowerDict.get(i);
     }
 
-    public static ArrayList<Flower> filterByOccasion(Flower.Occasion occasion){
+    public static ArrayList<Flower> filterByOccasion(Flower.Occasion occasion) {
         ArrayList<Flower> filteredFlowers = new ArrayList<>();
         for (int i = 0; i < flowerDict.size(); i++) {
             if (flowerDict.get(i).getOccasion().contains(occasion)){
