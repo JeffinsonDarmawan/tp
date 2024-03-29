@@ -16,7 +16,7 @@ import florizz.objects.Bouquet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static florizz.core.FuzzyLogic.detectCommand;
+
 
 /**
  * Parses user input and generates appropriate Command objects.
@@ -96,13 +96,14 @@ public class Parser {
         int firstWhitespace = trimmedInput.indexOf(" ");
         if (firstWhitespace != -1) {
             // input have arguments
-            output[0] = detectCommand(trimmedInput.substring(0,firstWhitespace).toLowerCase());
+            output[0] = FuzzyLogic.detectCommand(trimmedInput.substring(0,firstWhitespace).toLowerCase());
             output[1] = trimmedInput.substring(firstWhitespace).trim();
         } else {
-            output[0] = detectCommand(trimmedInput.toLowerCase());
+            output[0] = FuzzyLogic.detectCommand(trimmedInput.toLowerCase());
         }
         return output;
     }
+
 
     /**
      * remove prefix from an input string
