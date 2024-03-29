@@ -8,7 +8,7 @@
 
 ### Flower Removal Command
 
-![Help Command Sequence Diagram](/Users/jeffinsondarmawan/Downloads/Documents/National University of Singapore/Y2S2/CS2113 Software Engineering/tP/docs/UML-diagrams/Jeffinson/Jeffinson-UML-Help.png)
+![Help Command Sequence Diagram](UML-diagrams/Jeffinson/Jeffinson-UML-Remove.png)
 
 **Step 1:** Removing flowers utilise the `parser` class to parse user command to identify which flower to remove,
 how much to remove and from which bouquet to remove.
@@ -59,7 +59,7 @@ Priorities: High (must have) `* * *`, Medium (nice to have) `* *`, Low (unlikely
 
 ## Use cases
 
-(For all all use cases below, the System is `Florizz` and the Actor is the `user`, unless specified otherwise)
+(For all use cases below, the System is `Florizz` and the Actor is the `user`, unless specified otherwise)
 
 **Use case: Create a new bouquet named "for valentine" and add 3 stalks of rose into the bouquet**
 
