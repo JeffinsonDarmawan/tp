@@ -1,4 +1,4 @@
-package florizz.storage;
+package florizz.unused;
 
 import florizz.core.FlorizzException;
 
@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
+//@@ author IanFH-unused
 public class StorageManager {
     private final String URL = "jdbc:sqlite:flowers.db";
     private Connection connection;
