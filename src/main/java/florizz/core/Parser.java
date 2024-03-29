@@ -38,7 +38,6 @@ public class Parser {
 
         try {
             String[] decodedInput = commandHandler(input);
-            //logger.log(Level.INFO, "commandHandler handled command successfully");
             switch (decodedInput[0]) {
             case ("mybouquets"):
                 command = new ListBouquetCommand();
@@ -56,10 +55,10 @@ public class Parser {
                 command = new HelpCommand();
                 break;
             case ("flowers"):
-                command = handleFlowerCommand(input);
+                command = handleFlowerCommand(decodedInput[0] + " " + decodedInput[1]);
                 break;
             case ("info"):
-                command = handleInfoCommand(input);
+                command = handleInfoCommand(decodedInput[1]);
                 break;
             case ("occasion"):
                 command = new ListOccasionCommand();
@@ -96,10 +95,10 @@ public class Parser {
         int firstWhitespace = trimmedInput.indexOf(" ");
         if (firstWhitespace != -1) {
             // input have arguments
-            output[0] = FuzzyLogic.detectCommand(trimmedInput.substring(0,firstWhitespace).toLowerCase());
-            output[1] = trimmedInput.substring(firstWhitespace).trim();
+            output[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
+            output[1] = FuzzyLogic.detectItem(trimmedInput.substring(firstWhitespace).trim());
         } else {
-            output[0] = FuzzyLogic.detectCommand(trimmedInput.toLowerCase());
+            output[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
         }
         return output;
     }
@@ -152,7 +151,7 @@ public class Parser {
      * @return A FlowerCommand object corresponding to the parsed input.
      */
     private static FlowerCommand handleFlowerCommand(String input) {
-        String occasion  = (input.length() == 7) ? " " : input.substring(input.indexOf(" ") + 1);
+        String occasion = (input.length() == 7) ? " " : input.substring(input.indexOf(" ") + 1).trim();
         return new FlowerCommand(occasion);
     }
 
@@ -209,7 +208,6 @@ public class Parser {
         int prefixIndex = argument.indexOf(REMOVE_FLOWER_PREFIX);
         int quantityIndex = argument.indexOf(QUANTITY);
 
-
         String flowerName = argument.substring(0, quantityIndex).trim().toLowerCase();
         String quantityString = removePrefix(argument.substring(quantityIndex, prefixIndex), QUANTITY).trim();
         // [WARNING] might need to check if it's a valid integer
@@ -221,13 +219,11 @@ public class Parser {
 
     /**
      * Handles the parsing and creation of an InfoCommand object based on user input.
-     * @param input The user input to be parsed.
+     * @param flowerName The user input to be parsed.
      * @return An InfoCommand object corresponding to the parsed input.
      */
-    private static InfoCommand handleInfoCommand(String input) {
-        String flowerName = input.substring(input.indexOf(" ") + 1);
+    private static InfoCommand handleInfoCommand(String flowerName) {
         assert !flowerName.isEmpty() : "This string is empty";
         return new InfoCommand(flowerName);
-
     }
 }
