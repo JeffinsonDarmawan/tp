@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Ui {
-    Scanner inputScanner = new Scanner (System.in);
+    private final Scanner inputScanner = new Scanner (System.in);
 
     /**
      * Prints the introductory message.
