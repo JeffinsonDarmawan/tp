@@ -10,6 +10,7 @@ public class Flower {
     private ArrayList<Occasion> occasions = null;
     private Colour colour = null;
     private Double price;
+    private ArrayList<String> meanings = null;
 
     /**
      * Enumerates different colours a flower can have.
@@ -31,6 +32,7 @@ public class Flower {
     public Flower() {
         this.name = "";
     }
+  
     /**
      * Constructs a Flower object with specified parameters.
      * @param name The name of the flower.
@@ -38,11 +40,12 @@ public class Flower {
      * @param occasion The occasion(s) associated with the flower.
      * @param price The price of the flower.
      */
-    public Flower(String name, Colour colour, ArrayList<Occasion> occasion, Double price) {
+    public Flower(String name, Colour colour, ArrayList<Occasion> occasion, Double price, ArrayList<String> meanings) {
         this.name = name;
         this.occasions = occasion;
         this.colour = colour;
         this.price = price;
+        this.meanings = meanings;
     }
 
     /**
@@ -135,6 +138,6 @@ public class Flower {
     @Override
     public String toString() {
         return ("Name: " + name + "\n" + "Colours: " + colour.toString() + "\n" + "Occasions: " + occasions.toString()
-            + "\n" + "Price: $" + String.format("%.2f", price));
+            + "\n" + "Price: $" + String.format("%.2f", price) + "\n" + "Meanings: " + meanings.toString());
     }
 }

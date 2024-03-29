@@ -1,0 +1,10 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!define LOGIC_COLOUR #bcf5c9
+!define LOGIC_COLOUR_T1 #3dfc6a
+!define MODEL_COLOUR #f5a2a2
+!define MODEL_COLOUR_T1 #fc1e1e
+!define UI_COLOUR #FFDA17
+!define UI_COLOUR_T1 #FFF5C0
+@enduml

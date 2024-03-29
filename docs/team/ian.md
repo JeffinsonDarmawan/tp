@@ -1,45 +1,6 @@
-# Developer Guide
+# Design & Implementation
 
-## Acknowledgements
-
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
-
-## Design
-Florizz consists of four components, Ui, Logic, Model and Storage. These components are all called on by the Main component, Florizz.java, which simply handles the app initialisation.
-
-App initialisation: Initialises the various components, then begins reading inputs from the user
-
-![Architecture](UML-diagrams/Samuel/Architecture.png)
-
-`Ui`: takes in user inputs from the CLI and sends it to the Logic component. Also handles all writing of messages to the user
-
-`Logic`: takes in string input from Ui, and parses it into commands to be executed on variables stored in the model. Calls Ui to provide the user with feedback that the action has or has not been completed.
-
-`Model`: Handles all the cached variables, i.e. the list of Bouquets created by the user, the list of available Flowers that the user can add to their Bouquets
-
-`Storage`: Handles storing and reading from hardware, such as saving the list of bouquets created by the user so they can access it later.
-
-## Implementation
-
-### Adding/Removing Bouquets
-
-![AddBouquets](UML-diagrams/Samuel/AddBouquets.png)
-To add a new bouquet to the list of Bouquets saved in the BouquetList variable, the user would have to type `add <bouquet name>` into the CLI, which is then handled by `Ui.getInput` and passed to `Parser`, which 
-creates a Command `Addcommand` with a new Bouquet of that name as an argument. This command is then sent back to `Florizz`, the main class, where it is then executed. 
-
-If a bouquet of the same name already exists in BouquetList, an exception will be thrown and the user will be prompted to choose another name. This is facilitated by overriding the .equals() method in the `Bouquet` class such that
-when two Bouquets are compared, .equals() returns true when they have the same name, regardless of which flowers are contained within each `Bouquet`. This decision was made mainly to facilitate `DeleteBouquetCommand`, 
-so we can simply call BouquetList.remove(BouquetToRemove) and the correct bouquet will be removed even if the BouquetToRemove is simply an empty `Bouquet` with the same name as the one in the list.
-
-After adding the `Bouquet` to `BouquetList`, the new `Bouquet` is then sent to `ui.printBouquetAdded`, where a confirmation message will be printed to the user. 
-
-Removing Bouquets follows a similar logic, just that instead of calling `BouquetList.add(Bouquet)`, executing `DeleteBouquetCommand` calls `BouquetList.remove(Bouquet)`, removing the `Bouquet` as mentioned above.
-
-### Flower Information Command
-
-`info <flowerName>` command prints information about the specified flower
-
-![Info Command Sequence Diagram](/docs/UML-diagrams/Ian/InfoCommandUML.png)
+## Flower Information Command
 
 Step 1: Flower information mechanism utilize the `parser` class to parse user command for a specific flower name inputted.
 
@@ -49,53 +10,33 @@ Step 3: `InfoCommand` class will call `printFlowerInfo()` method of `Ui` class
 
 Step 4: `get()` of `FlowerDictionary` class will then be called in order to retrive information about the specified flower. This information will be printed by the `Ui` class
 
-### Add Flower Command
 
-`add <flower> /q <quantity> /to <targetBouquet>` command adds specified number of flower to a bouquet
+## [Proposed] Storage
 
-![Add Flower Command Diagram](/docs/UML-diagrams/Ijaaz/Ijaaz-UML.png)
-
-Step 1: Firstly the input is put into the `Parser.parse()` method to identify that it is infact an add flower command.
-
-Step 2: Then an object of type `AddFlowerCommand` is returned which contains the name, quantity of the flower to be added, as well as the target bouquet
-
-Step 3: The `execute()` method is called to execute the add flower command 
-
-Step 4: The target bouquet, which is under model, is updated accordingly
-
-Step 5: A confirmation message is then sent back to the user
-
-
-### [Proposed] Storage
-
-#### Proposed Implementation:
+### Proposed Implementation:
 
 The proposed storage mechanism will utilize a class `storage` who is in charge of getting the file, `encoder` which will encode current model into a .txt file format, `decoder` which will decode .txt file into a usable model.
 
-![Storage Class Diagram](/docs/UML-diagrams/Ian/storage.png)
-
-#### Design Considerations:
+### Design Considerations:
 - Alternative 1 (current choice): use .txt files as storage
-    - Pros:
-        - Easier to implement
-        - .txt file is very readable even outside of programme
-    - Cons:
-        - .txt file can be easily changed outside of programme, making storage of model prone to parsing failure
+  - Pros:
+    - Easier to implement
+    - .txt file is very readable even outside of programme
+  - Cons:
+    - .txt file can be easily changed outside of programme, making storage of model prone to parsing failure
 - Alternative 2: use .csv files as storage
     - Pros:
-        - A more standardize format that is easily accepted by other 3rd party software
+      - A more standardize format that is easily accepted by other 3rd party software
     - Cons:
-        - More difficulty to set up the decoder
-        - .csv file can be easily changed outside of programme, making storage of model prone to parsing failure
-
-
+      - More difficulty to set up the decoder 
+      - .csv file can be easily changed outside of programme, making storage of model prone to parsing failure
 # Appendix: Requirements
 
 ## Product scope
 
 ### Target user profile:
 - has a need of purchasing a bouquet
-- prefers desktop apps over other types
+- prefers desktop apps over other types 
 - can type reasonably fast
 - prefers typing to mouse interactions
 - is comfortable using CLI apps
@@ -148,11 +89,12 @@ Main Success Scenario (MSS):
 
 **Extensions**
 - 1a. The bouquet named "for valentine" does not exist
-    - 1a. Florizz shows an error message
+  - 1a. Florizz shows an error message
 
       Use case ends.
 
 - 2a. There are less than 5 stalks of rose in the specified bouquet
-    - 2a1. Florizz shows an error message
+  - 2a1. Florizz shows an error message
 
       Use case ends. 
+

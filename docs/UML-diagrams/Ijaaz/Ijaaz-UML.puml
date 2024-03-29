@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include Ijaaz-style.puml
+
+actor "user" as user
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant "a:AddFlowerCommand" as AddFlowerCommand LOGIC_COLOUR_T1
+end box
+
+box Model MODEL_COLOUR
+participant ":Model" as Model MODEL_COLOUR_T1
+end box
+
+[-> Florizz : execute("add rose /q 1 /to mum")
+activate Florizz
+
+Florizz -> Parser : parse("add rose /q 1 /to mum")
+activate Parser
+
+create AddFlowerCommand
+Parser -> AddFlowerCommand : AddFlowerCommand("rose", 1, "mum")
+activate AddFlowerCommand
+
+AddFlowerCommand --> Parser : a
+deactivate AddFlowerCommand
+
+Parser --> Florizz : a
+deactivate Parser
+
+Florizz -> AddFlowerCommand : execute()
+activate AddFlowerCommand
+
+AddFlowerCommand -> Model : addFlower("rose", 1)
+activate Model
+
+Model --> AddFlowerCommand
+deactivate Model
+
+AddFlowerCommand --> Florizz
+deactivate AddFlowerCommand
+
+<--Florizz
+@enduml
