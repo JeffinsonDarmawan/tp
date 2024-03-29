@@ -6,7 +6,19 @@
 
 ## Design & implementation
 
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+### Flower Removal Command
+
+![Help Command Sequence Diagram](/Users/jeffinsondarmawan/Downloads/Documents/National University of Singapore/Y2S2/CS2113 Software Engineering/tP/docs/UML-diagrams/Jeffinson/Jeffinson-UML-Help.png)
+
+**Step 1:** Removing flowers utilise the `parser` class to parse user command to identify which flower to remove,
+how much to remove and from which bouquet to remove.
+
+**Step 2:** User will input `remove <flowerName> /q <quantity> /from <bouquetName>` and once `parser` identifies the
+appropriate keywords, it will instantiate the `HelpCommand` class and run its `execute()` method.
+
+**Step 3:** `HelpCommand` class will call `printHelpMessage()` method of `Ui` class
+
+**Step 4:** The list of valid commands will be printed by the `Ui` class
 
 # Appendix: Requirements
 
