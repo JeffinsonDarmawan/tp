@@ -1,33 +1,35 @@
 # Design & Implementation
 
-## Adding / Removing Flowers from Bouquet
-Adding and Removing Flowers mechanism is facilitated by `AddFlowerCommand`
+## Flower Information Command
+
+Step 1: Flower information mechanism utilize the `parser` class to parse user command for a specific flower name inputted.
+
+Step 2: Once `parser` detect that `info` keyword is used, it will instantiate `InfoCommand` class and run its `execute()` method.
+
+Step 3: `InfoCommand` class will call `printFlowerInfo()` method of `Ui` class
+
+Step 4: `get()` of `FlowerDictionary` class will then be called in order to retrive information about the specified flower. This information will be printed by the `Ui` class
 
 
 ## [Proposed] Storage
 
-In order to make database of flowers more robust and extensible, 
-an SQL database can be used instead of current implementation of in-built data structure.
-
 ### Proposed Implementation:
 
-The proposed storage mechanism will utilize a new interface `storage` 
-which will define the behaviour of multiple storage classes. These classes include `fileHandler`, `querier`, `
-
+The proposed storage mechanism will utilize a class `storage` who is in charge of getting the file, `encoder` which will encode current model into a .txt file format, `decoder` which will decode .txt file into a usable model.
 
 ### Design Considerations:
 - Alternative 1 (current choice): use .txt files as storage
   - Pros:
     - Easier to implement
-    - User can easily view .txt file outside of programme
+    - .txt file is very readable even outside of programme
   - Cons:
     - .txt file can be easily changed outside of programme, making storage of model prone to parsing failure
-- Alternative 1 (current choice): use .txt file storage
+- Alternative 2: use .csv files as storage
     - Pros:
-        - Use of SQL database instead of storing data in .txt files allows database to be more robust and less prone to external changes
-        - Use of SQL database allows easier querying of needed data from the programme, skipping the parsing of .txt files when the programme starts
+      - A more standardize format that is easily accepted by other 3rd party software
     - Cons:
-        - Use of SQL database might be unfriendly to users who wants to access their data outside of the programme. Thus, an exporting to .txt feature is considered
+      - More difficulty to set up the decoder 
+      - .csv file can be easily changed outside of programme, making storage of model prone to parsing failure
 # Appendix: Requirements
 
 ## Product scope
