@@ -9,6 +9,7 @@ Florizz consists of four components, Ui, Logic, Model and Storage. These compone
 
 App initialisation: Initialises the various components, then begins reading inputs from the user
 
+
 ![Architecture](UML-diagrams/Samuel/Architecture.png)
 
 `Ui`: takes in user inputs from the CLI and sends it to the Logic component. Also handles all writing of messages to the user
@@ -34,6 +35,44 @@ so we can simply call BouquetList.remove(BouquetToRemove) and the correct bouque
 After adding the `Bouquet` to `BouquetList`, the new `Bouquet` is then sent to `ui.printBouquetAdded`, where a confirmation message will be printed to the user. 
 
 Removing Bouquets follows a similar logic, just that instead of calling `BouquetList.add(Bouquet)`, executing `DeleteBouquetCommand` calls `BouquetList.remove(Bouquet)`, removing the `Bouquet` as mentioned above. 
+### Flower Information Command
+
+`info <flowerName>` command prints information about the specified flower
+
+![Info Command Sequence Diagram](..\docs\UML-diagrams.Ian\InfoCommandUML.png)
+
+Step 1: Flower information mechanism utilize the `parser` class to parse user command for a specific flower name inputted.
+
+Step 2: Once `parser` detect that `info` keyword is used, it will instantiate `InfoCommand` class and run its `execute()` method.
+
+Step 3: `InfoCommand` class will call `printFlowerInfo()` method of `Ui` class
+
+Step 4: `get()` of `FlowerDictionary` class will then be called in order to retrive information about the specified flower. This information will be printed by the `Ui` class
+
+
+### [Proposed] Storage
+
+#### Proposed Implementation:
+
+The proposed storage mechanism will utilize a class `storage` who is in charge of getting the file, `encoder` which will encode current model into a .txt file format, `decoder` which will decode .txt file into a usable model.
+
+![Storage Class Diagram](..z\docs\UML-diagrams.Ian\storage.png)
+
+#### Design Considerations:
+- Alternative 1 (current choice): use .txt files as storage
+    - Pros:
+        - Easier to implement
+        - .txt file is very readable even outside of programme
+    - Cons:
+        - .txt file can be easily changed outside of programme, making storage of model prone to parsing failure
+- Alternative 2: use .csv files as storage
+    - Pros:
+        - A more standardize format that is easily accepted by other 3rd party software
+    - Cons:
+        - More difficulty to set up the decoder
+        - .csv file can be easily changed outside of programme, making storage of model prone to parsing failure
+
+
 # Appendix: Requirements
 
 ## Product scope
