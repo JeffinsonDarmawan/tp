@@ -8,8 +8,8 @@ participant ":Parser" as Parser LOGIC_COLOUR_T1
 participant "HelpCommand" as HelpCommand LOGIC_COLOUR_T1
 end box
 
-box Model MODEL_COLOUR
-participant ":Model" as Model MODEL_COLOUR_T1
+box Ui UI_COLOUR
+participant ":Ui" as Ui UI_COLOUR_T1
 end box
 
 user -> Florizz : execute("help")
@@ -31,11 +31,11 @@ deactivate Parser
 Florizz -> HelpCommand : execute()
 activate HelpCommand
 
-HelpCommand -> Model : getHelpMessage()
-activate Model
+HelpCommand -> Ui : printHelpMessage()
+activate Ui
 
-Model --> HelpCommand
-deactivate Model
+Ui --> HelpCommand
+deactivate Ui
 
 HelpCommand --> Florizz
 deactivate HelpCommand

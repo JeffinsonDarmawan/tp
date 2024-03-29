@@ -1,12 +1,8 @@
-1::florizz.core.Florizz::main::Fri Mar 29 12:27:39 SGT 2024::Entered isRunning while loop in Florizz.java
-1::Parser::parse::Fri Mar 29 12:27:54 SGT 2024::ENTRY
-1::florizz.core.Parser::parse::Fri Mar 29 12:27:54 SGT 2024::Command parsed successfully
-1::Parser::parse::Fri Mar 29 12:27:54 SGT 2024::RETURN
-1::florizz.core.Florizz::main::Fri Mar 29 12:27:54 SGT 2024::Entered isRunning while loop in Florizz.java
-1::Parser::parse::Fri Mar 29 12:28:00 SGT 2024::ENTRY
-1::florizz.core.Parser::parse::Fri Mar 29 12:28:00 SGT 2024::Command parsed successfully
-1::Parser::parse::Fri Mar 29 12:28:00 SGT 2024::RETURN
-1::florizz.core.Florizz::main::Fri Mar 29 12:28:00 SGT 2024::Entered isRunning while loop in Florizz.java
-1::Parser::parse::Fri Mar 29 12:28:06 SGT 2024::ENTRY
-1::florizz.core.Parser::parse::Fri Mar 29 12:28:06 SGT 2024::Command parsed successfully
-1::Parser::parse::Fri Mar 29 12:28:06 SGT 2024::RETURN
+1::florizz.core.Florizz::main::Fri Mar 29 13:03:47 SGT 2024::Entered isRunning while loop in Florizz.java
+1::Parser::parse::Fri Mar 29 13:03:51 SGT 2024::ENTRY
+1::florizz.core.Parser::parse::Fri Mar 29 13:03:51 SGT 2024::Command parsed successfully
+1::Parser::parse::Fri Mar 29 13:03:51 SGT 2024::RETURN
+1::florizz.core.Florizz::main::Fri Mar 29 13:03:51 SGT 2024::Entered isRunning while loop in Florizz.java
+1::Parser::parse::Fri Mar 29 13:03:53 SGT 2024::ENTRY
+1::florizz.core.Parser::parse::Fri Mar 29 13:03:53 SGT 2024::Command parsed successfully
+1::Parser::parse::Fri Mar 29 13:03:53 SGT 2024::RETURN
