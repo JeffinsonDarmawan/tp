@@ -1,15 +1,16 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+!include Ijaaz-style.puml
 
-
+actor "user" as user
 participant ":Florizz" as Florizz
-box Logic #FFFFFF
-participant ":Parser" as Parser
-participant "a:AddFlowerCommand" as AddFlowerCommand
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant "a:AddFlowerCommand" as AddFlowerCommand LOGIC_COLOUR_T1
 end box
 
-box Model #FFFFFF
-participant ":Model" as Model
+box Model MODEL_COLOUR
+participant ":Model" as Model MODEL_COLOUR_T1
 end box
 
 [-> Florizz : execute("add rose /q 1 /to mum")

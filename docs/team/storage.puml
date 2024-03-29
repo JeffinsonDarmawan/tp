@@ -1,0 +1,23 @@
+@startuml
+package "Storage Component" {
+    class StorageManager {
+        -URL: String
+        +getFile(): void
+        +retrieve(): Data
+        +delete(): void
+    }
+
+    class Encoder {
+        -bouquet: Bouquet
+        +encodeBouquet(:bouquet): void
+    }
+
+    class Decoder {
+        -bouquet: Bouquet
+        +decodeBouquet(): Bouquet
+    }
+
+    StorageManager -- Encoder
+    StorageManager -- Decoder
+}
+@enduml
