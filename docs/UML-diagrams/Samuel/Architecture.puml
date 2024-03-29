@@ -1,0 +1,22 @@
+@startuml
+[Main]
+[Ui]
+[Logic]
+[Model]
+[Storage]
+
+Main --> Ui
+Main --> Logic
+Main --> Model
+Main --> Storage
+
+Ui -> Logic
+Logic -> Ui
+Model -> Logic
+
+
+
+Logic -> Model
+
+Model -> Storage
+@enduml
