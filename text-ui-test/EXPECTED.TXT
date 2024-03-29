@@ -22,5 +22,12 @@ Here are the list of commands you can use:
 10. bye - Exits the programme
 ____________________________________________________________
 What can I do for you?
+Name: Rose
+Colours: RED
+Occasions: [VALENTINES, WEDDING, MOTHERS_DAY]
+Price: $2.00
+Meanings: [Love]
+____________________________________________________________
+What can I do for you?
 Enjoy your bouquet! Thank you for using Florizz
 ____________________________________________________________
