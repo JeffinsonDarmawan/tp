@@ -1,3 +1,2 @@
 help
-info rose
 bye
