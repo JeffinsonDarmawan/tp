@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include samuel-style.puml
+
+actor "user" as user
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant ":AddBouquetCommand" as AddBouquetCommand LOGIC_COLOUR_T1
+end box
+
+box Model MODEL_COLOUR
+participant ":Model" as Model MODEL_COLOUR_T1
+end box
+
+user -> Florizz : "new valentines"
+activate Florizz
+
+Florizz -> Parser : parse("new valentines")
+activate Parser
+
+create AddBouquetCommand
+Parser -> AddBouquetCommand : AddBouquetCommand(new Bouquet("valentines"))
+activate AddBouquetCommand
+
+AddBouquetCommand --> Parser : AddBouquetCommand
+deactivate AddBouquetCommand
+
+Parser --> Florizz : AddBouquetCommand
+deactivate Parser
+
+Florizz -> AddBouquetCommand : AddBouquetCommand.execute()
+activate AddBouquetCommand
+
+AddBouquetCommand -> Model : BouquetList.add(new Bouquet("valentines"))
+activate Model
+
+Model --> AddBouquetCommand :
+deactivate Model
+
+AddBouquetCommand --> Florizz : isRunning=true
+deactivate AddBouquetCommand
+
+destroy AddBouquetCommand
+
+Florizz-->user : "added valentines"
+@enduml
