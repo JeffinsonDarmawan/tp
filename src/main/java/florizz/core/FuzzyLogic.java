@@ -57,11 +57,11 @@ public class FuzzyLogic {
         Ui uiFuzzy = new Ui();
 
         // Iterate over predefined commands
-        for (String command : ITEMS.keySet()) {
-            int distance = computeLevenshteinDistance(command, userInput);
+        for (String item : ITEMS.keySet()) {
+            int distance = computeDLDistance(item, userInput);
             if (distance < bestDistance) {
                 bestDistance = distance;
-                bestMatch = command;
+                bestMatch = item;
             }
         }
 
@@ -79,19 +79,19 @@ public class FuzzyLogic {
     }
 
     /**
-     * Computes the Levenshtein distance which is a metric used to measure the similarity between two strings.
+     * Computes the Damerau-Levenshtein distance which is a metric used to measure the similarity between two strings.
      * It calculates the minimum number of single-character edits required to change one string into another.
-     * These edits can be insertions, deletions, or substitutions of individual characters.
+     * These edits can be insertions, deletions, substitutions and transpositions of individual characters.
      *
-     * @param s1 The first string.
-     * @param s2 The second string.
-     * @return The Levenshtein distance between the two strings.
+     * @param item The first string.
+     * @param userInput The second string.
+     * @return The Damerau-Levenshtein distance between the two strings.
      */
-    private static int computeLevenshteinDistance(String s1, String s2) {
-        assert s1 != null && s2 != null : "Strings cannot be null";
+    private static int computeDLDistance(String item, String userInput) {
+        assert item != null && userInput != null : "Strings cannot be null";
 
-        int m = s1.length();
-        int n = s2.length();
+        int m = item.length();
+        int n = userInput.length();
 
         int[] previousRow = new int[n + 1];
         int[] currentRow = new int[n + 1];
@@ -101,16 +101,22 @@ public class FuzzyLogic {
             previousRow[j] = j;
         }
 
-        // Calculate the Levenshtein distance
+        // Calculate the Damerau-Levenshtein distance
         for (int i = 1; i <= m; i++) {
             currentRow[0] = i;
 
             for (int j = 1; j <= n; j++) {
-                int substitutionCost = (s1.charAt(i - 1) == s2.charAt(j - 1)) ? 0 : 1;
+                int substitutionCost = (item.charAt(i - 1) == userInput.charAt(j - 1)) ? 0 : 1;
                 currentRow[j] = Math.min(Math.min(
                                 previousRow[j] + 1,             // deletion
                                 currentRow[j - 1] + 1),         // insertion
                         previousRow[j - 1] + substitutionCost); // substitution
+
+                // Check for transpositions
+                if (i > 1 && j > 1 && item.charAt(i - 1) == userInput.charAt(j - 2)
+                        && item.charAt(i - 2) == userInput.charAt(j - 1)) {
+                    currentRow[j] = Math.min(currentRow[j], previousRow[j - 2] + substitutionCost);
+                }
             }
 
             // Swap rows
@@ -119,7 +125,7 @@ public class FuzzyLogic {
             currentRow = tempRow;
         }
 
-        // Return the Levenshtein distance
+        // Return the Damerau-Levenshtein distance
         assert previousRow[n] >= 0 : "Levenshtein distance cannot be negative";
         return previousRow[n];
     }
