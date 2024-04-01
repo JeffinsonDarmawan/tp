@@ -107,7 +107,7 @@ public class Parser {
                     String[] arguments = new String[2];
                     String trimmedArgument = trimmedInput.substring(firstWhitespace).trim();
                     int secondWhitespace = trimmedArgument.indexOf(" ");
-                    arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,secondWhitespace).toLowerCase());
+                    arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,secondWhitespace));
                     arguments[1] = trimmedArgument.substring(secondWhitespace).trim();
                     outputs[1] = arguments[0] + " " + arguments[1];
                     break;

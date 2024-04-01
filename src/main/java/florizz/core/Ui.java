@@ -66,7 +66,7 @@ public class Ui {
      * @param bouquetList The list of saved bouquets.
      */
     public void printAllBouquets(ArrayList<Bouquet> bouquetList){
-        System.out.println("Here are the list of your saved bouquets:");
+        System.out.println("Here is the list of your saved bouquets:");
         int i = 1;
         double totalPrice = 0;
         for (Bouquet bouquet : bouquetList){
