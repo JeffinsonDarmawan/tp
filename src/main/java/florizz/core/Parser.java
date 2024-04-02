@@ -55,7 +55,7 @@ public class Parser {
                 command = new HelpCommand();
                 break;
             case ("flowers"):
-                command = handleFlowerCommand(decodedInput[0] + " " + decodedInput[1]);
+                command = handleFlowerCommand(decodedInput);
                 break;
             case ("info"):
                 command = handleInfoCommand(decodedInput[1]);
@@ -171,8 +171,8 @@ public class Parser {
      * @param input The user input to be parsed.
      * @return A FlowerCommand object corresponding to the parsed input.
      */
-    private static FlowerCommand handleFlowerCommand(String input) {
-        String occasion = (input.length() == 7) ? " " : input.substring(input.indexOf(" ") + 1).trim();
+    private static FlowerCommand handleFlowerCommand(String[] input) {
+        String occasion = (input[1] == null) ? " " : input[1].trim();
         return new FlowerCommand(occasion);
     }
 
