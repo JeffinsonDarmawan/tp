@@ -147,22 +147,20 @@ public class Ui {
 
     /**
      * Prints name, colour, occasion and price information about a specific flower.
-     * @param targetFlower The name of the flower to retrieve information for.
-     * @return true if the flower information is found and printed successfully, otherwise false.
+     * @param targetFlower The name of the flower the user searched for.
+     * @param flowers The list of flowers that contain that name.
      */
-    public boolean printFlowerInfo(String targetFlower) {
-        for (int i = 0; i < FlowerDictionary.size(); i++) {
-            if (FlowerDictionary.get(i).getFlowerName().equalsIgnoreCase(targetFlower)) {
-                System.out.println(FlowerDictionary.get(i));
-                printBreakLine();
-                return true;
-            }
+    public void printFlowerInfo(ArrayList<Flower> flowers, String targetFlower) {
+        System.out.println("Here are all the info for flowers named " + targetFlower + ": ");
+        for (Flower flower : flowers){
+            System.out.println();
+            System.out.println(flower);
         }
-        return false;
+
     }
   
     /**
-     * print all occasions available
+     * Prints all possible occasions the user can query
      */
     public void printAllOccasions() {
         System.out.println("Here are all the occasions associated with the available flowers: ");

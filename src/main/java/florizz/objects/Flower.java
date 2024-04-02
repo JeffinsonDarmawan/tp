@@ -16,7 +16,7 @@ public class Flower {
      * Enumerates different colours a flower can have.
      */
     public enum Colour {
-        WHITE, BLUE, RED, PINK
+        WHITE, BLUE, RED, PINK, DARK_CRIMSON
     }
 
     /**
@@ -91,6 +91,9 @@ public class Flower {
         return Colour.valueOf(colourString.replaceAll(" ", "_").toUpperCase());
     }
 
+    public static String colourToString(Colour colour){
+        return colour.toString().charAt(0) + colour.toString().replaceAll("_", " ").toLowerCase().substring(1);
+    }
     /**
      * Gets the name of the flower.
      * @return The name of the flower.
@@ -137,7 +140,22 @@ public class Flower {
      */
     @Override
     public String toString() {
-        return ("Name: " + name + "\n" + "Colours: " + colour.toString() + "\n" + "Occasions: " + occasions.toString()
-            + "\n" + "Price: $" + String.format("%.2f", price) + "\n" + "Meanings: " + meanings.toString());
+        StringBuilder occasionsString = new StringBuilder("Occasions: ");
+        StringBuilder meaningsString = new StringBuilder("Meanings: ");
+        for (Occasion occasion : occasions){
+            occasionsString.append(occasionToString(occasion));
+            occasionsString.append(", ");
+        }
+
+
+        for (String meaning : meanings){
+            meaningsString.append(meaning);
+            meaningsString.append(", ");
+        }
+        return ("Name: " + name + "\n" +
+                "Colour: " + colourToString(colour) + "\n" +
+                occasionsString.substring(0, occasionsString.lastIndexOf(",")) + "\n" +
+                "Price: $" + String.format("%.2f", price) + "\n" +
+                meaningsString.substring(0, meaningsString.lastIndexOf(",")));
     }
 }

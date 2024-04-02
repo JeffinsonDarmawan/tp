@@ -36,6 +36,7 @@ public class FlowerDictionary {
      */
     public static void startup() {
         add("Orchid", "White", new String[]{"Wedding"}, 10.00, new String[]{"Innocence","Respect","Beauty"});
+        add("Rose", "Dark Crimson", new String[]{"Funeral"}, 2.00, new String[]{"Mourning"});
         add("Rose", "Red", new String[]{"Valentines", "Wedding", "Mothers Day"}, 2.00, new String[]{"Love"});
         add("Lily", "White", new String[]{"Funeral", "Wedding"}, 2.50, new String[]{"Innocence"});
         add("Daisy", "White", new String[]{"Valentines"}, 0.50, new String[]{"Innocence"});
@@ -65,11 +66,31 @@ public class FlowerDictionary {
         return flowerDict.get(i);
     }
 
+    /**
+     * Gets a list of flowers that suit that occasion
+     * @param occasion occasion to filter flowers by
+     * @return an ArrayList of flowers to be printed by ui
+     */
     public static ArrayList<Flower> filterByOccasion(Flower.Occasion occasion) {
         ArrayList<Flower> filteredFlowers = new ArrayList<>();
-        for (int i = 0; i < flowerDict.size(); i++) {
-            if (flowerDict.get(i).getOccasion().contains(occasion)){
-                filteredFlowers.add(flowerDict.get(i));
+        for (Flower flower : flowerDict) {
+            if (flower.getOccasion().contains(occasion)) {
+                filteredFlowers.add(flower);
+            }
+        }
+        return filteredFlowers;
+    }
+
+    /**
+     * Gets a list of flowers that contain the name search
+     * @param name name of Flowers to filter by
+     * @return an ArrayList of Flowers to be printed by ui
+     */
+    public static ArrayList<Flower> filterByName(String name){
+        ArrayList<Flower> filteredFlowers = new ArrayList<>();
+        for (Flower flower : flowerDict) {
+            if (flower.getFlowerName().contains(name)) {
+                filteredFlowers.add(flower);
             }
         }
         return filteredFlowers;
