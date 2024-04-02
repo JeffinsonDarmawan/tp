@@ -152,7 +152,10 @@ public class Flower {
             meaningsString.append(meaning);
             meaningsString.append(", ");
         }
-        return ("Name: " + name + "\n" + "Colour: " + colourToString(colour) + "\n" + occasionsString.substring(0, occasionsString.lastIndexOf(","))
-            + "\n" + "Price: $" + String.format("%.2f", price) + "\n" + meaningsString.substring(0, meaningsString.lastIndexOf(",")));
+        return ("Name: " + name + "\n" +
+                "Colour: " + colourToString(colour) + "\n" +
+                occasionsString.substring(0, occasionsString.lastIndexOf(",")) + "\n" +
+                "Price: $" + String.format("%.2f", price) + "\n" +
+                meaningsString.substring(0, meaningsString.lastIndexOf(",")));
     }
 }

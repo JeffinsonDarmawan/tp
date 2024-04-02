@@ -40,7 +40,8 @@ public class FlowerDictionary {
         add("Rose", "Red", new String[]{"Valentines", "Wedding", "Mothers Day"}, 2.00, new String[]{"Love"});
         add("Lily", "White", new String[]{"Funeral", "Wedding"}, 2.50, new String[]{"Innocence"});
         add("Daisy", "White", new String[]{"Valentines"}, 0.50, new String[]{"Innocence"});
-        add("Baby Breath", "White", new String[] {"Wedding"}, 1.00, new String[]{"Innocence", "Kindness", "Care", "Humble"});
+        add("Baby Breath", "White", new String[] {"Wedding"}, 1.00,
+                new String[]{"Innocence", "Kindness", "Care", "Humble"});
         add("Chrysanthemum", "White", new String[]{"Funeral"}, 1.00, new String[]{"Love", "Loyalty", "Innocence"});
         add("Hydrangea", "Blue", new String[] {"Wedding"}, 9.00, new String[]{"Forgiveness", "Gratitude"});
         add("Carnation", "Pink", new String[] {"Mothers Day"}, 2.00, new String[]{"Gratitude", "Love"});
