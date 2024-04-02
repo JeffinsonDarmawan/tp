@@ -153,6 +153,7 @@ public class Ui {
     public void printFlowerInfo(ArrayList<Flower> flowers, String targetFlower) {
         System.out.println("Here are all the info for flowers named " + targetFlower + ": ");
         for (Flower flower : flowers){
+            System.out.println();
             System.out.println(flower);
         }
 
