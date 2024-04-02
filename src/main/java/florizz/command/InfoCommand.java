@@ -26,7 +26,7 @@ public class InfoCommand extends Command{
         ArrayList<Flower> filteredFlowers = FlowerDictionary.filterByName(flowerName);
         if (filteredFlowers.isEmpty()){
             logger.log(Level.WARNING, "FLOWER DOES NOT EXIST");
-            throw new FlorizzException("Flower does not exist type 'flower' for a list of flowers");
+            throw new FlorizzException("Flower does not exist, type 'flowers' for a list of flowers");
         } else{
             ui.printFlowerInfo(filteredFlowers, flowerName);
         }
