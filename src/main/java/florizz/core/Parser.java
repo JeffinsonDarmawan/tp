@@ -84,25 +84,46 @@ public class Parser {
 
 
     /**
-     * Splits input into command and arguments. Also handles capitalisation and space exceptions
+     * Splits input into command and arguments (if any). Handles capitalisation, whitespaces and small typos.
      *
      * @param input
-     * @return String[] output; output[0] = command ; output[1] arguments
+     * @return String[] output; output[0] = item ; output[1] = argument(s)
      */
-    private static String[] commandHandler(String input) throws FlorizzException {
-        String[] output = new String[2];
-        String trimmedInput = input.trim();
-        int firstWhitespace = trimmedInput.indexOf(" ");
-        if (firstWhitespace != -1) {
-            // input have arguments
-            output[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
-            output[1] = FuzzyLogic.detectItem(trimmedInput.substring(firstWhitespace).trim());
-        } else {
-            output[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
-        }
-        return output;
-    }
 
+    private static String[] commandHandler(String input) throws FlorizzException {
+        String[] outputs = new String[2];
+        try {
+            String trimmedInput = input.trim();
+            int firstWhitespace = trimmedInput.indexOf(" ");
+            if (firstWhitespace != -1) {
+                outputs[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
+                switch (outputs[0]) {
+                case ("delete"): // Fallthrough
+                case ("new"):
+                    outputs[1] = trimmedInput.substring(firstWhitespace).trim();
+                    break;
+                case ("remove"): // Fallthrough
+                case ("add"):
+                    String[] arguments = new String[2];
+                    String trimmedArgument = trimmedInput.substring(firstWhitespace).trim();
+                    int secondWhitespace = trimmedArgument.indexOf(" ");
+                    arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,secondWhitespace));
+                    arguments[1] = trimmedArgument.substring(secondWhitespace).trim();
+                    outputs[1] = arguments[0] + " " + arguments[1];
+                    break;
+                default:
+                    outputs[1] = FuzzyLogic.detectItem(trimmedInput.substring(firstWhitespace).trim());
+                    break;
+                }
+            } else {
+                outputs[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
+            }
+        } catch (FlorizzException ex) {
+            Logger.getLogger("CommandHandler").log(Level.SEVERE, "Exception occurred in commandHandler", ex);
+            throw ex;
+        }
+        return outputs;
+    }
 
     /**
      * remove prefix from an input string
