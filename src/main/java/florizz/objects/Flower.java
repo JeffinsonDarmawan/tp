@@ -16,7 +16,7 @@ public class Flower {
      * Enumerates different colours a flower can have.
      */
     public enum Colour {
-        WHITE, BLUE, RED, PINK
+        WHITE, BLUE, RED, PINK, DARK_CRIMSON
     }
 
     /**
