@@ -11,12 +11,14 @@ public class Flower {
     private Colour colour = null;
     private Double price;
     private ArrayList<String> meanings = null;
+    private Type type = null;
+
 
     /**
      * Enumerates different colours a flower can have.
      */
     public enum Colour {
-        WHITE, BLUE, RED, PINK, DARK_CRIMSON
+        WHITE, BLUE, RED, PINK, DARK_CRIMSON,GREEN, YELLOW, PURPLE
     }
 
     /**
@@ -24,6 +26,10 @@ public class Flower {
      */
     public enum Occasion {
         FUNERAL, WEDDING, VALENTINES, MOTHERS_DAY
+    }
+
+    public enum Type {
+        FLOWER, FILLER
     }
 
     /**
@@ -52,6 +58,25 @@ public class Flower {
      * Constructs a Flower object with specified parameters.
      * @param name The name of the flower.
      * @param colour The colour of the flower.
+     * @param occasion  The occasion associated with the flower.
+     * @param price The price of the flower.
+     * @param meanings The meanings associated with the flower.
+     * @param type The type of the flower.
+     */
+    public Flower(String name, Colour colour, ArrayList<Occasion> occasion,
+                  Double price, ArrayList<String> meanings, Type type){
+        this.name = name;
+        this.occasions = occasion;
+        this.colour = colour;
+        this.price = price;
+        this.meanings = meanings;
+        this.type = type;
+    }
+
+    /**
+     * Constructs a Flower object with specified parameters.
+     * @param name The name of the flower.
+     * @param colour The colour of the flower.
      * @param occasion The occasion associated with the flower.
      * @param price The price of the flower.
      */
@@ -64,11 +89,40 @@ public class Flower {
     }
 
     /**
+     * check if argument inputted is a valid occasion
+     * @param argument
+     * @return boolean true if occasion is valid
+     */
+    public static Boolean isValidOccasion(String argument) {
+        for (Flower.Occasion occasion : Flower.Occasion.values()) {
+            if (Flower.occasionToString(occasion).equalsIgnoreCase(argument)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * check if argument inputted is a valid colour
+     * @param argument
+     * @return boolean true if colour is valid
+     */
+    public static Boolean isValidColour(String argument) {
+        for (Flower.Colour colour : Flower.Colour.values()) {
+            if (Flower.colourToString(colour).equalsIgnoreCase(argument)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Converts a string representation of an occasion to an Occasion enum value.
      * @param ocassionString The string representation of an occasion.
      * @return The Occasion enum value corresponding to the string.
      */
     public static Occasion stringToOccasion(String ocassionString){
+        assert ocassionString != null;
         return Occasion.valueOf(ocassionString.replaceAll(" ", "_").toUpperCase());
     }
 
@@ -78,6 +132,7 @@ public class Flower {
      * @return The string representation of the occasion.
      */
     public static String occasionToString(Occasion occasion){
+        // check if occasion is valid
         return occasion.toString().charAt(0) +
                 occasion.toString().replaceAll("_", " ").toLowerCase().substring(1);
     }

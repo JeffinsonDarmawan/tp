@@ -98,6 +98,23 @@ public class Ui {
     }
 
     /**
+     * Prints all flowers in a bouquet.
+     * @param bouquet The bouquet to print.
+     */
+    public void printFullBouquet(Bouquet bouquet) {
+        System.out.println("Here is the full list of flowers in " + bouquet.getBouquetName() + ":");
+        HashMap<Flower, Integer> flowerHashMap = bouquet.getFlowerHashMap();
+        if (!flowerHashMap.isEmpty()) {
+            for (Flower j : flowerHashMap.keySet()) {
+                System.out.println("    - " + flowerHashMap.get(j) + " x " + j.getFlowerName());
+            }
+        } else {
+            System.out.println("      No flowers added so far");
+        }
+        printBreakLine();
+    }
+
+    /**
      * print all available command
      */
     public void printHelpMessage() {
@@ -326,6 +343,47 @@ public class Ui {
      */
     public void printIOError() {
         System.out.println("ERROR: IO Error Encountered Xd");
+    }
+
+    /**
+     * ask user for occasion input
+     * @return String of occasion input
+     */
+    public String printAskOccasion() {
+        System.out.println("For what occasion are you buying flowers for?");
+        System.out.println("Here are the list of our available occasion:");
+        this.printAllOccasions();
+        return inputScanner.nextLine();
+    }
+
+    /**
+     * ask user for colour input
+     * @param eligibleFlowers list of flowers that are eligible for the occasion
+     * @return String of colour input
+     */
+    public String printAskColour(ArrayList<Flower> eligibleFlowers) {
+        System.out.println("What colour would you like your bouquets to be?");
+
+        // print all available colours in a given array list
+        System.out.println("Here are the list of colours available for the occasion: ");
+        // remove duplicate colours in eligible flowers
+        ArrayList<String> colourList = new ArrayList<>();
+        for (Flower flower : eligibleFlowers) {
+            if(!colourList.contains(flower.getColour())){
+                colourList.add(flower.getColour());
+            }
+        }
+        for (String colour : colourList){
+            System.out.println("- " + colour);
+        }
+        return inputScanner.nextLine();
+    }
+
+    public String printAskSaveBouquet(Bouquet recommendedBouquet) {
+        System.out.println("Would you like to save this bouquet to your list?");
+        printFullBouquet(recommendedBouquet);
+        System.out.println("Type 'yes' to save, 'no' to discard");
+        return inputScanner.nextLine();
     }
 
     /**

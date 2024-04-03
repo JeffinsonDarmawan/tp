@@ -8,7 +8,7 @@ import florizz.objects.Flower;
 
 import java.util.ArrayList;
 
-public class FlowerCommand extends Command{
+public class FlowerCommand extends Command {
     private String occasion;
 
     public FlowerCommand(String occasion) {
@@ -26,7 +26,7 @@ public class FlowerCommand extends Command{
             ui.printFilteredFlowers(FlowerDictionary.filterByOccasion(occasionEnum),occasion, 1);
             return true;
 
-        }catch(IllegalArgumentException error){
+        } catch (IllegalArgumentException error){
             throw new FlorizzException("This occasion does not exist. Type 'occasion' to get a list of occasions");
         }
     }

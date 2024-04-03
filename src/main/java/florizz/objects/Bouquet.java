@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Bouquet {
-    private final String bouquetName;
+    private String bouquetName;
     private HashMap<Flower, Integer> flowerHashMap;
 
     public Bouquet() {
@@ -109,5 +109,9 @@ public class Bouquet {
      */
     public String getBouquetName() {
         return this.bouquetName;
+    }
+
+    public void setName(String newName) {
+        this.bouquetName = newName;
     }
 }

@@ -14,6 +14,7 @@ import florizz.command.Command;
 import florizz.command.AddBouquetCommand;
 import florizz.command.BackCommand;
 import florizz.command.NextCommand;
+import florizz.command.RecommendCommand;
 import florizz.objects.Bouquet;
 
 import java.util.logging.Level;
@@ -34,6 +35,9 @@ public class Parser {
     // regex
     private static final String ADD_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/to(.+)";
     private static final String REMOVE_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/from(.+)";
+    private static final String PARSE_OCCASION_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
+    private static final String PARSE_COLOUR_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
+    private static final String SAVE_BOUQUET_REGEX = "^\\s*(yes|no)\\s*$";
 
     public static Command parse (String input, boolean enableUi) throws FlorizzException {
         logger.entering("Parser", "parse");
@@ -78,6 +82,9 @@ public class Parser {
             case ("remove"):
                 command = handleRemoveFlower(decodedInput[1]);
                 break;
+            case ("recommend"):
+                command = new RecommendCommand();
+                break;
             case ("save"):
                 command = new SaveCommand(decodedInput[1]);
                 break;
@@ -86,7 +93,7 @@ public class Parser {
             }
             logger.log(Level.INFO, "Command parsed successfully");
         } catch (FlorizzException ex) {
-            logger.log(Level.SEVERE, "Exception occurred while parsing command: " + ex.errorMessage, ex);
+            logger.log(Level.INFO, "Exception occurred while parsing command: " + ex.errorMessage, ex);
             throw ex;
         } finally {
             logger.exiting("Parser", "parse");
@@ -131,7 +138,7 @@ public class Parser {
                 outputs[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
             }
         } catch (FlorizzException ex) {
-            Logger.getLogger("CommandHandler").log(Level.SEVERE, "Exception occurred in commandHandler", ex);
+            Logger.getLogger("CommandHandler").log(Level.INFO, "Exception occurred in commandHandler", ex);
             throw ex;
         }
         return outputs;
@@ -258,5 +265,63 @@ public class Parser {
     private static InfoCommand handleInfoCommand(String flowerName) {
         assert !flowerName.isEmpty() : "This string is empty";
         return new InfoCommand(flowerName);
+    }
+
+    /**
+     * Parses the occasion from the user input.
+     * @param argument The user input to be parsed.
+     * @return The parsed occasion.
+     * @throws FlorizzException If the input does not match the required format.
+     */
+    public static String parseOccasion(String argument) throws FlorizzException{
+        if (argument == null) {
+            throw new FlorizzException("No argument detected! " +
+                    "Please input an occasion");
+        }
+
+        if (!argument.matches(PARSE_OCCASION_REGEX)) {
+            throw new FlorizzException("Incorrect format detected! " +
+                    "Please input a single occasion");
+        }
+
+        return argument;
+    }
+
+    /**
+     * Parses the colour from the user input.
+     * @param argument The user input to be parsed.
+     * @return The parsed colour String
+     */
+    public static String parseColour(String argument) throws FlorizzException{
+        if (argument == null) {
+            throw new FlorizzException("No argument detected! " +
+                    "Please input a colour");
+        }
+
+        if (!argument.matches(PARSE_COLOUR_REGEX)) {
+            throw new FlorizzException("Incorrect format detected! " +
+                    "Please input a single colour");
+        }
+
+        return argument;
+    }
+
+    /**
+     * Parses the user input to save a bouquet.
+     * @param argument The user input to be parsed.
+     * @return The parsed save bouquet String
+     */
+    public static String parseSaveBouquet(String argument) throws FlorizzException{
+        if (argument == null) {
+            throw new FlorizzException("No argument detected! " +
+                    "Please input a bouquet name to save");
+        }
+
+        if (!argument.matches(SAVE_BOUQUET_REGEX)) {
+            throw new FlorizzException("Incorrect format detected! " +
+                    "Please input a yes or a no");
+        }
+
+        return argument;
     }
 }
