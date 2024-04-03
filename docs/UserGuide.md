@@ -1,5 +1,5 @@
 # User Guide
-_Florizz is your personal digital florist which helps people in Singapore to curate flowers to create bouquets for all occasions._
+Florizz is your personal digital florist which helps people in Singapore to curate flowers to create bouquets for all occasions._
 
 ## Features
 ### Viewing help: `help`
@@ -56,7 +56,7 @@ Deleted bouquet:
 For Mother
 ```
 
-### View existing bouquets: mybouquets
+### View existing bouquets: `mybouquets`
 Views all the bouquets in the list
 
 Format: `mybouquets`
@@ -68,7 +68,7 @@ Here are the list of your saved bouquets:
       No flowers added so far
 ```
 
-### List all available flowers: flowers
+### List all available flowers: `flowers`
 List all available flowers in the database currently, also able to filter presented flowers according to occasion, 
 colour (coming soon) and meaning (coming soon).
 
@@ -100,7 +100,8 @@ Here is page 1/1 of all the flowers related to Funeral:
 3. White Chrysanthemum
 ____________________________________________________________
 ```
-### View detailed info of a flower: info
+
+### View detailed info of a flower: `info`
 
 Get detailed info (colour, meaning and related occasions) about a specific flower in the database,
 will show all colours and their associated meanings (specifying colours will come soon).
@@ -122,7 +123,7 @@ Meanings: Innocence
 ____________________________________________________________
 ```
 
-### Add flower: add
+### Add flower: `add`
 
 Adds a flower into a bouquet
 
@@ -145,7 +146,7 @@ Here are the list of your saved bouquets:
     - 3 x Rose
 ```
 
-### Remove flower: remove
+### Remove flower: `remove`
 
 Removes a flower from a bouquet
 
@@ -168,8 +169,8 @@ Here are the list of your saved bouquets:
     - 2 x Rose
 ```
 
-### List occasions: occasion
-Shows a list of occasions that the flowers in the database are associated with. 
+### List occasions: `occasion`
+Shows a list of occasions that the flowers in the database are associated with.
 
 Format: `occasion`
 
@@ -229,7 +230,7 @@ Recommended Bouquet
 ____________________________________________________________
 ```
 
-### Save a bouquet to device: save
+### Save a bouquet to device: `save`
 Saves chosen bouquet, if it exists, locally to the users device
 
 Format: `save <bouquetName>`
@@ -244,7 +245,7 @@ Expected Output:
 Successfully saved moms bouquet. You can find it at 'florizz-out/saved/moms bouquet.txt'
 ```
 
-### Exit programme: exit
+### Exit programme: `exit`
 
 Exits the program.
 
