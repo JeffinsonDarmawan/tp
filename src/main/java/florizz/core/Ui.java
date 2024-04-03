@@ -83,10 +83,12 @@ public class Ui {
             System.out.println(i++ + ". " + bouquet + " :");
             HashMap<Flower, Integer> flowerHashMap = bouquet.getFlowerHashMap();
             totalPrice = 0;
-            if (!flowerHashMap.isEmpty()) {
+            if (!flowerHashMap.isEmpty() ) {
                 for (Flower j : flowerHashMap.keySet()) {
-                    System.out.println("    - " + flowerHashMap.get(j) + " x " + j.getFlowerName());
-                    totalPrice += (flowerHashMap.get(j) * j.getPrice());
+                    if (flowerHashMap.get(j) != 0) {
+                        System.out.println("    - " + flowerHashMap.get(j) + " x " + j.getFlowerName());
+                        totalPrice += (flowerHashMap.get(j) * j.getPrice());
+                    }
                 }
                 System.out.println("  Total estimated price = $" + String.format("%.2f", (double) totalPrice));
             } else {
