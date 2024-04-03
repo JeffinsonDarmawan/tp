@@ -126,6 +126,10 @@ public class Parser {
                     String[] arguments = new String[2];
                     String trimmedArgument = trimmedInput.substring(firstWhitespace).trim();
                     int secondWhitespace = trimmedArgument.indexOf(" ");
+                    if (secondWhitespace <0){
+                        throw new FlorizzException("Incorrect usage of remove." +
+                                " Correct format: remove <flowerName> /q <quantity> /from <bouquetName>");
+                    }
                     arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,secondWhitespace));
                     arguments[1] = trimmedArgument.substring(secondWhitespace).trim();
                     outputs[1] = arguments[0] + " " + arguments[1];

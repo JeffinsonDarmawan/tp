@@ -7,10 +7,11 @@ import florizz.objects.Bouquet;
 import florizz.objects.Flower;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class AddFlowerCommand extends Command{
+    private static Logger logger = Logger.getLogger(AddFlowerCommand.class.getName());
     private String flowerName;
-
     private Integer quantity;
     private String bouquetName;
     private boolean enableUi;
@@ -24,6 +25,7 @@ public class AddFlowerCommand extends Command{
 
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
+        logger.entering(AddFlowerCommand.class.getName(), "execute");
         boolean doesBouquetExist = false;
         Bouquet bouquetToAddFlower = new Bouquet();
         for (int i = 0; !doesBouquetExist && i < bouquetList.size(); i++) {
@@ -34,8 +36,7 @@ public class AddFlowerCommand extends Command{
         }
 
         if (!doesBouquetExist) {
-            throw new FlorizzException("ERROR: No such bouquet is found." + System.lineSeparator() +
-                                       "Create a bouquet by using 'new <bouquetName>`");
+            throw new FlorizzException("No such bouquet is found.");
         }
 
         boolean doesFlowerExist = false;
@@ -58,6 +59,8 @@ public class AddFlowerCommand extends Command{
         if (enableUi) {
             ui.printAddFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
         }
+
+        logger.exiting(AddFlowerCommand.class.getName(), "execute");
         return true;
     }
 }
