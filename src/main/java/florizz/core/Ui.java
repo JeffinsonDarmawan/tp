@@ -112,7 +112,8 @@ public class Ui {
         System.out.println("7. flowers - Shows a list of flowers that can be added into mybouquets");
         System.out.println("8. flowers <occasion> - Shows a list of flowers associated with said occasion");
         System.out.println("9. occasion - Shows a list of occasions associated with available flowers.");
-        System.out.println("10. bye - Exits the programme");
+        System.out.println("10. save <bouquetName> - Saves a bouquet to an external <bouquetName>.txt file");
+        System.out.println("11. bye - Exits the programme");
         printBreakLine();
     }
 
@@ -325,5 +326,11 @@ public class Ui {
      */
     public void printIOError() {
         System.out.println("ERROR: IO Error Encountered Xd");
+    }
+
+    public void printSaveSuccess(String bouquetName) {
+        System.out.println("Successfully saved " + bouquetName + ". You can find it at 'florizz-out/saved/"
+                + bouquetName + ".txt'");
+        printBreakLine();
     }
 }

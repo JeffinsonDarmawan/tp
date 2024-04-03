@@ -32,6 +32,7 @@ public class Storage {
             try {
                 Files.createDirectories(Paths.get("./florizz-out/data/"));
                 Files.createDirectory(Paths.get("./florizz-out/logs/"));
+                Files.createDirectory(Paths.get("./florizz-out/saved/"));
                 Files.createFile(Paths.get(storagePath));
             } catch (IOException e) {
                 System.out.println("File not created");
@@ -56,6 +57,7 @@ public class Storage {
 
     /**
      * Saves all bouquets in the bouquetList to a txt file
+     * text is formatted beforehand to allow the bouquets to be added back next time florizz is run
      * @param bouquetStorageWriter A FileWriter that writes into the storage txt file
      * @param bouquetList An ArrayList that contains all the bouquets added during run time
      * @throws IOException Thrown when the file to write to does not exist
@@ -64,13 +66,18 @@ public class Storage {
         for (Bouquet bouquet : bouquetList) {
             String bouquetName = bouquet.getBouquetName();
             bouquetStorageWriter.write("new " + bouquetName + "\n");
-            saveBouquet(bouquet, bouquetStorageWriter);
+            HashMap<Flower, Integer> tempHashMap = bouquet.getFlowerHashMap();
+            for (Map.Entry<Flower, Integer> k : tempHashMap.entrySet()) {
+                Flower flower = k.getKey();
+                Integer quantity = k.getValue();
+                bouquetStorageWriter.write("add " + flower.getFlowerName() +
+                        " /q " + quantity + " /to " + bouquetName + "\n");
+            }
         }
     }
 
     /**
-     * Saves the flower, quantity and target bouquet to a txt file
-     * text is formatted beforehand to allow the bouquets to be added back next time florizz is run
+     * Saves a bouquet to a txt file
      * @param bouquet Target bouquet to be added to txt file
      * @param bouquetStorageWriter FileWriter that writes to a txt file
      * @throws IOException Thrown when the target file to write to does not exist
@@ -78,12 +85,15 @@ public class Storage {
     public void saveBouquet(Bouquet bouquet, FileWriter bouquetStorageWriter)  throws IOException{
         String bouquetName = bouquet.getBouquetName();
         HashMap<Flower, Integer> tempHashMap = bouquet.getFlowerHashMap();
+        double totalPrice = 0;
+        bouquetStorageWriter.write(bouquetName + " :\n");
         for (Map.Entry<Flower, Integer> k : tempHashMap.entrySet()) {
             Flower flower = k.getKey();
             Integer quantity = k.getValue();
-            bouquetStorageWriter.write("add " + flower.getFlowerName() +
-                    " /q " + quantity + " /to " + bouquetName + "\n");
+            bouquetStorageWriter.write("    - " + quantity + " x " + flower.getFlowerName() + "\n");
+            totalPrice += (flower.getPrice() * quantity);
         }
+        bouquetStorageWriter.write("  Total estimated price = $" + String.format("%.2f", (double) totalPrice));
     }
 
     /**

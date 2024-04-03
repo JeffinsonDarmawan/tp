@@ -10,13 +10,13 @@ import java.sql.ResultSet;
 
 //@@ author IanFH-unused
 public class StorageManager {
-    private final String URL = "jdbc:sqlite:flowers.db";
+    private final String url = "jdbc:sqlite:flowers.db";
     private Connection connection;
     private Statement statement;
 
     public void loadDatabase() throws FlorizzException {
         try {
-            this.connection = DriverManager.getConnection(URL);
+            this.connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
         } catch (SQLException e) {
             throw new FlorizzException("ERROR: unable to make connection with database");
