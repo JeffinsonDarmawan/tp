@@ -8,7 +8,7 @@ import florizz.objects.Flower;
 
 import java.util.ArrayList;
 
-public class FlowerCommand extends Command{
+public class FlowerCommand extends Command {
     private String occasion;
 
     public FlowerCommand(String occasion) {

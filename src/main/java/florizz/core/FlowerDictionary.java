@@ -17,7 +17,8 @@ public class FlowerDictionary {
      * @param colour    Colour of flower to be added
      * @param occasions Occasions that the flower can be bought for
      */
-    private static void add(String name, String colour, String[] occasions, Double price, String[] meanings, Flower.Type type) {
+    private static void add(String name, String colour, String[] occasions,
+                            Double price, String[] meanings, Flower.Type type) {
 
         Flower.Colour colourEnum = Flower.Colour.valueOf(colour.replaceAll(" ", "_").toUpperCase());
         ArrayList<Flower.Occasion> occasionsArrayList = new ArrayList<>();
