@@ -328,6 +328,10 @@ public class Ui {
         System.out.println("ERROR: IO Error Encountered Xd");
     }
 
+    /**
+     * Prints out to user when bouquet has been successfully saved
+     * @param bouquetName Bouquet to save externally
+     */
     public void printSaveSuccess(String bouquetName) {
         System.out.println("Successfully saved " + bouquetName + ". You can find it at 'florizz-out/saved/"
                 + bouquetName + ".txt'");
