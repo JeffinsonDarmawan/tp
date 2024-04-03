@@ -39,6 +39,7 @@ Expected output:
 Added new bouquet to list: 
 For Girlfriend
 ```
+<div style="page-break-after: always;"></div>
 
 ### Delete existing bouquet: `delete`
 Deletes a bouquet from the bouquet list
@@ -67,6 +68,7 @@ Here are the list of your saved bouquets:
 1. For Girlfriend :
       No flowers added so far
 ```
+<div style="page-break-after: always;"></div>
 
 ### List all available flowers: `flowers`
 List all available flowers in the database currently, also able to filter presented flowers according to occasion, 
