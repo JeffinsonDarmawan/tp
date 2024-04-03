@@ -32,7 +32,7 @@ public class Parser {
     private static final String ADD_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/to(.+)";
     private static final String REMOVE_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/from(.+)";
 
-    public static Command parse (String input) throws FlorizzException {
+    public static Command parse (String input, boolean enableUi) throws FlorizzException {
         logger.entering("Parser", "parse");
         Command command = null;
 
@@ -43,7 +43,7 @@ public class Parser {
                 command = new ListBouquetCommand();
                 break;
             case ("new"):
-                command = handleAddBouquet(input);
+                command = handleAddBouquet(input, enableUi);
                 break;
             case ("delete"):
                 command = handleDeleteBouquet(input);
@@ -64,7 +64,7 @@ public class Parser {
                 command = new ListOccasionCommand();
                 break;
             case ("add"):
-                command = handleAddFlower(decodedInput[1]);
+                command = handleAddFlower(decodedInput[1], enableUi);
                 break;
             case ("remove"):
                 command = handleRemoveFlower(decodedInput[1]);
@@ -90,7 +90,7 @@ public class Parser {
      * @return String[] output; output[0] = item ; output[1] = argument(s)
      */
 
-    private static String[] commandHandler(String input) throws FlorizzException {
+    public static String[] commandHandler(String input) throws FlorizzException {
         String[] outputs = new String[2];
         try {
             String trimmedInput = input.trim();
@@ -133,7 +133,7 @@ public class Parser {
      * @param prefix
      * @return input with prefix removed
      */
-    private static String removePrefix(String input, String prefix) {
+    public static String removePrefix(String input, String prefix) {
         return input.replace(prefix, "");
     }
 
@@ -143,12 +143,12 @@ public class Parser {
      * @return An AddBouquetCommand object corresponding to the parsed input.
      * @throws FlorizzException If the input does not contain the required bouquet information.
      */
-    private static AddBouquetCommand handleAddBouquet(String input) throws FlorizzException{
+    private static AddBouquetCommand handleAddBouquet(String input, boolean enableUi) throws FlorizzException{
         if (!input.contains(" ")){
             throw new FlorizzException("Did not include bouquet to add");
         }
         String newBouquetName = input.substring(input.indexOf(" ") + 1).trim();
-        return new AddBouquetCommand(new Bouquet(newBouquetName));
+        return new AddBouquetCommand(new Bouquet(newBouquetName), enableUi);
     }
 
     /**
@@ -182,7 +182,7 @@ public class Parser {
      * @return An AddFlowerCommand object corresponding to the parsed input.
      * @throws FlorizzException If the input does not match the required format.
      */
-    private static AddFlowerCommand handleAddFlower(String argument) throws FlorizzException {
+    private static AddFlowerCommand handleAddFlower(String argument, boolean enableUi) throws FlorizzException {
         if (argument == null) {
             throw new FlorizzException("No argument detected! " +
                     "Please use the correct format of 'add <flowerName> /q <quantity> /to <bouquetName>");
@@ -204,7 +204,7 @@ public class Parser {
         Integer quantity = Integer.parseInt(quantityString);
         String bouquetName = removePrefix(argument.substring(prefixIndex), ADD_FLOWER_PREFIX).trim();
 
-        return new AddFlowerCommand(flowerName, quantity, bouquetName);
+        return new AddFlowerCommand(flowerName, quantity, bouquetName, enableUi);
     }
 
     /**

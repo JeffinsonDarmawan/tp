@@ -17,7 +17,7 @@ public class AddBouquetTest {
         ArrayList<Bouquet> controlList = new ArrayList<>();
         ArrayList<Bouquet> testList = new ArrayList<>();
         controlList.add(testBouquet);
-        Command testAddBouquetCommand = new AddBouquetCommand(testBouquet);
+        Command testAddBouquetCommand = new AddBouquetCommand(testBouquet, true);
         try {
             testAddBouquetCommand.execute(testList, ui);
         } catch(FlorizzException error){
