@@ -384,6 +384,7 @@ public class Ui {
         printFullBouquet(recommendedBouquet);
         System.out.println("Type 'yes' to save, 'no' to discard");
         return inputScanner.nextLine();
+    }
 
     /**
      * Prints out to user when bouquet has been successfully saved
