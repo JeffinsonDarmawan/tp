@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Ui {
     private static ArrayList<Flower> lastShownList = new ArrayList<>();
     private static int lastPageNo = 0;
-    private static final int PAGE_SIZE = 3;
+    private static final int PAGE_SIZE = 5;
     private final Scanner inputScanner = new Scanner (System.in);
 
 
