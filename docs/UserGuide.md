@@ -155,6 +155,53 @@ valentines
 wedding
 ```
 
+### Recommend A Bouquet: `recommend`
+Recommends a bouquet based on the occasion and the recipient's preference
+
+Steps:
+1. Type command: `recommend`
+
+Expected output:
+```
+For what occasion are you buying flowers for?
+Here are the list of our available occasion:
+Here are all the occasions associated with the available flowers: 
+- Funeral
+- Wedding
+- Valentines
+- Mothers day
+____________________________________________________________
+```
+2. Type occasion: `Funeral`
+
+Expected output:
+```
+What colour would you like your bouquets to be?
+Here are the list of colours available for the occasion: 
+- DARK_CRIMSON
+- WHITE
+```
+
+3. Select colour of bouquet: `WHITE`
+
+Expected output:
+
+```
+Would you like to save this bouquet to your list?
+Here is the full list of flowers in Recommended Bouquet:
+    - 3 x Lily
+    - 2 x Chrysanthemum
+____________________________________________________________
+Type 'yes' to save, 'no' to discard
+```
+4. Confirm wheter you want to add the recommended bouquet to your mybouquets list: `yes`
+
+```
+Added new bouquet to list: 
+Recommended Bouquet
+____________________________________________________________
+```
+
 ### Exit programme: exit
 
 Exits the program.

@@ -263,10 +263,16 @@ public class Ui {
 
         // print all available colours in a given array list
         System.out.println("Here are the list of colours available for the occasion: ");
-        for (Flower flower : eligibleFlowers){
-            System.out.println("- " + flower.getColour());
+        // remove duplicate colours in eligible flowers
+        ArrayList<String> colourList = new ArrayList<>();
+        for (Flower flower : eligibleFlowers) {
+            if(!colourList.contains(flower.getColour())){
+                colourList.add(flower.getColour());
+            }
         }
-
+        for (String colour : colourList){
+            System.out.println("- " + colour);
+        }
         return inputScanner.nextLine();
     }
 

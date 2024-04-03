@@ -53,16 +53,11 @@ public class FlowerDictionary {
         add("Carnation", "Pink", new String[]{"Mothers Day"}, 2.00,
                 new String[]{"Gratitude", "Love"}, Flower.Type.FLOWER);
 
-        // fillers
+        // [Fillers have yet to be implemented]
         add("Baby Breath", "White", new String[]{"Wedding", "Valentines", "Mothers Day"}, 1.00,
                 new String[]{"Innocence", "Kindness", "Care", "Humble"}, Flower.Type.FILLER);
         add("Eucalyptus", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
-        add("Dusty Miller",
-                "Green",
-                new String[]{},
-                1.5,
-                new String[]{},
-                Flower.Type.FILLER);
+        add("Dusty Miller", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
         add("Pistacia", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
         add("Pittosporum", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
         add("Chamomile", "White", new String[]{}, 1.9, new String[]{}, Flower.Type.FILLER);
