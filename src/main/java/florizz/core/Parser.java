@@ -14,6 +14,7 @@ import florizz.command.Command;
 import florizz.command.AddBouquetCommand;
 import florizz.command.BackCommand;
 import florizz.command.NextCommand;
+import florizz.command.RecommendCommand;
 import florizz.objects.Bouquet;
 
 import java.util.logging.Level;
@@ -83,6 +84,7 @@ public class Parser {
                 break;
             case ("recommend"):
                 command = new RecommendCommand();
+                break;
             case ("save"):
                 command = new SaveCommand(decodedInput[1]);
                 break;

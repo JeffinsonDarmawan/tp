@@ -155,6 +155,7 @@ public class FlowerDictionary {
             }
         }
         return filteredFlowers;
+    }
 
     public static ArrayList<Flower> getAllFlowers(){
         return flowerDict;
