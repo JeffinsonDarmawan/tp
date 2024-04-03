@@ -13,8 +13,7 @@ src/main/resources/docs/
 *.iml
 bin/
 
-/text-ui-test/ACTUAL.TXT
-text-ui-test/EXPECTED-UNIX.TXT
+
 /florizz-out/logs
 /florizz-out/data
 /florizz-out/saved
