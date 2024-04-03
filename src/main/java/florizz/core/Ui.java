@@ -126,13 +126,13 @@ public class Ui {
         System.out.println("2. delete <bouquetName> - Delete a bouquets");
         System.out.println("3. mybouquets - List current saved bouquets");
         System.out.println("4. info <flowerName> - Provide information on chosen flower");
-        System.out.println("5. add <flowerName> /q <quantity> /to <bouquetName> - add flower to a bouquet.");
-        System.out.println("6. remove <flowerName> /q <quantity> /from <bouquetName> - remove flower from a bouquet.");
+        System.out.println("5. add <flowerName> /q <quantity> /to <bouquetName> - add flower to a bouquet");
+        System.out.println("6. remove <flowerName> /q <quantity> /from <bouquetName> - remove flower from a bouquet");
         System.out.println("7. flowers - Shows a list of flowers that can be added into mybouquets");
         System.out.println("8. flowers <occasion> - Shows a list of flowers associated with said occasion");
-        System.out.println("9. occasion - Shows a list of occasions associated with available flowers.");
+        System.out.println("9. occasion - Shows a list of occasions associated with available flowers");
         System.out.println("10. save <bouquetName> - Saves a bouquet to an external <bouquetName>.txt file");
-        System.out.println("11. recommend - Recommends a bouquet based on the chosen occasion and colour.");
+        System.out.println("11. recommend - Recommends a bouquet based on the chosen occasion and colour");
         System.out.println("12. bye - Exits the programme");
         printBreakLine();
     }
