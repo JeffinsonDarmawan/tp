@@ -16,6 +16,7 @@ public class FuzzyLogic {
     private static final Logger logger = Logger.getLogger(FuzzyLogic.class.getName());
 
     static {
+        ITEMS.put("save", "Command: Save a bouquet to device");
         ITEMS.put("new", "Command: Add a new bouquet");
         ITEMS.put("delete", "Command: Delete a bouquet");
         ITEMS.put("mybouquets", "Command: List all bouquets");

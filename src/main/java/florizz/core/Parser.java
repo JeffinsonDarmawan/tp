@@ -1,18 +1,19 @@
 package florizz.core;
 
-import florizz.command.AddBouquetCommand;
-import florizz.command.AddFlowerCommand;
-import florizz.command.BackCommand;
-import florizz.command.Command;
-import florizz.command.DeleteBouquetCommand;
-import florizz.command.ExitCommand;
-import florizz.command.FlowerCommand;
-import florizz.command.HelpCommand;
 import florizz.command.InfoCommand;
-import florizz.command.ListBouquetCommand;
-import florizz.command.ListOccasionCommand;
-import florizz.command.NextCommand;
+import florizz.command.HelpCommand;
+import florizz.command.SaveCommand;
+import florizz.command.FlowerCommand;
+import florizz.command.ExitCommand;
 import florizz.command.RemoveFlowerCommand;
+import florizz.command.ListOccasionCommand;
+import florizz.command.ListBouquetCommand;
+import florizz.command.DeleteBouquetCommand;
+import florizz.command.AddFlowerCommand;
+import florizz.command.Command;
+import florizz.command.AddBouquetCommand;
+import florizz.command.BackCommand;
+import florizz.command.NextCommand;
 import florizz.objects.Bouquet;
 
 import java.util.logging.Level;
@@ -77,6 +78,9 @@ public class Parser {
             case ("remove"):
                 command = handleRemoveFlower(decodedInput[1]);
                 break;
+            case ("save"):
+                command = new SaveCommand(decodedInput[1]);
+                break;
             default:
                 throw new FlorizzException("Unidentified input, type help to get a list of all commands!");
             }
@@ -97,7 +101,6 @@ public class Parser {
      * @param input
      * @return String[] output; output[0] = item ; output[1] = argument(s)
      */
-
     public static String[] commandHandler(String input) throws FlorizzException {
         String[] outputs = new String[2];
         try {
@@ -106,6 +109,7 @@ public class Parser {
             if (firstWhitespace != -1) {
                 outputs[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
                 switch (outputs[0]) {
+                case ("save"):
                 case ("delete"): // Fallthrough
                 case ("new"):
                     outputs[1] = trimmedInput.substring(firstWhitespace).trim();
