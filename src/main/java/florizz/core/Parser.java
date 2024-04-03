@@ -1,16 +1,18 @@
 package florizz.core;
 
-import florizz.command.Command;
 import florizz.command.AddBouquetCommand;
 import florizz.command.AddFlowerCommand;
+import florizz.command.BackCommand;
+import florizz.command.Command;
 import florizz.command.DeleteBouquetCommand;
 import florizz.command.ExitCommand;
 import florizz.command.FlowerCommand;
+import florizz.command.HelpCommand;
 import florizz.command.InfoCommand;
 import florizz.command.ListBouquetCommand;
 import florizz.command.ListOccasionCommand;
+import florizz.command.NextCommand;
 import florizz.command.RemoveFlowerCommand;
-import florizz.command.HelpCommand;
 import florizz.objects.Bouquet;
 
 import java.util.logging.Level;
@@ -55,10 +57,16 @@ public class Parser {
                 command = new HelpCommand();
                 break;
             case ("flowers"):
-                command = handleFlowerCommand(decodedInput[0] + " " + decodedInput[1]);
+                command = handleFlowerCommand(decodedInput);
                 break;
             case ("info"):
                 command = handleInfoCommand(decodedInput[1]);
+                break;
+            case ("next"):
+                command = new NextCommand();
+                break;
+            case ("back"):
+                command = new BackCommand();
                 break;
             case ("occasion"):
                 command = new ListOccasionCommand();
@@ -171,8 +179,8 @@ public class Parser {
      * @param input The user input to be parsed.
      * @return A FlowerCommand object corresponding to the parsed input.
      */
-    private static FlowerCommand handleFlowerCommand(String input) {
-        String occasion = (input.length() == 7) ? " " : input.substring(input.indexOf(" ") + 1).trim();
+    private static FlowerCommand handleFlowerCommand(String[] input) {
+        String occasion = (input[1] == null) ? " " : input[1].trim();
         return new FlowerCommand(occasion);
     }
 

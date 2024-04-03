@@ -1,8 +1,10 @@
 package florizz.command;
 
 import florizz.core.FlorizzException;
+import florizz.core.FlowerDictionary;
 import florizz.core.Ui;
 import florizz.objects.Bouquet;
+import florizz.objects.Flower;
 
 import java.util.ArrayList;
 import java.util.logging.ConsoleHandler;
@@ -21,11 +23,14 @@ public class InfoCommand extends Command{
 
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
-        boolean flowerExists = ui.printFlowerInfo(flowerName);
-        if (!flowerExists) {
+        ArrayList<Flower> filteredFlowers = FlowerDictionary.filterByName(flowerName);
+        if (filteredFlowers.isEmpty()){
             logger.log(Level.WARNING, "FLOWER DOES NOT EXIST");
-            throw new FlorizzException("Flower does not exist type 'flower' for a list of flowers");
+            throw new FlorizzException("Flower does not exist, type 'flowers' for a list of flowers");
+        } else{
+            ui.printFlowerInfo(filteredFlowers, flowerName, 1);
         }
+
         return true;
     }
 }
