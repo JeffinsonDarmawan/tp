@@ -130,7 +130,8 @@ public class Ui {
         System.out.println("8. flowers <occasion> - Shows a list of flowers associated with said occasion");
         System.out.println("9. occasion - Shows a list of occasions associated with available flowers.");
         System.out.println("10. save <bouquetName> - Saves a bouquet to an external <bouquetName>.txt file");
-        System.out.println("11. bye - Exits the programme");
+        System.out.println("11. recommend - Recommends a bouquet based on the chosen occasion and colour.");
+        System.out.println("12. bye - Exits the programme");
         printBreakLine();
     }
 

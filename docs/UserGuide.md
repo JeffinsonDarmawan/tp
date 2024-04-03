@@ -21,7 +21,8 @@ Here are the list of commands you can use:
 8. flowers <occasion> - Shows a list of flowers associated with said occasion
 9. occasion - Shows a list of occasions associated with available flowers.
 10. save <bouquetName> - Saves a bouquet to an external <bouquetName>.txt file
-11. bye - Exits the programme
+11. recommend - Recommends a bouquet based on the chosen occasion and colour 
+12. bye - Exits the programme
 ```
 
 ### Create a new bouquet: `new`
@@ -83,7 +84,7 @@ Chrysanthemum
 ```
 ### View detailed info of a flower: info
 
-Get detailed info (colour, meaning etc) about a specific flower in the database
+Get detailed info (colour, meaning, etc.) about a specific flower in the database
 
 Format: `info <flowerName>`
 
@@ -107,16 +108,19 @@ Format: `add <flowerName> /q <quantity> /to <bouquetName>`
 - Bouquet must exist in the database
 
 Examples:
-- `add Rose /q 3 /to Bouquet for mom`
+- `add Rose /q 3 /to For Girlfriend`
 - `add Babys breath /q 2 /to Sister’s graduation`
 
 Expected Output:
 ```
 You have successfully added the following: 
-    - 3 x Rose -> Bouquet: For Girlfriend
-Here are the list of your saved bouquets:
+    - 3 x rose -> Bouquet: For Girlfriend
+Here is the list of your saved bouquets:
 1. For Girlfriend :
     - 3 x Rose
+  Total estimated price = $6.00
+____________________________________________________________
+What can I do for you?
 ```
 
 ### Remove flower: remove
@@ -135,11 +139,14 @@ Examples:
 
 Expected output:
 ```
-You have successfully added the following: 
-    - 1 x Rose -> Bouquet: For Girlfriend
-Here are the list of your saved bouquets:
+You have successfully removed the following: 
+    - 1 x rose -> Bouquet: For Girlfriend
+Here is the list of your saved bouquets:
 1. For Girlfriend :
     - 2 x Rose
+  Total estimated price = $4.00
+____________________________________________________________
+What can I do for you?
 ```
 
 ### List occasions: occasion
@@ -200,7 +207,7 @@ Type 'yes' to save, 'no' to discard
 Added new bouquet to list: 
 Recommended Bouquet
 ____________________________________________________________
-
+```
 ### Save a bouquet to device: save
 Saves chosen bouquet, if it exists, locally to the users device
 
@@ -225,5 +232,53 @@ Format: `bye`
 Expected output:
 ```
 Enjoy your bouquet! Thank you for using Florizz
+```
+
+### Fuzzy Logic
+
+Florizz uses a type of fuzzy logic to rectifies typos in user input by utilising the Damerau-Levenshtein Distance 
+to measure the similarity between the user input and a valid command/item/occasion.
+
+The Damerau-Levenshtein distance measures the minimum number of single-character edits required to change one string
+into another. These edits can be insertions, deletions, substitutions and transpositions of individual characters.
+
+When a typo is detected, Florizz will make a calculated guess as to the valid commands that a user is actually calling.
+
+Examples:
+- `newq mybouquet1`
+- `adds Chysanthenum /q 10 /to mybouquet1`
+- `delate mybouquet1`
+
+Expected output:
+
+```
+newq mybouquet1
+--> Your input is [newq] but I am guessing you mean [new]
+Added new bouquet to list: 
+mybouquet1
+____________________________________________________________
+What can I do for you?
+```
+```
+adds Chysanthenum /q 10 /to mybouquet1
+--> Your input is [adds] but I am guessing you mean [add]
+--> Your input is [Chysanthenum] but I am guessing you mean [Chrysanthemum]
+You have successfully added the following: 
+    - 10 x chrysanthemum -> Bouquet: mybouquet1
+Here is the list of your saved bouquets:
+1. mybouquet1 :
+    - 10 x Chrysanthemum
+  Total estimated price = $10.00
+____________________________________________________________
+What can I do for you?
+```
+
+```
+delate mybouquet1
+--> Your input is [delate] but I am guessing you mean [delete]
+Deleted bouquet: 
+mybouquet1
+____________________________________________________________
+What can I do for you?
 ```
 
