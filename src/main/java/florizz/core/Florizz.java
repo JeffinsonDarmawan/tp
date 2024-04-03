@@ -2,7 +2,7 @@ package florizz.core;
 
 import florizz.command.Command;
 import florizz.logging.MyFormatter;
-import florizz.logging.Storage;
+import florizz.storage.Storage;
 import florizz.objects.Bouquet;
 
 import java.io.IOException;
@@ -35,6 +35,7 @@ public class Florizz {
 
         LogManager.getLogManager().reset();
         Storage storage = new Storage();
+        storage.tryReadStoredBouquets(tempBouquetList);
         logger.setLevel(Level.ALL);
 
         // Set up console handler
@@ -56,7 +57,7 @@ public class Florizz {
             logger.log(Level.INFO, "Entered isRunning while loop in Florizz.java");
             try {
                 String input = ui.getInput();
-                Command command = Parser.parse(input);
+                Command command = Parser.parse(input.trim(), true);
                 isRunning = command.execute(tempBouquetList, ui);
                 storage.trySaveAllBouquets(tempBouquetList);
             } catch(FlorizzException error){

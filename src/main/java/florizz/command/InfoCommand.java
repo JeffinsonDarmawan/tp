@@ -28,7 +28,7 @@ public class InfoCommand extends Command{
             logger.log(Level.WARNING, "FLOWER DOES NOT EXIST");
             throw new FlorizzException("Flower does not exist, type 'flowers' for a list of flowers");
         } else{
-            ui.printFlowerInfo(filteredFlowers, flowerName);
+            ui.printFlowerInfo(filteredFlowers, flowerName, 1);
         }
 
         return true;

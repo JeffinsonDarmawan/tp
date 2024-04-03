@@ -8,8 +8,11 @@ import java.util.ArrayList;
 
 public class AddBouquetCommand extends Command{
     private final Bouquet bouquetToAdd;
-    public AddBouquetCommand(Bouquet bouquetToAdd){
+    private final boolean enableUi;
+    public AddBouquetCommand(Bouquet bouquetToAdd, boolean enableUi){
         this.bouquetToAdd = bouquetToAdd;
+        this.enableUi = enableUi;
+
     }
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
@@ -17,7 +20,9 @@ public class AddBouquetCommand extends Command{
             throw new FlorizzException("Tried to add bouquet already in list");
         }
         bouquetList.add(bouquetToAdd);
-        ui.printBouquetAdded(bouquetToAdd);
+        if (enableUi) {
+            ui.printBouquetAdded(bouquetToAdd);
+        }
         assert !bouquetList.isEmpty() : "Bouquet list should not be empty";
         return true;
     }

@@ -13,11 +13,13 @@ public class AddFlowerCommand extends Command{
 
     private Integer quantity;
     private String bouquetName;
+    private boolean enableUi;
 
-    public AddFlowerCommand(String flowerName, int quantity, String bouquetName) {
+    public AddFlowerCommand(String flowerName, int quantity, String bouquetName, boolean enableUi) {
         this.flowerName = flowerName;
         this.quantity = quantity;
         this.bouquetName = bouquetName;
+        this.enableUi = enableUi;
     }
 
     @Override
@@ -53,7 +55,9 @@ public class AddFlowerCommand extends Command{
         }
 
         bouquetToAddFlower.addFlower(flowerToBeAdded, this.quantity);
-        ui.printAddFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
+        if (enableUi) {
+            ui.printAddFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
+        }
         return true;
     }
 }

@@ -17,10 +17,11 @@ Here are the list of commands you can use:
 4. info <flowerName> - Provide information on chosen flower
 5. add <flowerName> /q <quantity> /to <bouquetName> - add flower to a bouquet.
 6. remove <flowerName> /q <quantity> /from <bouquetName> - remove flower from a bouquet.
-7. flower - Shows a list of flowers that can be added into mybouquets
-8. flower <occasion> - Shows a list of flowers associated with said occasion
+7. flowers - Shows a list of flowers that can be added into mybouquets
+8. flowers <occasion> - Shows a list of flowers associated with said occasion
 9. occasion - Shows a list of occasions associated with available flowers.
-10. bye - Exits the programme
+10. save <bouquetName> - Saves a bouquet to an external <bouquetName>.txt file
+11. bye - Exits the programme
 ```
 
 ### Create a new bouquet: `new`
@@ -154,7 +155,6 @@ funeral
 valentines
 wedding
 ```
-
 ### Recommend A Bouquet: `recommend`
 Recommends a bouquet based on the occasion and the recipient's preference
 
@@ -200,6 +200,20 @@ Type 'yes' to save, 'no' to discard
 Added new bouquet to list: 
 Recommended Bouquet
 ____________________________________________________________
+
+### Save a bouquet to device: save
+Saves chosen bouquet, if it exists, locally to the users device
+
+Format: `save <bouquetName>`
+
+- Bouquet must exist before it can be saved 
+
+Examples:
+- `save moms bouquet`
+
+Expected Output:
+```
+Successfully saved moms bouquet. You can find it at 'florizz-out/saved/moms bouquet.txt'
 ```
 
 ### Exit programme: exit

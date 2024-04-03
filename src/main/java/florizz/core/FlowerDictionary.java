@@ -8,7 +8,7 @@ import florizz.objects.Flower;
  * A class that contains a dictionary of preset flowers
  */
 public class FlowerDictionary {
-    private static ArrayList<Flower> flowerDict = new ArrayList<Flower>();
+    private static final ArrayList<Flower> flowerDict = new ArrayList<Flower>();
 
     /**
      * Adds a new flower to the flower dictionary
@@ -155,5 +155,9 @@ public class FlowerDictionary {
             }
         }
         return filteredFlowers;
+
+    public static ArrayList<Flower> getAllFlowers(){
+        return flowerDict;
+
     }
 }

@@ -18,12 +18,12 @@ public class FlowerCommand extends Command{
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
         if (occasion.isBlank()) {
-            ui.printAllDictFlowerName();
+            ui.printAllDictFlowerName(1);
             return true;
         }
         try {
             Flower.Occasion occasionEnum = Flower.stringToOccasion(occasion);
-            ui.printFilteredFlowers(FlowerDictionary.filterByOccasion(occasionEnum),occasion);
+            ui.printFilteredFlowers(FlowerDictionary.filterByOccasion(occasionEnum),occasion, 1);
             return true;
 
         } catch (IllegalArgumentException error){
