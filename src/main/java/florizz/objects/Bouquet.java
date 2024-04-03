@@ -80,14 +80,16 @@ public class Bouquet {
             Integer currentQuantity = getFlowerQuantity(flowerName);
             Integer newQuantity = currentQuantity - quantity;
             if (newQuantity < 0) {
-                System.out.println("Tried to remove more than quantity available, quantity set to 0");
+                System.out.println("Tried to remove more than the quantity available, quantity set to 0");
                 newQuantity = 0;
+            }
+            if (newQuantity == 0) {
+                flowerHashMap.remove(flowerName);
             }
             flowerHashMap.replace(flowerName, newQuantity);
             return true;
         }
         return false;
-
     }
 
     /**
