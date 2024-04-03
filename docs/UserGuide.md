@@ -72,30 +72,55 @@ Here are the list of your saved bouquets:
 List all available flowers in the database currently, also able to filter presented flowers according to occasion, 
 colour (coming soon) and meaning (coming soon).
 
-Format: `flower <occassion>`
+Shows at most five flowers at once, type `next` to see flowers on the next page, and `back` to view a previous page.
 
-Example: `flower funeral`
+Format: `flowers <occassion>`
+
+Example: `flowers`
 
 Expected output:
 ```
-Here are all the flowers related to funeral: 
-Lily
-Chrysanthemum
+Showing page 1/2 of all the flowers you can add: 
+1. White Orchid
+2. Dark crimson Rose
+3. Red Rose
+4. White Lily
+5. White Daisy
+Type 'next' to go to the next page.
+____________________________________________________________
+```
+
+Example: `flowers Funeral` 
+
+Expected output:
+```
+Here is page 1/1 of all the flowers related to Funeral: 
+1. Dark crimson Rose
+2. White Lily
+3. White Chrysanthemum
+____________________________________________________________
 ```
 
 ### View detailed info of a flower: `info`
 
-Get detailed info (colour, meaning etc) about a specific flower in the database
+Get detailed info (colour, meaning and related occasions) about a specific flower in the database,
+will show all colours and their associated meanings (specifying colours will come soon).
+
+Shows at most five flowers at once, type `next` to see flowers on the next page, and `back` to view a previous page.
 
 Format: `info <flowerName>`
 
-Example: `info Orchid`
+Example: `info Lily`
 
 Expected Output:
 ```
-Name: Orchid
+Here is page 1/1 of info regarding flowers whose name contains Lily: 
+1. Name: Lily
 Colour: White
-Occasion: Wedding
+Occasions: Funeral, Wedding
+Price: $2.50
+Meanings: Innocence
+____________________________________________________________
 ```
 
 ### Add flower: `add`
@@ -152,10 +177,11 @@ Format: `occasion`
 Expected output:
 ```
 Here are all the occasions associated with the available flowers: 
-mother's day
-funeral
-valentines
-wedding
+- Funeral
+- Wedding
+- Valentines
+- Mothers day
+____________________________________________________________
 ```
 ### Recommend A Bouquet: `recommend`
 Recommends a bouquet based on the occasion and the recipient's preference
