@@ -224,4 +224,11 @@ public class Ui {
     public void printIOError() {
         System.out.println("ERROR: IO Error Encountered Xd");
     }
+
+    public String printAskOccasion() {
+        System.out.println("For what occasion are you buying flowers for?");
+        System.out.println("Here are the list of our available occasion:");
+        this.printAllOccasions();
+        return inputScanner.nextLine();
+    }
 }

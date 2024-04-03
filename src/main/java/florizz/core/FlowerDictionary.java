@@ -40,11 +40,28 @@ public class FlowerDictionary {
         add("Rose", "Red", new String[]{"Valentines", "Wedding", "Mothers Day"}, 2.00, new String[]{"Love"});
         add("Lily", "White", new String[]{"Funeral", "Wedding"}, 2.50, new String[]{"Innocence"});
         add("Daisy", "White", new String[]{"Valentines"}, 0.50, new String[]{"Innocence"});
-        add("Baby Breath", "White", new String[] {"Wedding"}, 1.00,
+        add("Baby Breath", "White", new String[] {"Wedding", "Valentines", "Mothers Day", "Filler"}, 1.00,
                 new String[]{"Innocence", "Kindness", "Care", "Humble"});
         add("Chrysanthemum", "White", new String[]{"Funeral"}, 1.00, new String[]{"Love", "Loyalty", "Innocence"});
         add("Hydrangea", "Blue", new String[] {"Wedding"}, 9.00, new String[]{"Forgiveness", "Gratitude"});
         add("Carnation", "Pink", new String[] {"Mothers Day"}, 2.00, new String[]{"Gratitude", "Love"});
+
+        // fillers
+        add("Eucalyptus", "Green", new String[] {"Filler"}, 1.5, new String[]{});
+        add("Dusty Miller", "Green", new String[] {"Filler"}, 1.5, new String[]{});
+        add("Pistacia", "Green", new String[] {"Filler"}, 1.5, new String[]{});
+        add("Pittosporum", "Green", new String[] {"Filler"}, 1.5, new String[]{});
+        add("Chamomile", "White", new String[] {"Filler"}, 1.9, new String[]{});
+        add("Astilbe", "Pink", new String[] {"Filler"}, 2.8, new String[]{});
+        add("Hypericum", "Red", new String[] {"Filler"}, 2.0, new String[]{});
+        add("Freesia", "White", new String[] {"Filler"}, 1.9, new String[]{});
+        add("Helichrysum", "Yellow", new String[] {"Filler"}, 1.5, new String[]{});
+        add("Limonium", "Red", new String[] {"Filler"}, 1.8, new String[]{});
+        add("Limonium", "Dark Crimson", new String[] {"Filler"}, 1.8, new String[]{});
+        add("Limonium Perezii", "Purple", new String[] {"Filler"}, 1.8, new String[]{});
+        add("Statice", "Blue", new String[] {"Filler"}, 1.5, new String[]{});
+        add("Statice", "Purple", new String[] {"Filler"}, 1.5, new String[]{});
+        add("Rice Flower", "Pink", new String[] {"Filler"}, 1.8, new String[]{});
     }
 
     /**

@@ -1,16 +1,6 @@
 package florizz.core;
 
-import florizz.command.Command;
-import florizz.command.AddBouquetCommand;
-import florizz.command.AddFlowerCommand;
-import florizz.command.DeleteBouquetCommand;
-import florizz.command.ExitCommand;
-import florizz.command.FlowerCommand;
-import florizz.command.InfoCommand;
-import florizz.command.ListBouquetCommand;
-import florizz.command.ListOccasionCommand;
-import florizz.command.RemoveFlowerCommand;
-import florizz.command.HelpCommand;
+import florizz.command.*;
 import florizz.objects.Bouquet;
 
 import java.util.logging.Level;
@@ -31,6 +21,7 @@ public class Parser {
     // regex
     private static final String ADD_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/to(.+)";
     private static final String REMOVE_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/from(.+)";
+    private static final String PARSE_OCCASION_REGEX = "\\b[A-Za-z]+\\b";
 
     public static Command parse (String input) throws FlorizzException {
         logger.entering("Parser", "parse");
@@ -69,12 +60,15 @@ public class Parser {
             case ("remove"):
                 command = handleRemoveFlower(decodedInput[1]);
                 break;
+            case ("recommend"):
+                command = new RecommendCommand();
+                break;
             default:
                 throw new FlorizzException("Unidentified input, type help to get a list of all commands!");
             }
             logger.log(Level.INFO, "Command parsed successfully");
         } catch (FlorizzException ex) {
-            logger.log(Level.SEVERE, "Exception occurred while parsing command: " + ex.errorMessage, ex);
+            logger.log(Level.INFO, "Exception occurred while parsing command: " + ex.errorMessage, ex);
             throw ex;
         } finally {
             logger.exiting("Parser", "parse");
@@ -246,5 +240,25 @@ public class Parser {
     private static InfoCommand handleInfoCommand(String flowerName) {
         assert !flowerName.isEmpty() : "This string is empty";
         return new InfoCommand(flowerName);
+    }
+
+    /**
+     * Parses the occasion from the user input.
+     * @param argument The user input to be parsed.
+     * @return The parsed occasion.
+     * @throws FlorizzException If the input does not match the required format.
+     */
+    public static String parseOccasion(String argument) throws FlorizzException{
+        if (argument == null) {
+            throw new FlorizzException("No argument detected! " +
+                    "Please input an occasion");
+        }
+
+        if (!argument.matches(PARSE_OCCASION_REGEX)) {
+            throw new FlorizzException("Incorrect format detected! " +
+                    "Please input a single occasion");
+        }
+
+        return argument.toLowerCase();
     }
 }

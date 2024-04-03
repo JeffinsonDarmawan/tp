@@ -26,7 +26,7 @@ public class FlowerCommand extends Command{
             ui.printFilteredFlowers(FlowerDictionary.filterByOccasion(occasionEnum),occasion);
             return true;
 
-        }catch(IllegalArgumentException error){
+        } catch (IllegalArgumentException error){
             throw new FlorizzException("This occasion does not exist. Type 'occasion' to get a list of occasions");
         }
     }

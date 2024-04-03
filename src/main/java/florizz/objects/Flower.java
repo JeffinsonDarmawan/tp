@@ -16,14 +16,14 @@ public class Flower {
      * Enumerates different colours a flower can have.
      */
     public enum Colour {
-        WHITE, BLUE, RED, PINK, DARK_CRIMSON
+        WHITE, BLUE, RED, PINK, DARK_CRIMSON,GREEN, YELLOW, PURPLE
     }
 
     /**
      * Enumerates different occasions for which a flower can be used.
      */
     public enum Occasion {
-        FUNERAL, WEDDING, VALENTINES, MOTHERS_DAY
+        FUNERAL, WEDDING, VALENTINES, MOTHERS_DAY, FILLER
     }
 
     /**
@@ -64,11 +64,26 @@ public class Flower {
     }
 
     /**
+     * check if argument inputted is a valid occasion
+     * @param argument
+     * @return
+     */
+    public Boolean isValidOccasion(String argument) {
+        for (Flower.Occasion occasion : Flower.Occasion.values()) {
+            if (Flower.occasionToString(occasion).equals(argument)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Converts a string representation of an occasion to an Occasion enum value.
      * @param ocassionString The string representation of an occasion.
      * @return The Occasion enum value corresponding to the string.
      */
     public static Occasion stringToOccasion(String ocassionString){
+        assert ocassionString != null;
         return Occasion.valueOf(ocassionString.replaceAll(" ", "_").toUpperCase());
     }
 
