@@ -1,8 +1,8 @@
 package florizz.command;
 
 import florizz.core.FlorizzException;
-import florizz.core.FlowerDictionary;
 import florizz.core.Parser;
+import florizz.core.FlowerDictionary;
 import florizz.core.Ui;
 import florizz.objects.Bouquet;
 import florizz.objects.Flower;
@@ -10,37 +10,98 @@ import florizz.objects.Flower;
 import java.util.ArrayList;
 
 public class RecommendCommand extends Command{
-    private Bouquet bouquetToRecommend;
-    public RecommendCommand() {
-        this.bouquetToRecommend = new Bouquet();
-    }
-
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
         // ask for occasion
-        String occasion = askOccasion(ui);
+        Flower.Occasion occasion = askOccasion(ui);
+
+        // eligible flowers based on occasion
+        ArrayList<Flower> eligibleFlowers = FlowerDictionary.filterByOccasion(occasion);
 
         // ask for colour preference
-        String colour = askColour(ui);
+        Flower.Colour colour = askColour(ui, eligibleFlowers);
 
-        // ask for size
+        // eligible flowers based on colour
+        eligibleFlowers = FlowerDictionary.filterByColour(eligibleFlowers, colour);
+
+        // check if there are any flowers available
+        if (eligibleFlowers.isEmpty()) {
+            throw new FlorizzException("No flowers available for this occasion and colour");
+        }
+
+        // ask for size [FUTURE IMPLEMENTATION]
+
+        // create bouquet with occasion and colour
+        Bouquet recommendedBouquet = new Bouquet("Recommended Bouquet");
+
+        // randomly add 3 flowers to bouquet
+        addRandomFlowers(eligibleFlowers, recommendedBouquet);
 
         // ask if they want to save bouquet to array
+        askSaveBouquet(ui, bouquetList, recommendedBouquet);
 
         return true;
     }
 
-    private String askOccasion(Ui ui) throws FlorizzException {
+    /**
+     * Adds random flowers to the bouquet
+     * @param eligibleFlowers list of flowers to choose from
+     * @param recommendedBouquet bouquet to add flowers to
+     */
+    private static void addRandomFlowers(ArrayList<Flower> eligibleFlowers, Bouquet recommendedBouquet) {
+        // [TEMPORARY CODE]
+        // generate random combination of flowers from eligible flowers totaling to 5
+        for (int i = 0; i < 5; i++) {
+            int randomIndex = (int) (Math.random() * eligibleFlowers.size());
+            recommendedBouquet.addFlower(eligibleFlowers.get(randomIndex), 1);
+        }
+    }
+
+    /**
+     * Asks user for occasion
+     * @return Occasion enum
+     */
+    private Flower.Occasion askOccasion(Ui ui) throws FlorizzException {
         String occasionInput = Parser.parseOccasion(ui.printAskOccasion());
 
         // check if occasion is in our dictionary
-        Flower.Occasion occasionEnum = Flower.stringToOccasion(occasionInput);
-        ArrayList<Flower> filteredFlowers = FlowerDictionary.filterByOccasion(occasionEnum);
+        if (!Flower.isValidOccasion(occasionInput)) {
+            throw new FlorizzException("This occasion does not exist. Type 'occasion' to get a list of occasions");
+        }
 
-        return filteredFlowers.toString();
+        // convert string to Occasion enum
+        return Flower.stringToOccasion(occasionInput);
     }
 
-    private String askColour(Ui ui) throws FlorizzException {
-        return "Red";
+    /**
+     * Asks user for colour
+     * @param eligibleFlowers list of flowers to choose from
+     * @return Colour enum
+     */
+    private Flower.Colour askColour(Ui ui, ArrayList<Flower> eligibleFlowers) throws FlorizzException {
+        String colourInput = Parser.parseColour(ui.printAskColour(eligibleFlowers));
+
+        // check if colour is in our dictionary
+        if (!Flower.isValidColour(colourInput)) {
+            throw new FlorizzException("This colour does not exist. Type 'colour' to get a list of colours");
+        }
+
+        return Flower.stringToColour(colourInput);
+    }
+
+    private void askSaveBouquet(Ui ui, ArrayList<Bouquet> bouquetList,
+                                Bouquet recommendedBouquet) throws FlorizzException {
+        String saveInput = Parser.parseSaveBouquet(ui.printAskSaveBouquet(recommendedBouquet));
+
+        if (saveInput.equals("yes")) {
+            if (bouquetList.contains(recommendedBouquet)) {
+                // change name of bouquet
+                recommendedBouquet.setName(recommendedBouquet.getBouquetName() + " (1)");
+            }
+
+            bouquetList.add(recommendedBouquet);
+            ui.printBouquetAdded(recommendedBouquet);
+            assert !bouquetList.isEmpty() : "Bouquet list should not be empty";
+        }
     }
 }

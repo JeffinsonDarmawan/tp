@@ -26,6 +26,7 @@ public class FuzzyLogic {
         ITEMS.put("occasion", "Command: List flowers of specified occasion");
         ITEMS.put("add", "Command: Add flower(s) to a bouquet");
         ITEMS.put("help", "Command: List available commands");
+        ITEMS.put("recommend", "Command: Get a recommended bouquet");
         ITEMS.put("Orchid", "Flower");
         ITEMS.put("Rose", "Flower");
         ITEMS.put("Lily", "Flower");
