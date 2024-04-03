@@ -1,16 +1,18 @@
 package florizz.core;
 
-import florizz.command.Command;
 import florizz.command.AddBouquetCommand;
 import florizz.command.AddFlowerCommand;
+import florizz.command.BackCommand;
+import florizz.command.Command;
 import florizz.command.DeleteBouquetCommand;
 import florizz.command.ExitCommand;
 import florizz.command.FlowerCommand;
+import florizz.command.HelpCommand;
 import florizz.command.InfoCommand;
 import florizz.command.ListBouquetCommand;
 import florizz.command.ListOccasionCommand;
+import florizz.command.NextCommand;
 import florizz.command.RemoveFlowerCommand;
-import florizz.command.HelpCommand;
 import florizz.objects.Bouquet;
 
 import java.util.logging.Level;
@@ -59,6 +61,12 @@ public class Parser {
                 break;
             case ("info"):
                 command = handleInfoCommand(decodedInput[1]);
+                break;
+            case ("next"):
+                command = new NextCommand();
+                break;
+            case ("back"):
+                command = new BackCommand();
                 break;
             case ("occasion"):
                 command = new ListOccasionCommand();

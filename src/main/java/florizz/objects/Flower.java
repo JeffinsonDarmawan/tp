@@ -92,7 +92,8 @@ public class Flower {
     }
 
     public static String colourToString(Colour colour){
-        return colour.toString().charAt(0) + colour.toString().replaceAll("_", " ").toLowerCase().substring(1);
+        return colour.toString().charAt(0) +
+                colour.toString().replaceAll("_", " ").toLowerCase().substring(1);
     }
     /**
      * Gets the name of the flower.
@@ -107,7 +108,9 @@ public class Flower {
      * @return The name and colour of the flower.
      */
     public String getNameAndColour() {
-        return colour.toString().charAt(0) + colour.toString().substring(1).toLowerCase() + " " + name;
+        return colour.toString().charAt(0) +
+                colour.toString().replaceAll("_", " " ).substring(1).toLowerCase() + " " +
+                name;
     }
 
     /**
