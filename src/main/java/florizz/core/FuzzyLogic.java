@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class FuzzyLogic {
 
     private static final Map<String, String> ITEMS = new HashMap<>();
-    private static final int SIMILARITY_THRESHOLD = 3;
+    private static final int SIMILARITY_THRESHOLD = 2;
     private static final Logger logger = Logger.getLogger(FuzzyLogic.class.getName());
 
     static {
