@@ -8,10 +8,13 @@ import florizz.objects.Bouquet;
 import florizz.objects.Flower;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class RecommendCommand extends Command{
+    private Logger logger = Logger.getLogger(RecommendCommand.class.getName());
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
+        logger.entering(RecommendCommand.class.getName(), "execute");
         // ask for occasion
         Flower.Occasion occasion = askOccasion(ui);
 
@@ -40,6 +43,7 @@ public class RecommendCommand extends Command{
         // ask if they want to save bouquet to array
         askSaveBouquet(ui, bouquetList, recommendedBouquet);
 
+        logger.exiting(RecommendCommand.class.getName(), "execute");
         return true;
     }
 
@@ -48,13 +52,15 @@ public class RecommendCommand extends Command{
      * @param eligibleFlowers list of flowers to choose from
      * @param recommendedBouquet bouquet to add flowers to
      */
-    private static void addRandomFlowers(ArrayList<Flower> eligibleFlowers, Bouquet recommendedBouquet) {
+    private void addRandomFlowers(ArrayList<Flower> eligibleFlowers, Bouquet recommendedBouquet) {
+        logger.entering(RecommendCommand.class.getName(), "addRandomFlowers");
         // [TEMPORARY CODE]
         // generate random combination of flowers from eligible flowers totaling to 5
         for (int i = 0; i < 5; i++) {
             int randomIndex = (int) (Math.random() * eligibleFlowers.size());
             recommendedBouquet.addFlower(eligibleFlowers.get(randomIndex), 1);
         }
+        logger.exiting(RecommendCommand.class.getName(), "addRandomFlowers");
     }
 
     /**
@@ -62,6 +68,7 @@ public class RecommendCommand extends Command{
      * @return Occasion enum
      */
     private Flower.Occasion askOccasion(Ui ui) throws FlorizzException {
+        logger.entering(RecommendCommand.class.getName(), "askOccasion");
         String occasionInput = Parser.parseOccasion(ui.printAskOccasion());
 
         // check if occasion is in our dictionary
@@ -69,6 +76,7 @@ public class RecommendCommand extends Command{
             throw new FlorizzException("This occasion does not exist. Type 'occasion' to get a list of occasions");
         }
 
+        logger.exiting(RecommendCommand.class.getName(), "askOccasion");
         // convert string to Occasion enum
         return Flower.stringToOccasion(occasionInput);
     }
@@ -79,6 +87,8 @@ public class RecommendCommand extends Command{
      * @return Colour enum
      */
     private Flower.Colour askColour(Ui ui, ArrayList<Flower> eligibleFlowers) throws FlorizzException {
+        assert !eligibleFlowers.isEmpty() : "Eligible flowers should not be empty";
+        logger.entering(RecommendCommand.class.getName(), "askColour");
         String colourInput = Parser.parseColour(ui.printAskColour(eligibleFlowers));
 
         // check if colour is in our dictionary
@@ -86,11 +96,13 @@ public class RecommendCommand extends Command{
             throw new FlorizzException("This colour does not exist. Type 'colour' to get a list of colours");
         }
 
+        logger.exiting(RecommendCommand.class.getName(), "askColour");
         return Flower.stringToColour(colourInput);
     }
 
     private void askSaveBouquet(Ui ui, ArrayList<Bouquet> bouquetList,
                                 Bouquet recommendedBouquet) throws FlorizzException {
+        logger.entering(RecommendCommand.class.getName(), "askSaveBouquet");
         String saveInput = Parser.parseSaveBouquet(ui.printAskSaveBouquet(recommendedBouquet));
 
         if (saveInput.equals("yes")) {
@@ -103,5 +115,6 @@ public class RecommendCommand extends Command{
             ui.printBouquetAdded(recommendedBouquet);
             assert !bouquetList.isEmpty() : "Bouquet list should not be empty";
         }
+        logger.exiting(RecommendCommand.class.getName(), "askSaveBouquet");
     }
 }

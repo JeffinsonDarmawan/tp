@@ -7,8 +7,10 @@ import florizz.objects.Bouquet;
 import florizz.objects.Flower;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class RemoveFlowerCommand extends Command {
+    private static Logger logger = Logger.getLogger(RemoveFlowerCommand.class.getName());
     private String flowerName;
     private Integer quantity;
     private String bouquetName;
@@ -21,6 +23,8 @@ public class RemoveFlowerCommand extends Command {
 
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
+        logger.entering(RemoveFlowerCommand.class.getName(), "execute");
+        assert !bouquetList.isEmpty() : "Bouquet list should not be empty";
         boolean doesBouquetExist = false;
         Bouquet bouquetToRemoveFlower = new Bouquet();
         for (int i = 0; !doesBouquetExist && i < bouquetList.size(); i++) {
@@ -56,6 +60,7 @@ public class RemoveFlowerCommand extends Command {
             ui.printRemoveFlowerUnsuccessful(bouquetList, flowerName, bouquetName);
         }
 
+        logger.exiting(RemoveFlowerCommand.class.getName(), "execute");
         return true;
     }
 }
