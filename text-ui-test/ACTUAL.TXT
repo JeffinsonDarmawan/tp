@@ -20,7 +20,8 @@ Here are the list of commands you can use:
 8. flowers <occasion> - Shows a list of flowers associated with said occasion
 9. occasion - Shows a list of occasions associated with available flowers.
 10. save <bouquetName> - Saves a bouquet to an external <bouquetName>.txt file
-11. bye - Exits the programme
+11. recommend - Recommends a bouquet based on the chosen occasion and colour
+12. bye - Exits the programme
 ____________________________________________________________
 What can I do for you?
 Enjoy your bouquet! Thank you for using Florizz
