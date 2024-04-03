@@ -78,7 +78,7 @@ public class Bouquet {
         // if flower already in bouquet
         if (doesFlowerExist(flowerName)) {
             Integer currentQuantity = getFlowerQuantity(flowerName);
-            Integer newQuantity = currentQuantity - quantity;
+            int newQuantity = currentQuantity - quantity;
             if (newQuantity < 0) {
                 System.out.println("Tried to remove more than the quantity available, quantity set to 0");
                 newQuantity = 0;
