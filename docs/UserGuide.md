@@ -194,12 +194,13 @@ Here is the full list of flowers in Recommended Bouquet:
 ____________________________________________________________
 Type 'yes' to save, 'no' to discard
 ```
-4. Confirm wheter you want to add the recommended bouquet to your mybouquets list: `yes`
+4. Confirm whether you want to add the recommended bouquet to your mybouquets list: `yes`
 
 ```
 Added new bouquet to list: 
 Recommended Bouquet
 ____________________________________________________________
+```
 
 ### Save a bouquet to device: save
 Saves chosen bouquet, if it exists, locally to the users device
@@ -226,4 +227,10 @@ Expected output:
 ```
 Enjoy your bouquet! Thank you for using Florizz
 ```
+
+### Autosave
+Florizz automatically backs up all your bouquet data onto your device in a `FlorizzBouquets.txt` file.
+As such the user can transfer their bouquet data between devices by simply moving the text file to the `florizz-out/data/`
+folder. However, editing this text file is not recommended as the format is very specific, so users
+should do so at their own risk
 
