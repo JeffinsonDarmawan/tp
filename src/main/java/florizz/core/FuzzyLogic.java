@@ -12,10 +12,11 @@ import java.util.logging.Logger;
 public class FuzzyLogic {
 
     private static final Map<String, String> ITEMS = new HashMap<>();
-    private static final int SIMILARITY_THRESHOLD = 3;
+    private static final int SIMILARITY_THRESHOLD = 2;
     private static final Logger logger = Logger.getLogger(FuzzyLogic.class.getName());
 
     static {
+        ITEMS.put("save", "Command: Save a bouquet to device");
         ITEMS.put("new", "Command: Add a new bouquet");
         ITEMS.put("delete", "Command: Delete a bouquet");
         ITEMS.put("mybouquets", "Command: List all bouquets");
@@ -26,6 +27,8 @@ public class FuzzyLogic {
         ITEMS.put("occasion", "Command: List flowers of specified occasion");
         ITEMS.put("add", "Command: Add flower(s) to a bouquet");
         ITEMS.put("help", "Command: List available commands");
+        ITEMS.put("next", "Command: Goes to next page");
+        ITEMS.put("back", "Command: Goes to previous page");
         ITEMS.put("Orchid", "Flower");
         ITEMS.put("Rose", "Flower");
         ITEMS.put("Lily", "Flower");
