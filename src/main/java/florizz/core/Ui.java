@@ -254,21 +254,12 @@ public class Ui {
         } else {
             switch (lastCommand.split(" ")[0]) {
             case ("ALL_FLOWERS"):
-                if (lastPageNo*PAGE_SIZE >= lastShownList.size()){
-                    throw new FlorizzException("There is no next page, type 'back' to go to the previous page");
-                }
                 printAllDictFlowerName(lastPageNo-1);
                 break;
             case ("FILTERED_FLOWERS"):
-                if (lastPageNo*PAGE_SIZE >= lastShownList.size()){
-                    throw new FlorizzException("There is no next page, type 'back' to go to the previous page");
-                }
                 printFilteredFlowers(lastShownList, lastCommand.split(" ")[1],lastPageNo-1);
                 break;
             case ("INFO_FLOWERS"):
-                if (lastPageNo*PAGE_SIZE >= lastShownList.size()){
-                    throw new FlorizzException("There is no next page, type 'back' to go to the previous page");
-                }
                 printFlowerInfo(lastShownList, lastCommand.split(" ")[1], lastPageNo-1);
                 break;
             default:

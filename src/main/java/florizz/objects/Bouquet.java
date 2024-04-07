@@ -2,6 +2,8 @@ package florizz.objects;
 
 
 
+import florizz.core.FlorizzException;
+
 import java.util.HashMap;
 
 import java.util.Objects;
@@ -74,11 +76,15 @@ public class Bouquet {
         }
     }
 
-    public boolean removeFlower(Flower flowerName, Integer quantity) {
+    public boolean removeFlower(Flower flowerName, Integer quantity) throws FlorizzException {
         // if flower already in bouquet
         if (doesFlowerExist(flowerName)) {
             Integer currentQuantity = getFlowerQuantity(flowerName);
             int newQuantity = currentQuantity - quantity;
+            if (quantity <= 0) {
+                throw new FlorizzException("Please input a quantity between 1 and the " +
+                        "current amount of flowers (inclusive).");
+            }
             if (newQuantity < 0) {
                 System.out.println("Tried to remove more than the quantity available, quantity set to 0");
                 newQuantity = 0;
