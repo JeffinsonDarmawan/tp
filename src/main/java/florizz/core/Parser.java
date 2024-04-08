@@ -17,7 +17,6 @@ import florizz.command.NextCommand;
 import florizz.command.RecommendCommand;
 import florizz.objects.Bouquet;
 
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -127,9 +126,12 @@ public class Parser {
                 String[] arguments = new String[2];
                 String trimmedArgument = trimmedInput.substring(firstWhitespace).trim();
                 int secondWhitespace = trimmedArgument.indexOf(" ");
-                if (secondWhitespace <0){
+                if (secondWhitespace < 0 && outputs[0].equals("remove")){
                     throw new FlorizzException("Incorrect usage of remove." +
                             " Correct format: remove <flowerName> /q <quantity> /from <bouquetName>");
+                } else if (secondWhitespace < 0 && outputs[0].equals("add")) {
+                    throw new FlorizzException("Incorrect usage of add." +
+                            " Correct format: add <flowerName> /q <quantity> /to <bouquetName>");
                 }
                 arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,secondWhitespace));
                 arguments[1] = trimmedArgument.substring(secondWhitespace).trim();
@@ -272,7 +274,6 @@ public class Parser {
         if (flowerName == null) {
             throw new FlorizzException("Please specify flower name to retrieve info from.");
         }
-        System.out.println(flowerName);
         return new InfoCommand(flowerName);
     }
 

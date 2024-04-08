@@ -2,6 +2,7 @@ package florizz.core;
 
 
 import java.util.ArrayList;
+
 import florizz.objects.Flower;
 
 /**
@@ -9,7 +10,6 @@ import florizz.objects.Flower;
  */
 public class FlowerDictionary {
     private static final ArrayList<Flower> flowerDict = new ArrayList<Flower>();
-
     /**
      * Adds a new flower to the flower dictionary
      *
@@ -115,12 +115,15 @@ public class FlowerDictionary {
      * @param name name of Flowers to filter by
      * @return an ArrayList of Flowers to be printed by ui
      */
-    public static ArrayList<Flower> filterByName(String name) {
+    public static ArrayList<Flower> filterByName(String name) throws FlorizzException {
         ArrayList<Flower> filteredFlowers = new ArrayList<>();
         for (Flower flower : flowerDict) {
             if (flower.getFlowerName().contains(name)) {
                 filteredFlowers.add(flower);
             }
+        }
+        if (filteredFlowers.isEmpty()) {
+            throw new FlorizzException("Flower name is unidentified.");
         }
         return filteredFlowers;
     }
