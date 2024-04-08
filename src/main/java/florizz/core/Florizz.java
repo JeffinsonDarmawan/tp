@@ -56,6 +56,7 @@ public class Florizz {
         while (isRunning) {
             logger.log(Level.INFO, "Entered isRunning while loop in Florizz.java");
             try {
+                System.out.println("What can I do for you?");
                 String input = ui.getInput();
                 Command command = Parser.parse(input.trim(), true);
                 isRunning = command.execute(tempBouquetList, ui);

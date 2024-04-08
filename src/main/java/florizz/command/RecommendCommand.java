@@ -32,10 +32,13 @@ public class RecommendCommand extends Command{
             throw new FlorizzException("No flowers available for this occasion and colour");
         }
 
+        // ask for bouquetName
+        String bouquetName = askBouquetName(ui, bouquetList);
+
         // ask for size [FUTURE IMPLEMENTATION]
 
         // create bouquet with occasion and colour
-        Bouquet recommendedBouquet = new Bouquet("Recommended Bouquet");
+        Bouquet recommendedBouquet = new Bouquet(bouquetName);
 
         // randomly add 3 flowers to bouquet
         addRandomFlowers(eligibleFlowers, recommendedBouquet);
@@ -45,6 +48,27 @@ public class RecommendCommand extends Command{
 
         logger.exiting(RecommendCommand.class.getName(), "execute");
         return true;
+    }
+
+    /**
+     * Gets the name the user wants to make for the recommended bouquet and makes sure the name does not already exist
+     * @param ui Ui to take input and print messages
+     * @param bouquetList List that contains all bouquets
+     * @return The chosen valid bouquetName
+     */
+    public String askBouquetName(Ui ui, ArrayList<Bouquet> bouquetList) {
+        boolean isValidName = false;
+        String bouquetName = "placeHolder";
+        ui.printAskBouquetName();
+        while (!isValidName) {
+            bouquetName = ui.getInput();
+            if (bouquetList.contains(new Bouquet(bouquetName))) {
+                System.out.println("Sorry a bouquet with this name already exists, please enter another name");
+            } else {
+                isValidName = true;
+            }
+        }
+        return bouquetName;
     }
 
     /**
@@ -67,13 +91,19 @@ public class RecommendCommand extends Command{
      * Asks user for occasion
      * @return Occasion enum
      */
-    private Flower.Occasion askOccasion(Ui ui) throws FlorizzException {
+    private Flower.Occasion askOccasion(Ui ui) {
         logger.entering(RecommendCommand.class.getName(), "askOccasion");
-        String occasionInput = Parser.parseOccasion(ui.printAskOccasion());
-
-        // check if occasion is in our dictionary
-        if (!Flower.isValidOccasion(occasionInput)) {
-            throw new FlorizzException("This occasion does not exist. Type 'occasion' to get a list of occasions");
+        boolean isValidFormat = false;
+        boolean isValidOccasion = false;
+        String occasionInput = "placeholder";
+        while (!(isValidFormat && isValidOccasion)) {
+            occasionInput = ui.printAskOccasion();
+            isValidFormat = Parser.parseOccasion(occasionInput);
+            isValidOccasion = Flower.isValidOccasion(occasionInput);
+            // check if occasion is in our dictionary
+            if (!isValidOccasion) {
+                System.out.println("This occasion does not exist.");
+            }
         }
 
         logger.exiting(RecommendCommand.class.getName(), "askOccasion");
@@ -86,14 +116,21 @@ public class RecommendCommand extends Command{
      * @param eligibleFlowers list of flowers to choose from
      * @return Colour enum
      */
-    private Flower.Colour askColour(Ui ui, ArrayList<Flower> eligibleFlowers) throws FlorizzException {
+    private Flower.Colour askColour(Ui ui, ArrayList<Flower> eligibleFlowers) {
         assert !eligibleFlowers.isEmpty() : "Eligible flowers should not be empty";
         logger.entering(RecommendCommand.class.getName(), "askColour");
-        String colourInput = Parser.parseColour(ui.printAskColour(eligibleFlowers));
+        String colourInput = "placeHolder";
+        boolean isValidFormat = false;
+        boolean isValidColour = false;
+        while (!(isValidColour && isValidFormat)) {
+            colourInput = ui.printAskColour(eligibleFlowers);
+            isValidFormat = Parser.parseColour(colourInput);
+            isValidColour = Flower.isValidColour(colourInput);
 
-        // check if colour is in our dictionary
-        if (!Flower.isValidColour(colourInput)) {
-            throw new FlorizzException("This colour does not exist. Type 'colour' to get a list of colours");
+            // check if colour is in our dictionary
+            if (!isValidColour) {
+                System.out.println("This colour does not exist.");
+            }
         }
 
         logger.exiting(RecommendCommand.class.getName(), "askColour");
@@ -101,16 +138,18 @@ public class RecommendCommand extends Command{
     }
 
     private void askSaveBouquet(Ui ui, ArrayList<Bouquet> bouquetList,
-                                Bouquet recommendedBouquet) throws FlorizzException {
+                                Bouquet recommendedBouquet) {
         logger.entering(RecommendCommand.class.getName(), "askSaveBouquet");
-        String saveInput = Parser.parseSaveBouquet(ui.printAskSaveBouquet(recommendedBouquet));
+        String saveInput = "placeHolder";
+        boolean isValidFormat = false;
+        boolean isValidInput = false;
+        while (!(isValidInput && isValidFormat)) {
+            saveInput = ui.printAskSaveBouquet(recommendedBouquet);
+            isValidFormat = Parser.parseSaveBouquet(saveInput);
+            isValidInput = (saveInput.equalsIgnoreCase("yes") || saveInput.equalsIgnoreCase("no"));
+        }
 
-        if (saveInput.equals("yes")) {
-            if (bouquetList.contains(recommendedBouquet)) {
-                // change name of bouquet
-                recommendedBouquet.setName(recommendedBouquet.getBouquetName() + " (1)");
-            }
-
+        if (saveInput.equalsIgnoreCase("yes")) {
             bouquetList.add(recommendedBouquet);
             ui.printBouquetAdded(recommendedBouquet);
             assert !bouquetList.isEmpty() : "Bouquet list should not be empty";

@@ -44,7 +44,6 @@ public class Ui {
      * @return Returns the user input as one String.
      */
     public String getInput(){
-        System.out.println("What can I do for you?");
         return inputScanner.nextLine();
     }
 
@@ -357,6 +356,11 @@ public class Ui {
         System.out.println("Here are the list of our available occasion:");
         this.printAllOccasions();
         return inputScanner.nextLine();
+    }
+
+    public void printAskBouquetName() {
+        System.out.println("Great we managed to find some flowers for you!");
+        System.out.println("Before we carry on what would you like to call your bouquet?");
     }
 
     /**
