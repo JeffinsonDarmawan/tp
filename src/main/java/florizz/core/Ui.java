@@ -11,12 +11,9 @@ public class Ui {
     private static ArrayList<Flower> lastShownList = new ArrayList<>();
     private static int lastPageNo = 0;
     private static final int PAGE_SIZE = 5;
-    private final Scanner inputScanner = new Scanner (System.in);
+    private static final Scanner inputScanner = new Scanner (System.in);
 
-
-
-
-    private String lastCommand = "";
+    private static String lastCommand = "";
     /**
      * Prints the introductory message.
      */
@@ -85,7 +82,7 @@ public class Ui {
             if (!flowerHashMap.isEmpty() ) {
                 for (Flower j : flowerHashMap.keySet()) {
                     if (flowerHashMap.get(j) != 0) {
-                        System.out.println("    - " + flowerHashMap.get(j) + " x " + j.getFlowerName());
+                        System.out.println("    - " + flowerHashMap.get(j) + " x " + j.getNameAndColour());
                         totalPrice += (flowerHashMap.get(j) * j.getPrice());
                     }
                 }
@@ -155,16 +152,10 @@ public class Ui {
     }
 
     private static void printNextOrBack(int pageNo, int maxPages){
-        if (pageNo < maxPages && pageNo > 1){
-            System.out.println("Type 'next' to go to the next page, or 'back' to go to the previous page.");
-        } else if (pageNo < maxPages){
-            System.out.println("Type 'next' to go to the next page.");
-        } else if (pageNo > 1){
-            System.out.println("Type 'back' to go to the previous page.");
-        }
+
     }
 
-    private static void printFlowerList(boolean needsInfo){
+    private void printFlowerList(boolean needsInfo){
         int maxPages = (int) Math.ceil((double)lastShownList.size() / PAGE_SIZE);
         for (int i = (lastPageNo-1)*PAGE_SIZE; i < Math.min(lastPageNo*PAGE_SIZE, lastShownList.size()); i++) {
             if (needsInfo) {
@@ -173,7 +164,13 @@ public class Ui {
                 System.out.println(i + 1 + ". " + lastShownList.get(i).getNameAndColour());
             }
         }
-        printNextOrBack(lastPageNo, maxPages);
+        if (lastPageNo < maxPages && lastPageNo > 1){
+            System.out.println("Type 'next' to go to the next page, or 'back' to go to the previous page.");
+        } else if (lastPageNo < maxPages){
+            System.out.println("Type 'next' to go to the next page.");
+        } else if (lastPageNo > 1){
+            System.out.println("Type 'back' to go to the previous page.");
+        }
         printBreakLine();
     }
     /**
@@ -243,37 +240,32 @@ public class Ui {
             throw new FlorizzException("There is no list of flowers to view. " +
                     "Type 'flowers' to view a list of all flowers.");
         }
-
-
     }
 
     public void printBackPage() throws FlorizzException{
-
-            switch (lastCommand.split(" ")[0]) {
-            case ("ALL_FLOWERS"):
-                if (lastPageNo == 1){
-                    throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
-                }
-                printAllDictFlowerName(lastPageNo-1);
-                break;
-            case ("FILTERED_FLOWERS"):
-                if (lastPageNo == 1){
-                    throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
-                }
-                printFilteredFlowers(lastShownList, lastCommand.split(" ")[1],lastPageNo-1);
-                break;
-            case ("INFO_FLOWERS"):
-                if (lastPageNo == 1){
-                    throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
-                }
-                printFlowerInfo(lastShownList, lastCommand.split(" ")[1], lastPageNo-1);
-                break;
-            default:
-                throw new FlorizzException("There is no list of flowers to view. " +
-                        "Type 'flowers' to view a list of all flowers.");
+        switch (lastCommand.split(" ")[0]) {
+        case ("ALL_FLOWERS"):
+            if (lastPageNo == 1){
+                throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
             }
-
-
+            printAllDictFlowerName(lastPageNo-1);
+            break;
+        case ("FILTERED_FLOWERS"):
+            if (lastPageNo == 1){
+                throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
+            }
+            printFilteredFlowers(lastShownList, lastCommand.split(" ")[1],lastPageNo-1);
+            break;
+        case ("INFO_FLOWERS"):
+            if (lastPageNo == 1){
+                throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
+            }
+            printFlowerInfo(lastShownList, lastCommand.split(" ")[1], lastPageNo-1);
+            break;
+        default:
+            throw new FlorizzException("There is no list of flowers to view. " +
+                    "Type 'flowers' to view a list of all flowers.");
+        }
     }
     /**
      * Prints all possible occasions the user can query
@@ -400,4 +392,16 @@ public class Ui {
                 + bouquetName + ".txt'");
         printBreakLine();
     }
+
+    public void printAddFlowerColour(ArrayList<Flower> flowers, String flowerName){
+        System.out.println("The flower you're looking to add has more than one colour available, " +
+                "each with their own vastly different meanings. Here's some info: ");
+        printFlowerInfo(flowers, flowerName, 1);
+        System.out.println("Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.");
+    }
+
+    public void printCancelCommand(){
+        System.out.println("Canceled command, returning to main menu.");
+    }
 }
+

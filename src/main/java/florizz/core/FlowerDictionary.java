@@ -118,7 +118,7 @@ public class FlowerDictionary {
     public static ArrayList<Flower> filterByName(String name) throws FlorizzException {
         ArrayList<Flower> filteredFlowers = new ArrayList<>();
         for (Flower flower : flowerDict) {
-            if (flower.getFlowerName().contains(name)) {
+            if (flower.getFlowerName().toLowerCase().contains(name.toLowerCase())) {
                 filteredFlowers.add(flower);
             }
         }
