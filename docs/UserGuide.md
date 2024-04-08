@@ -1,5 +1,6 @@
 # User Guide
-Florizz is your personal digital florist which helps people in Singapore to curate flowers to create bouquets for all occasions._
+Florizz is your personal digital florist which helps people in Singapore to curate flowers to create bouquets for all 
+occasions.
 
 ## Features
 ### Viewing help: `help`
@@ -159,7 +160,7 @@ Removes a flower from a bouquet
 Format: `remove <flowerName> /q <quantity> /from <bouquetName>`
 
 - Flower must exist in the database and the bouquet specified
-- Quantity must be more than 0 and a valid number
+- Quantity must be between 1 and the current amount of flowers in the bouquet (inclusive).
 - Bouquet must exist in the database
 
 Examples:
@@ -254,7 +255,7 @@ Expected Output:
 Successfully saved moms bouquet. You can find it at 'florizz-out/saved/moms bouquet.txt'
 ```
 
-### Exit programme: `exit`
+### Exit programme: `bye`
 
 Exits the program.
 
@@ -262,7 +263,7 @@ Format: `bye`
 
 Expected output:
 ```
-Enjoy your bouquet! Thank you for using Florizz
+Enjoy your bouquet! Thank you for using Florizz!
 ```
 
 ### Fuzzy Logic

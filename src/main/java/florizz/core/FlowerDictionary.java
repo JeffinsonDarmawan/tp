@@ -2,6 +2,7 @@ package florizz.core;
 
 
 import java.util.ArrayList;
+
 import florizz.objects.Flower;
 
 /**
@@ -9,7 +10,6 @@ import florizz.objects.Flower;
  */
 public class FlowerDictionary {
     private static final ArrayList<Flower> flowerDict = new ArrayList<Flower>();
-
     /**
      * Adds a new flower to the flower dictionary
      *
@@ -56,8 +56,8 @@ public class FlowerDictionary {
 
         // [Fillers have yet to be implemented]
         add("Baby Breath", "White", new String[]{"Wedding", "Valentines", "Mothers Day"}, 1.00,
-                new String[]{"Innocence", "Kindness", "Care", "Humble"}, Flower.Type.FILLER);
-        add("Eucalyptus", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
+                new String[]{"Innocence", "Kindness", "Care", "Humble"}, Flower.Type.FLOWER);
+        add("Eucalyptus", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FLOWER);
         add("Dusty Miller", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
         add("Pistacia", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
         add("Pittosporum", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
@@ -115,12 +115,15 @@ public class FlowerDictionary {
      * @param name name of Flowers to filter by
      * @return an ArrayList of Flowers to be printed by ui
      */
-    public static ArrayList<Flower> filterByName(String name) {
+    public static ArrayList<Flower> filterByName(String name) throws FlorizzException {
         ArrayList<Flower> filteredFlowers = new ArrayList<>();
         for (Flower flower : flowerDict) {
             if (flower.getFlowerName().contains(name)) {
                 filteredFlowers.add(flower);
             }
+        }
+        if (filteredFlowers.isEmpty()) {
+            throw new FlorizzException("Flower name is unidentified.");
         }
         return filteredFlowers;
     }

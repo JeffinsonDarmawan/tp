@@ -110,41 +110,45 @@ public class Parser {
      */
     public static String[] commandHandler(String input) throws FlorizzException {
         String[] outputs = new String[2];
-        try {
-            String trimmedInput = input.trim();
-            int firstWhitespace = trimmedInput.indexOf(" ");
-            if (firstWhitespace != -1) {
-                outputs[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
-                switch (outputs[0]) {
-                case ("save"):
-                case ("delete"): // Fallthrough
-                case ("new"):
-                    outputs[1] = trimmedInput.substring(firstWhitespace).trim();
-                    break;
-                case ("remove"): // Fallthrough
-                case ("add"):
-                    String[] arguments = new String[2];
-                    String trimmedArgument = trimmedInput.substring(firstWhitespace).trim();
-                    int secondWhitespace = trimmedArgument.indexOf(" ");
-                    if (secondWhitespace <0){
-                        throw new FlorizzException("Incorrect usage of remove." +
-                                " Correct format: remove <flowerName> /q <quantity> /from <bouquetName>");
-                    }
-                    arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,secondWhitespace));
-                    arguments[1] = trimmedArgument.substring(secondWhitespace).trim();
-                    outputs[1] = arguments[0] + " " + arguments[1];
-                    break;
-                default:
-                    outputs[1] = FuzzyLogic.detectItem(trimmedInput.substring(firstWhitespace).trim());
-                    break;
+        String trimmedInput = input.trim();
+        int firstWhitespace = trimmedInput.indexOf(" ");
+
+        if (firstWhitespace != -1) {
+            outputs[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
+            switch (outputs[0]) {
+            case ("save"):
+            case ("delete"): // Fallthrough
+            case ("new"):
+                outputs[1] = trimmedInput.substring(firstWhitespace).trim();
+                break;
+            case ("remove"): // Fallthrough
+            case ("add"):
+                String[] arguments = new String[2];
+                String trimmedArgument = trimmedInput.substring(firstWhitespace).trim();
+                int secondWhitespace = trimmedArgument.indexOf(" ");
+                if (secondWhitespace < 0 && outputs[0].equals("remove")){
+                    throw new FlorizzException("Incorrect usage of remove." +
+                            " Correct format: remove <flowerName> /q <quantity> /from <bouquetName>");
+                } else if (secondWhitespace < 0 && outputs[0].equals("add")) {
+                    throw new FlorizzException("Incorrect usage of add." +
+                            " Correct format: add <flowerName> /q <quantity> /to <bouquetName>");
                 }
-            } else {
-                outputs[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
+                arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,secondWhitespace));
+                arguments[1] = trimmedArgument.substring(secondWhitespace).trim();
+                outputs[1] = arguments[0] + " " + arguments[1];
+                break;
+            default:
+                outputs[1] = FuzzyLogic.detectItem(trimmedInput.substring(firstWhitespace).trim());
+                break;
             }
-        } catch (FlorizzException ex) {
-            Logger.getLogger("CommandHandler").log(Level.INFO, "Exception occurred in commandHandler", ex);
-            throw ex;
+        } else {
+            outputs[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
         }
+
+        if (firstWhitespace == -1 && (outputs[0].equals("save"))) {
+            throw new FlorizzException("Please specify which bouquet you are saving!");
+        }
+
         return outputs;
     }
 
@@ -224,7 +228,7 @@ public class Parser {
         String flowerName = argument.substring(0,quantityIndex).trim().toLowerCase();
         String quantityString = removePrefix(argument.substring(quantityIndex, prefixIndex), QUANTITY).trim();
         // [WARNING] might need to check if it's a valid integer
-        Integer quantity = Integer.parseInt(quantityString);
+        int quantity = Integer.parseInt(quantityString);
         String bouquetName = removePrefix(argument.substring(prefixIndex), ADD_FLOWER_PREFIX).trim();
 
         return new AddFlowerCommand(flowerName, quantity, bouquetName, enableUi);
@@ -255,7 +259,7 @@ public class Parser {
         String flowerName = argument.substring(0, quantityIndex).trim().toLowerCase();
         String quantityString = removePrefix(argument.substring(quantityIndex, prefixIndex), QUANTITY).trim();
         // [WARNING] might need to check if it's a valid integer
-        Integer quantity = Integer.parseInt(quantityString);
+        int quantity = Integer.parseInt(quantityString);
         String bouquetName = removePrefix(argument.substring(prefixIndex), REMOVE_FLOWER_PREFIX).trim();
 
         return new RemoveFlowerCommand(flowerName, quantity, bouquetName);
@@ -266,8 +270,10 @@ public class Parser {
      * @param flowerName The user input to be parsed.
      * @return An InfoCommand object corresponding to the parsed input.
      */
-    private static InfoCommand handleInfoCommand(String flowerName) {
-        assert !flowerName.isEmpty() : "This string is empty";
+    private static InfoCommand handleInfoCommand(String flowerName) throws FlorizzException {
+        if (flowerName == null) {
+            throw new FlorizzException("Please specify flower name to retrieve info from.");
+        }
         return new InfoCommand(flowerName);
     }
 
