@@ -354,7 +354,6 @@ public class Ui {
      */
     public String printAskOccasion() {
         System.out.println("For what occasion are you buying flowers for?");
-        System.out.println("Here are the list of our available occasion:");
         this.printAllOccasions();
         return inputScanner.nextLine();
     }
@@ -368,7 +367,7 @@ public class Ui {
         System.out.println("What colour would you like your bouquets to be?");
 
         // print all available colours in a given array list
-        System.out.println("Here are the list of colours available for the occasion: ");
+        System.out.println("Here is the list of colours available for the occasion: ");
         // remove duplicate colours in eligible flowers
         ArrayList<String> colourList = new ArrayList<>();
         for (Flower flower : eligibleFlowers) {
@@ -379,6 +378,7 @@ public class Ui {
         for (String colour : colourList){
             System.out.println("- " + colour);
         }
+        printBreakLine();
         return inputScanner.nextLine();
     }
 

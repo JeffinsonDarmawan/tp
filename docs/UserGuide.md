@@ -65,7 +65,7 @@ Format: `mybouquets`
 
 Expected output:
 ```
-Here are the list of your saved bouquets:
+Here is the list of your saved bouquets:
 1. For Girlfriend :
       No flowers added so far
 ```
@@ -201,7 +201,7 @@ Steps:
 Expected output:
 ```
 For what occasion are you buying flowers for?
-Here are the list of our available occasion:
+Here is the list of our available occasion:
 Here are all the occasions associated with the available flowers: 
 - Funeral
 - Wedding
@@ -214,7 +214,7 @@ ____________________________________________________________
 Expected output:
 ```
 What colour would you like your bouquets to be?
-Here are the list of colours available for the occasion: 
+Here is the list of colours available for the occasion: 
 - DARK_CRIMSON
 - WHITE
 ```
