@@ -151,7 +151,7 @@ public class Ui {
      * Prints exit message.
      */
     public void printExitMessage() {
-        System.out.println("Enjoy your bouquet! Thank you for using Florizz");
+        System.out.println("Enjoy your bouquet! Thank you for using Florizz!");
         printBreakLine();
     }
 
