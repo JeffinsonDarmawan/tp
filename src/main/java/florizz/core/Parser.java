@@ -50,10 +50,10 @@ public class Parser {
                 command = new ListBouquetCommand();
                 break;
             case ("new"):
-                command = handleAddBouquet(input, enableUi);
+                command = handleAddBouquet(decodedInput[1], enableUi);
                 break;
             case ("delete"):
-                command = handleDeleteBouquet(input);
+                command = handleDeleteBouquet(decodedInput[1]);
                 break;
             case ("bye"):
                 command = new ExitCommand();
@@ -105,13 +105,14 @@ public class Parser {
     /**
      * Splits input into command and arguments (if any). Handles capitalisation, whitespaces and small typos.
      *
-     * @param input
+     * @param input The user input where command is to be extracted
      * @return String[] output; output[0] = item ; output[1] = argument(s)
      */
     public static String[] commandHandler(String input) throws FlorizzException {
         String[] outputs = new String[2];
         String trimmedInput = input.trim();
-        int firstWhitespace = trimmedInput.indexOf(" ");
+        String separatedInput = FuzzyLogic.separateInput(trimmedInput);
+        int firstWhitespace = separatedInput.indexOf(" ");
 
         if (firstWhitespace != -1) {
             outputs[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
@@ -156,8 +157,8 @@ public class Parser {
      * remove prefix from an input string
      * e.g. "/to For Mom" -> " For Mom"
      *
-     * @param input
-     * @param prefix
+     * @param input The argument
+     * @param prefix The keyword that identifies the argument
      * @return input with prefix removed
      */
     public static String removePrefix(String input, String prefix) {
@@ -171,10 +172,10 @@ public class Parser {
      * @throws FlorizzException If the input does not contain the required bouquet information.
      */
     private static AddBouquetCommand handleAddBouquet(String input, boolean enableUi) throws FlorizzException{
-        if (!input.contains(" ")){
+        if (input == null){
             throw new FlorizzException("Did not include bouquet to add");
         }
-        String newBouquetName = input.substring(input.indexOf(" ") + 1).trim();
+        String newBouquetName = input.trim();
         return new AddBouquetCommand(new Bouquet(newBouquetName), enableUi);
     }
 
@@ -185,11 +186,10 @@ public class Parser {
      * @throws FlorizzException If the input does not contain the required bouquet information.
      */
     private static DeleteBouquetCommand handleDeleteBouquet(String input) throws FlorizzException{
-        if (!input.contains(" ")){
+        if (input == null){
             throw new FlorizzException("Did not include bouquet to delete");
         }
-        String bouquetToDelete = input.substring(input.indexOf(" ") + 1).trim();
-
+        String bouquetToDelete = input.trim();
         return new DeleteBouquetCommand(new Bouquet(bouquetToDelete));
     }
 
@@ -281,7 +281,6 @@ public class Parser {
      * Parses the occasion from the user input.
      * @param argument The user input to be parsed.
      * @return The parsed occasion.
-     * @throws FlorizzException If the input does not match the required format.
      */
     public static boolean parseOccasion(String argument) {
         if (argument == null) {

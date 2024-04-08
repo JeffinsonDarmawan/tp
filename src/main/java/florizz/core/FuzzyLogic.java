@@ -51,9 +51,13 @@ public class FuzzyLogic {
      * @return The closest matching command/item/occasion.
      * @throws FlorizzException if the input is null or no matching command/item/occasion is found.
      */
-    public static String detectItem(String userInput) throws FlorizzException {
+    protected static String detectItem(String userInput) throws FlorizzException {
         if (userInput == null) {
             throw new FlorizzException("Input cannot be null");
+        }
+
+        if (userInput.length() == 1) {
+            throw new FlorizzException("No matching command/item/occasion found for input: " + userInput);
         }
 
         String bestMatch = null;
@@ -132,5 +136,51 @@ public class FuzzyLogic {
         // Return the Damerau-Levenshtein distance
         assert previousRow[n] >= 0 : "Levenshtein distance cannot be negative";
         return previousRow[n];
+    }
+
+    /**
+     * Separates the input string into a command and an argument.
+     * If the input string matches a predefined command pattern, it corrects the input by adding a space between the
+     * command and the argument.
+     * Supported commands include: info, delete, flowers, new, add, remove, save.
+     * If the input does not match any predefined command pattern, it returns the original input string unchanged.
+     *
+     * @param userInput The input string to be separated and corrected.
+     * @return correctedInput The input with a space between the command and the argument if applicable.
+     * @throws FlorizzException if the input string is null.
+     */
+    protected static String separateInput(String userInput) throws FlorizzException {
+        if (userInput == null) {
+            throw new FlorizzException("Input cannot be empty.");
+        }
+
+        String correctedInput = "";
+        if (userInput.matches("(info)[a-zA-Z].*")) {
+            String argumentInfo = userInput.replaceAll("(info)", "");
+            correctedInput = "info " + argumentInfo;
+        } else if (userInput.matches("(delete)[a-zA-Z].*")) {
+            String argumentDelete = userInput.replaceAll("(delete)", "");
+            correctedInput = "delete " + argumentDelete;
+        } else if (userInput.matches("(flowers)[a-zA-Z].*")) {
+            String argumentFlowers = userInput.replaceAll("(flowers)", "");
+            correctedInput = "flowers " + argumentFlowers;
+        } else if (userInput.matches("(new)[a-zA-Z].*")) {
+            String argumentNew = userInput.replaceAll("(new)", "");
+            correctedInput = "new " + argumentNew;
+        } else if (userInput.matches("(add)[a-zA-Z].*")) {
+            String argumentAdd = userInput.replaceAll("(add)", "");
+            correctedInput = "add " + argumentAdd;
+        } else if (userInput.matches("(remove)[a-zA-Z].*")) {
+            String argumentRemove = userInput.replaceAll("(remove)", "");
+            correctedInput = "remove " + argumentRemove;
+        } else if (userInput.matches("(save)[a-zA-Z].*")) {
+            String argumentSave = userInput.replaceAll("(save)", "");
+            correctedInput = "save " + argumentSave;
+        }
+
+        if (correctedInput.isEmpty()) {
+            correctedInput = userInput;
+        }
+        return correctedInput;
     }
 }
