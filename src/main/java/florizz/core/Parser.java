@@ -283,18 +283,20 @@ public class Parser {
      * @return The parsed occasion.
      * @throws FlorizzException If the input does not match the required format.
      */
-    public static String parseOccasion(String argument) throws FlorizzException{
+    public static boolean parseOccasion(String argument) {
         if (argument == null) {
-            throw new FlorizzException("No argument detected! " +
+            System.out.println("No argument detected! " +
                     "Please input an occasion");
+            return false;
         }
 
         if (!argument.matches(PARSE_OCCASION_REGEX)) {
-            throw new FlorizzException("Incorrect format detected! " +
+            System.out.println("Incorrect format detected! " +
                     "Please input a single occasion");
+            return false;
         }
 
-        return argument;
+        return true;
     }
 
     /**
@@ -302,18 +304,20 @@ public class Parser {
      * @param argument The user input to be parsed.
      * @return The parsed colour String
      */
-    public static String parseColour(String argument) throws FlorizzException{
+    public static boolean parseColour(String argument) {
         if (argument == null) {
-            throw new FlorizzException("No argument detected! " +
+            System.out.println("No argument detected! " +
                     "Please input a colour");
+            return false;
         }
 
         if (!argument.matches(PARSE_COLOUR_REGEX)) {
-            throw new FlorizzException("Incorrect format detected! " +
+            System.out.println("Incorrect format detected! " +
                     "Please input a single colour");
+            return false;
         }
 
-        return argument;
+        return true;
     }
 
     /**
@@ -321,17 +325,19 @@ public class Parser {
      * @param argument The user input to be parsed.
      * @return The parsed save bouquet String
      */
-    public static String parseSaveBouquet(String argument) throws FlorizzException{
+    public static boolean parseSaveBouquet(String argument) {
         if (argument == null) {
-            throw new FlorizzException("No argument detected! " +
+            System.out.println("No argument detected! " +
                     "Please input a bouquet name to save");
+            return false;
         }
 
         if (!argument.matches(SAVE_BOUQUET_REGEX)) {
-            throw new FlorizzException("Incorrect format detected! " +
+            System.out.println("Incorrect format detected! " +
                     "Please input a yes or a no");
+            return false;
         }
 
-        return argument;
+        return true;
     }
 }
