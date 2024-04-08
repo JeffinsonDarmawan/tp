@@ -248,17 +248,24 @@ public class Ui {
     }
 
     public void printBackPage() throws FlorizzException{
-        if (lastPageNo == 1){
-            throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
-        } else {
+
             switch (lastCommand.split(" ")[0]) {
             case ("ALL_FLOWERS"):
+                if (lastPageNo == 1){
+                    throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
+                }
                 printAllDictFlowerName(lastPageNo-1);
                 break;
             case ("FILTERED_FLOWERS"):
+                if (lastPageNo == 1){
+                    throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
+                }
                 printFilteredFlowers(lastShownList, lastCommand.split(" ")[1],lastPageNo-1);
                 break;
             case ("INFO_FLOWERS"):
+                if (lastPageNo == 1){
+                    throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
+                }
                 printFlowerInfo(lastShownList, lastCommand.split(" ")[1], lastPageNo-1);
                 break;
             default:
@@ -266,7 +273,7 @@ public class Ui {
                         "Type 'flowers' to view a list of all flowers.");
             }
 
-        }
+
     }
     /**
      * Prints all possible occasions the user can query

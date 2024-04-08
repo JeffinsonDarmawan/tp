@@ -110,21 +110,20 @@ public class Parser {
      */
     public static String[] commandHandler(String input) throws FlorizzException {
         String[] outputs = new String[2];
-        String trimmedInput = input.trim();
-        int firstWhitespace = trimmedInput.indexOf(" ");
+        int firstWhitespace = input.indexOf(" ");
 
         if (firstWhitespace != -1) {
-            outputs[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
+            outputs[0] = FuzzyLogic.detectItem(input.substring(0,firstWhitespace).toLowerCase());
             switch (outputs[0]) {
             case ("save"):
             case ("delete"): // Fallthrough
             case ("new"):
-                outputs[1] = trimmedInput.substring(firstWhitespace).trim();
+                outputs[1] = input.substring(firstWhitespace).trim();
                 break;
             case ("remove"): // Fallthrough
             case ("add"):
                 String[] arguments = new String[2];
-                String trimmedArgument = trimmedInput.substring(firstWhitespace).trim();
+                String trimmedArgument = input.substring(firstWhitespace).trim();
                 int secondWhitespace = trimmedArgument.indexOf(" ");
                 if (secondWhitespace < 0 && outputs[0].equals("remove")){
                     throw new FlorizzException("Incorrect usage of remove." +
@@ -138,11 +137,11 @@ public class Parser {
                 outputs[1] = arguments[0] + " " + arguments[1];
                 break;
             default:
-                outputs[1] = FuzzyLogic.detectItem(trimmedInput.substring(firstWhitespace).trim());
+                outputs[1] = FuzzyLogic.detectItem(input.substring(firstWhitespace).trim());
                 break;
             }
         } else {
-            outputs[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
+            outputs[0] = FuzzyLogic.detectItem(input.toLowerCase());
         }
 
         if (firstWhitespace == -1 && (outputs[0].equals("save"))) {
