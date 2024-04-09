@@ -24,5 +24,14 @@ Here are the list of commands you can use:
 12. bye - Exits the programme
 ____________________________________________________________
 What can I do for you?
+Added new bouquet to list:
+test
+____________________________________________________________
+What can I do for you?
+Here is the list of your saved bouquets:
+1. test :
+      No flowers added so far
+____________________________________________________________
+What can I do for you?
 Enjoy your bouquet! Thank you for using Florizz!
 ____________________________________________________________
