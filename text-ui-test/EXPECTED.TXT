@@ -24,5 +24,101 @@ Here are the list of commands you can use:
 12. bye - Exits the programme
 ____________________________________________________________
 What can I do for you?
+Added new bouquet to list:
+test
+____________________________________________________________
+What can I do for you?
+Here is the list of your saved bouquets:
+1. test :
+      No flowers added so far
+____________________________________________________________
+What can I do for you?
+--> Your input is [rose] but I am guessing you mean [Rose]
+You have successfully added the following:
+    - 5 x Rose -> Bouquet: test
+Here is the list of your saved bouquets:
+1. test :
+    - 5 x Rose (Red)
+  Total estimated price = $10.00
+____________________________________________________________
+What can I do for you?
+Here is the list of your saved bouquets:
+1. test :
+    - 5 x Rose (Red)
+  Total estimated price = $10.00
+____________________________________________________________
+What can I do for you?
+--> Your input is [rose] but I am guessing you mean [Rose]
+The flower you're looking for has more than one colour available, each with their own vastly different meanings. Here's some info:
+Here is page 1/1 of info regarding flowers whose name contains rose:
+1. Name: Rose
+Colour: Dark crimson
+Occasions: Funeral
+Price: $2.00
+Meanings: Mourning
+2. Name: Rose
+Colour: Red
+Occasions: Valentines, Wedding, Mothers day
+Price: $2.00
+Meanings: Love
+____________________________________________________________
+Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.
+You have successfully added the following:
+    - 5 x rose -> Bouquet: test
+Here is the list of your saved bouquets:
+1. test :
+    - 5 x Rose (Dark crimson)
+    - 5 x Rose (Red)
+  Total estimated price = $20.00
+____________________________________________________________
+What can I do for you?
+Here is the list of your saved bouquets:
+1. test :
+    - 5 x Rose (Dark crimson)
+    - 5 x Rose (Red)
+  Total estimated price = $20.00
+____________________________________________________________
+What can I do for you?
+--> Your input is [rose] but I am guessing you mean [Rose]
+You have successfully removed the following:
+    - 4 x Rose -> Bouquet: test
+Here is the list of your saved bouquets:
+1. test :
+    - 5 x Rose (Dark crimson)
+    - 1 x Rose (Red)
+  Total estimated price = $12.00
+____________________________________________________________
+What can I do for you?
+--> Your input is [rose] but I am guessing you mean [Rose]
+The flower you're looking for has more than one colour available, each with their own vastly different meanings. Here's some info:
+Here is page 1/1 of info regarding flowers whose name contains rose:
+1. Name: Rose
+Colour: Dark crimson
+Occasions: Funeral
+Price: $2.00
+Meanings: Mourning
+2. Name: Rose
+Colour: Red
+Occasions: Valentines, Wedding, Mothers day
+Price: $2.00
+Meanings: Love
+____________________________________________________________
+Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.
+You have successfully removed the following:
+    - 4 x rose -> Bouquet: test
+Here is the list of your saved bouquets:
+1. test :
+    - 1 x Rose (Dark crimson)
+    - 1 x Rose (Red)
+  Total estimated price = $4.00
+____________________________________________________________
+What can I do for you?
+Here is the list of your saved bouquets:
+1. test :
+    - 1 x Rose (Dark crimson)
+    - 1 x Rose (Red)
+  Total estimated price = $4.00
+____________________________________________________________
+What can I do for you?
 Enjoy your bouquet! Thank you for using Florizz!
 ____________________________________________________________
