@@ -116,7 +116,7 @@ public class Parser {
         if (firstWhitespace != -1) {
             outputs[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
             switch (outputs[0]) {
-            case ("save"):
+            case ("save"): // Fallthrough
             case ("delete"): // Fallthrough
             case ("new"):
                 outputs[1] = trimmedInput.substring(firstWhitespace).trim();
@@ -145,9 +145,9 @@ public class Parser {
             outputs[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
         }
 
-        if (firstWhitespace == -1 && (outputs[0].equals("save"))) {
+        /*if (firstWhitespace == -1 && (outputs[0].equals("save"))) {
             throw new FlorizzException("Please specify which bouquet you are saving!");
-        }
+        }*/
 
         return outputs;
     }
