@@ -1,4 +1,6 @@
 help
 new test
 mybouquets
+add rose /c red /q 5 /to test
+mybouquets
 bye

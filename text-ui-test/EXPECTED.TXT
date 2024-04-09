@@ -33,5 +33,20 @@ Here is the list of your saved bouquets:
       No flowers added so far
 ____________________________________________________________
 What can I do for you?
+--> Your input is [rose] but I am guessing you mean [Rose]
+You have successfully added the following:
+    - 5 x Rose -> Bouquet: test
+Here is the list of your saved bouquets:
+1. test :
+    - 5 x Red Rose
+  Total estimated price = $10.00
+____________________________________________________________
+What can I do for you?
+Here is the list of your saved bouquets:
+1. test :
+    - 5 x Red Rose
+  Total estimated price = $10.00
+____________________________________________________________
+What can I do for you?
 Enjoy your bouquet! Thank you for using Florizz!
 ____________________________________________________________
