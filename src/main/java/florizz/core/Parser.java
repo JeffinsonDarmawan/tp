@@ -340,4 +340,15 @@ public class Parser {
 
         return true;
     }
+
+    /**
+     * Checks if the user has entered the exit word for the recommend page
+     * @param input Input from the user
+     * @throws FlorizzException Thrown when the user has entered the exit word
+     */
+    public static void checkRecommendExitCondition(String input) throws FlorizzException{
+        if (input.equalsIgnoreCase("cancel")) {
+            throw new FlorizzException("Leaving recommend");
+        }
+    }
 }

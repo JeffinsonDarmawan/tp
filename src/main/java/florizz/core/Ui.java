@@ -340,25 +340,27 @@ public class Ui {
 
     /**
      * ask user for occasion input
-     * @return String of occasion input
      */
-    public String printAskOccasion() {
+    public void printAskOccasion() {
         System.out.println("For what occasion are you buying flowers for?");
         this.printAllOccasions();
-        return inputScanner.nextLine();
+        System.out.println("Type 'cancel' if you would like to exit the recommendation page");
     }
 
+    /**
+     * Prints prompt to ask user to input bouquet name for recommended bouquet
+     */
     public void printAskBouquetName() {
         System.out.println("Great we managed to find some flowers for you!");
         System.out.println("Before we carry on what would you like to call your bouquet?");
+        System.out.println("Note: please take note 'cancel' cannot be used as a  bouquet name");
     }
 
     /**
      * ask user for colour input
      * @param eligibleFlowers list of flowers that are eligible for the occasion
-     * @return String of colour input
      */
-    public String printAskColour(ArrayList<Flower> eligibleFlowers) {
+    public void printAskColour(ArrayList<Flower> eligibleFlowers) {
         System.out.println("What colour would you like your bouquets to be?");
 
         // print all available colours in a given array list
@@ -373,8 +375,8 @@ public class Ui {
         for (String colour : colourList){
             System.out.println("- " + colour);
         }
+        System.out.println("Type 'cancel' if you would like to exit the recommendation page");
         printBreakLine();
-        return inputScanner.nextLine();
     }
 
     public String printAskSaveBouquet(Bouquet recommendedBouquet) {
