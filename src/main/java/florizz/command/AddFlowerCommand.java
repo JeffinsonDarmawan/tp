@@ -51,11 +51,6 @@ public class AddFlowerCommand extends Command{
 
         ArrayList<Flower> matchingFlowers = FlowerDictionary.filterByName(flowerName);
 
-        if (matchingFlowers.isEmpty()) {
-            throw new FlorizzException("Mentioned flower is not in our database." + System.lineSeparator() +
-                                       "Check available flowers: `flower` " + System.lineSeparator() +
-                                       "Add custom flowers: {{TO BE DONE}}");
-        }
         if (hasColour){
             ArrayList<Flower> matchedFlowerAndColour = FlowerDictionary.filterByColour(matchingFlowers, colour);
             if (!matchedFlowerAndColour.isEmpty()){
@@ -73,7 +68,7 @@ public class AddFlowerCommand extends Command{
                 ui.printAddFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
             }
         } else {
-            Flower flowerToAdd = chooseColour(ui, matchingFlowers, flowerName);
+            Flower flowerToAdd = ui.chooseColour(matchingFlowers, flowerName);
             if (!flowerToAdd.getFlowerName().isBlank()){
                 bouquetToAddFlower.addFlower(flowerToAdd, this.quantity);
                 if (enableUi) {
@@ -89,38 +84,4 @@ public class AddFlowerCommand extends Command{
         return true;
     }
 
-    private Flower chooseColour(Ui ui, ArrayList<Flower> flowers, String flowerName){
-        ui.printAddFlowerColour(flowers, flowerName);
-
-        while (true){
-            String colourInput = ui.getInput().trim().toLowerCase();
-            try {
-                switch (colourInput) {
-                case "back":
-                    ui.printBackPage();
-                    break;
-                case "next":
-                    ui.printNextPage();
-                    break;
-                case "cancel":
-                    return new Flower();
-                default:
-                    Flower.Colour chosenColour = Flower.stringToColour(colourInput);
-                    ArrayList<Flower> chosenFlowerList = FlowerDictionary.filterByColour(flowers, chosenColour);
-                    if (!chosenFlowerList.isEmpty()){
-                        return chosenFlowerList.get(0);
-                    } else {
-                        throw new FlorizzException("This flower is not available in this colour, " +
-                                "try typing a colour shown above!");
-                    }
-
-                }
-            } catch(FlorizzException error){
-                ui.printError(error);
-            } catch(IllegalArgumentException error){
-                System.out.println("Unrecognised input, type a colour that's available for this flower, " +
-                        "or 'cancel' to stop adding a flower.");
-            }
-        }
-    }
 }

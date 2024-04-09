@@ -1,2 +1,21 @@
 help
+new test
+add rose /q 5 /to test
+red
+add rose /c dark crimson /q 5 /to test
+recommend
+wedding
+blue
+test2
+yes
+remove rose /c red /q 4 /from test
+remove rose /q 4 /from test
+dark crimson
+flowers
+next
+occasion
+flowers funeral
+mybouquets
+delete test2
+mybouquets
 bye

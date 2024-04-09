@@ -1,6 +1,8 @@
 package florizz.objects;
 
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Represents a flower with its name, colour, occasions, and price.
@@ -173,7 +175,7 @@ public class Flower {
      * @return The colour of the flower.
      */
     public String getColour (){
-        return colour.toString();
+        return colourToString(colour);
     }
 
     /**
@@ -205,7 +207,6 @@ public class Flower {
             occasionsString.append(", ");
         }
 
-
         for (String meaning : meanings){
             meaningsString.append(meaning);
             meaningsString.append(", ");
@@ -215,5 +216,25 @@ public class Flower {
                 occasionsString.substring(0, occasionsString.lastIndexOf(",")) + "\n" +
                 "Price: $" + String.format("%.2f", price) + "\n" +
                 meaningsString.substring(0, meaningsString.lastIndexOf(",")));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        /* Check if o is an instance of Complex or not
+          "null instanceof [type]" also returns false */
+        if (!(obj instanceof Flower)) {
+            return false;
+        }
+
+        // typecast o to Complex so that we can compare data members
+        Flower c = (Flower) obj;
+
+        // Compare the data members and return accordingly
+        return (Objects.equals(c.name.toUpperCase(), this.name.toUpperCase()) &&
+                Objects.equals(c.colour, this.colour));
     }
 }
