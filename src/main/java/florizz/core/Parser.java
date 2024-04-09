@@ -240,7 +240,12 @@ public class Parser {
         String flowerName = argument.substring(0,quantityIndex).trim().toLowerCase();
         String quantityString = removePrefix(argument.substring(quantityIndex, prefixIndex), QUANTITY).trim();
         // [WARNING] might need to check if it's a valid integer
-        int quantity = Integer.parseInt(quantityString);
+        int quantity;
+        try {
+            quantity = Integer.parseInt(quantityString);
+        }catch(NumberFormatException error){
+            throw new FlorizzException("Invalid number inputted, please enter a sensible number next time!");
+        }
         String bouquetName = removePrefix(argument.substring(prefixIndex), ADD_FLOWER_PREFIX).trim();
         if (includeColour){
             int colourIndex = argument.indexOf(COLOUR);
@@ -285,7 +290,12 @@ public class Parser {
         String flowerName = argument.substring(0, quantityIndex).trim().toLowerCase();
         String quantityString = removePrefix(argument.substring(quantityIndex, prefixIndex), QUANTITY).trim();
         // [WARNING] might need to check if it's a valid integer
-        int quantity = Integer.parseInt(quantityString);
+        int quantity;
+        try {
+            quantity = Integer.parseInt(quantityString);
+        }catch(NumberFormatException error){
+            throw new FlorizzException("Invalid number inputted, please enter a sensible number next time!");
+        }
         String bouquetName = removePrefix(argument.substring(prefixIndex), REMOVE_FLOWER_PREFIX).trim();
         if (includeColour){
             int colourIndex = argument.indexOf(COLOUR);
