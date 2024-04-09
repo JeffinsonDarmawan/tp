@@ -139,7 +139,7 @@ public class Ui {
     /**
      * Prints error message thrown by Florizz Exception.
      *
-     * @param error
+     * @param error Error message
      */
     public void printError(FlorizzException error){
         System.out.println(error.errorMessage);
@@ -284,10 +284,10 @@ public class Ui {
     /**
      * print ui if flower added successfully
      *
-     * @param bouquetList
-     * @param flowerName
-     * @param quantity
-     * @param bouquetName
+     * @param bouquetList The list of bouquets.
+     * @param flowerName The name of the flower added.
+     * @param quantity The quantity of the flower added.
+     * @param bouquetName The name of the bouquet to which the flower was added.
      */
     public void printAddFlowerSuccess(ArrayList<Bouquet> bouquetList,
                                       String flowerName, Integer quantity, String bouquetName) {
@@ -300,10 +300,10 @@ public class Ui {
     /**
      * print ui if flower removed successfully
      *
-     * @param bouquetList
-     * @param flowerName
-     * @param quantity
-     * @param bouquetName
+     * @param bouquetList The list of bouquets.
+     * @param flowerName The name of the flower removed.
+     * @param quantity The quantity of the flower removed.
+     * @param bouquetName The name of the bouquet from which the flower was removed.
      */
     public void printRemoveFlowerSuccess(ArrayList<Bouquet> bouquetList,
                                          String flowerName, Integer quantity, String bouquetName) {
@@ -316,9 +316,9 @@ public class Ui {
     /**
      * print ui if flower removed can't be found
      *
-     * @param bouquetList
-     * @param flowerName
-     * @param bouquetName
+     * @param bouquetList The list of bouquets.
+     * @param flowerName The name of the flower that couldn't be found.
+     * @param bouquetName The name of the bouquet in which the flower couldn't be found.
      */
     public void printRemoveFlowerUnsuccessful(ArrayList<Bouquet> bouquetList, String flowerName, String bouquetName) {
         lastCommand = "OTHERS";
@@ -326,6 +326,12 @@ public class Ui {
         printAllBouquets(bouquetList);
     }
 
+    /**
+     * Prints a message to the UI indicating a fuzzy input detection.
+     *
+     * @param userInput The user's input.
+     * @param bestMatch The best matching suggestion for the user's input.
+     */
     public void printFuzzyInputDetection (String userInput, String bestMatch) {
         System.out.println("--> Your input is [" + userInput
                 + "] but I am guessing you mean [" + bestMatch + "]");

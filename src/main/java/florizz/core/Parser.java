@@ -111,26 +111,26 @@ public class Parser {
     public static String[] commandHandler(String input) throws FlorizzException {
         String[] outputs = new String[2];
         String trimmedInput = input.trim();
-        String separatedInput = FuzzyLogic.separateInput(trimmedInput);
-        int firstWhitespace = separatedInput.indexOf(" ");
+        String processedInput = FuzzyLogic.processCommand(trimmedInput);
+        int firstWhitespace = processedInput.indexOf(" ");
 
         if (firstWhitespace != -1) {
-            outputs[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
+            outputs[0] = FuzzyLogic.detectItem(processedInput.substring(0,firstWhitespace).toLowerCase());
             switch (outputs[0]) {
             case ("save"):
             case ("delete"): // Fallthrough
             case ("new"):
-                outputs[1] = trimmedInput.substring(firstWhitespace).trim();
+                outputs[1] = processedInput.substring(firstWhitespace).trim();
                 break;
             case ("remove"): // Fallthrough
             case ("add"):
                 String[] arguments = new String[2];
-                String trimmedArgument = trimmedInput.substring(firstWhitespace).trim();
+                String trimmedArgument = processedInput.substring(firstWhitespace).trim();
                 int secondWhitespace = trimmedArgument.indexOf(" ");
                 if (secondWhitespace < 0 && outputs[0].equals("remove")){
                     throw new FlorizzException("Incorrect usage of remove." +
                             " Correct format: remove <flowerName> /q <quantity> /from <bouquetName>");
-                } else if (secondWhitespace < 0 && outputs[0].equals("add")) {
+                } else if (secondWhitespace < 0) { // add
                     throw new FlorizzException("Incorrect usage of add." +
                             " Correct format: add <flowerName> /q <quantity> /to <bouquetName>");
                 }
@@ -139,13 +139,12 @@ public class Parser {
                 outputs[1] = arguments[0] + " " + arguments[1];
                 break;
             default:
-                outputs[1] = FuzzyLogic.detectItem(trimmedInput.substring(firstWhitespace).trim());
+                outputs[1] = FuzzyLogic.detectItem(processedInput.substring(firstWhitespace).trim());
                 break;
             }
         } else {
-            outputs[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
+            outputs[0] = FuzzyLogic.detectItem(processedInput.toLowerCase());
         }
-
         if (firstWhitespace == -1 && (outputs[0].equals("save"))) {
             throw new FlorizzException("Please specify which bouquet you are saving!");
         }

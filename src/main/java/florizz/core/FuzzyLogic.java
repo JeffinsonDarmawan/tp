@@ -1,5 +1,6 @@
 package florizz.core;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -81,7 +82,7 @@ public class FuzzyLogic {
         } else if (bestDistance == 0) {
             return bestMatch;
         } else {
-            logger.log(Level.WARNING, "No matching command/item/occasion found for input: {0}", userInput);
+            logger.log(Level.SEVERE, "No matching command/item/occasion found for input: {0}", userInput);
             throw new FlorizzException("No matching command/item/occasion found for input: " + userInput);
         }
     }
@@ -98,22 +99,22 @@ public class FuzzyLogic {
     private static int computeDLDistance(String item, String userInput) {
         assert item != null && userInput != null : "Strings cannot be null";
 
-        int m = item.length();
-        int n = userInput.length();
+        int itemLength = item.length();
+        int inputLength = userInput.length();
 
-        int[] previousRow = new int[n + 1];
-        int[] currentRow = new int[n + 1];
+        int[] previousRow = new int[inputLength + 1];
+        int[] currentRow = new int[inputLength + 1];
 
         // Initialize the first row
-        for (int j = 0; j <= n; j++) {
+        for (int j = 0; j <= inputLength; j++) {
             previousRow[j] = j;
         }
 
         // Calculate the Damerau-Levenshtein distance
-        for (int i = 1; i <= m; i++) {
+        for (int i = 1; i <= itemLength; i++) {
             currentRow[0] = i;
 
-            for (int j = 1; j <= n; j++) {
+            for (int j = 1; j <= inputLength; j++) {
                 int substitutionCost = (item.charAt(i - 1) == userInput.charAt(j - 1)) ? 0 : 1;
                 currentRow[j] = Math.min(Math.min(
                                 previousRow[j] + 1,             // deletion
@@ -134,8 +135,78 @@ public class FuzzyLogic {
         }
 
         // Return the Damerau-Levenshtein distance
-        assert previousRow[n] >= 0 : "Levenshtein distance cannot be negative";
-        return previousRow[n];
+        assert previousRow[inputLength] >= 0 : "Levenshtein distance cannot be negative";
+        return previousRow[inputLength];
+    }
+
+    // doesnt account for deletes abc --> something must be done before split and merge input
+    // my bouquets
+    //
+
+    protected static String processCommand(String userInput) throws FlorizzException {
+        if (userInput == null) {
+            throw new FlorizzException("Input cannot be empty.");
+        }
+        String correctedInput = splitAndMergeInput(userInput);
+        return correctedInput;
+    }
+
+    protected static String splitAndMergeInput(String userInput) throws FlorizzException {
+        String correctedInput = "";
+        String mergedInput = mergeInput(userInput);
+        String splitMergedInput = splitInput(mergedInput);
+        String[] arguments = splitMergedInput.split(" ");
+        System.out.println(Arrays.toString(arguments));
+        String bouquetName = "";
+        String removeArgument = "";
+        String addArgument = "";
+
+        if (arguments.length == 1 && !arguments[0].matches("(mybouquets|flowers|occasion|recommend|bye|help)")) {
+            correctedInput = userInput;
+        } else if (arguments[0].matches("(mybouquets|flowers|occasion|recommend|bye|help)")) {
+            correctedInput = detectItem(mergedInput);
+        } else if (arguments[0].matches("(info|flowers)")) {
+            correctedInput = detectItem(arguments[0]) + " " + detectItem(arguments[1]);
+        } else if (arguments[0].matches("(new)")) {
+            bouquetName = userInput.replace("n", "")
+                    .replace("e", "")
+                    .replace("w", "")
+                    .strip();
+            correctedInput = "new " + bouquetName;
+        } else if (arguments[0].matches("(delete)")) {
+            bouquetName = userInput.replace("d", "")
+                    .replace("e", "")
+                    .replace("l", "")
+                    .replace("e", "")
+                    .replace("t", "")
+                    .replace("e", "")
+                    .strip();
+            correctedInput = "delete " + bouquetName;
+        } else if (arguments[0].matches("(save)")) {
+            bouquetName = userInput.replace("s", "")
+                    .replace("a", "")
+                    .replace("v", "")
+                    .replace("e", "")
+                    .strip();
+            correctedInput = "save " + bouquetName;
+        } else if (arguments[0].matches("(remove)")) {
+            removeArgument = userInput.replace("r", "")
+                    .replace("e", "")
+                    .replace("m", "")
+                    .replace("o", "")
+                    .replace("v", "")
+                    .replace("e", "")
+                    .strip();
+            correctedInput = "remove " + removeArgument;
+        } else if (arguments[0].matches("(add)")) {
+            addArgument = userInput.replace("a", "")
+                    .replace("d", "")
+                    .replace("d", "")
+                    .strip();
+            correctedInput = "add " + addArgument;
+        }
+        System.out.println(correctedInput);
+        return correctedInput;
     }
 
     /**
@@ -149,7 +220,7 @@ public class FuzzyLogic {
      * @return correctedInput The input with a space between the command and the argument if applicable.
      * @throws FlorizzException if the input string is null.
      */
-    protected static String separateInput(String userInput) throws FlorizzException {
+    protected static String splitInput(String userInput) throws FlorizzException {
         if (userInput == null) {
             throw new FlorizzException("Input cannot be empty.");
         }
@@ -158,23 +229,25 @@ public class FuzzyLogic {
         if (userInput.matches("(info)[a-zA-Z].*")) {
             String argumentInfo = userInput.replaceAll("(info)", "");
             correctedInput = "info " + argumentInfo;
-        } else if (userInput.matches("(delete)[a-zA-Z].*")) {
-            String argumentDelete = userInput.replaceAll("(delete)", "");
+        } else if (userInput.matches("(delete).+")) {
+            String argumentDelete = userInput.replace("delete", "");
             correctedInput = "delete " + argumentDelete;
         } else if (userInput.matches("(flowers)[a-zA-Z].*")) {
             String argumentFlowers = userInput.replaceAll("(flowers)", "");
             correctedInput = "flowers " + argumentFlowers;
-        } else if (userInput.matches("(new)[a-zA-Z].*")) {
-            String argumentNew = userInput.replaceAll("(new)", "");
+        } else if (userInput.matches("(new).+")) {
+            String argumentNew = userInput.replace("new", "");
             correctedInput = "new " + argumentNew;
-        } else if (userInput.matches("(add)[a-zA-Z].*")) {
-            String argumentAdd = userInput.replaceAll("(add)", "");
+        } else if (userInput.matches("(add)[a-zA-Z].+")) {
+            System.out.println(userInput);
+            String argumentAdd = userInput.replace("add", "");
+            System.out.println(argumentAdd);
             correctedInput = "add " + argumentAdd;
-        } else if (userInput.matches("(remove)[a-zA-Z].*")) {
-            String argumentRemove = userInput.replaceAll("(remove)", "");
+        } else if (userInput.matches("(remove)[a-zA-Z].+")) {
+            String argumentRemove = userInput.replace("remove", "");
             correctedInput = "remove " + argumentRemove;
-        } else if (userInput.matches("(save)[a-zA-Z].*")) {
-            String argumentSave = userInput.replaceAll("(save)", "");
+        } else if (userInput.matches("(save)[a-zA-Z].+")) {
+            String argumentSave = userInput.replace("save", "");
             correctedInput = "save " + argumentSave;
         }
 
@@ -183,4 +256,12 @@ public class FuzzyLogic {
         }
         return correctedInput;
     }
+
+    protected static String mergeInput(String userInput) throws FlorizzException {
+        if (userInput == null) {
+            throw new FlorizzException("Input cannot be empty.");
+        }
+        return userInput.replaceAll("\\s", "");
+    }
+
 }
