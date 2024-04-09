@@ -16,6 +16,7 @@ import florizz.command.BackCommand;
 import florizz.command.NextCommand;
 import florizz.command.RecommendCommand;
 import florizz.objects.Bouquet;
+import florizz.objects.Flower;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,13 +29,17 @@ import java.util.logging.Logger;
 public class Parser {
     private static Logger logger = Logger.getLogger(Florizz.class.getName());
     // prefixes to parse input
+    private static final String COLOUR = "/c";
     private static final String QUANTITY = "/q";
     private static final String ADD_FLOWER_PREFIX = "/to";
     private static final String REMOVE_FLOWER_PREFIX = "/from";
 
     // regex
     private static final String ADD_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/to(.+)";
+
+    private static final String ADD_FLOWER_AND_COLOUR_REGEX = "(.+)/c(\\s*)(.+)(\\s*)/q(\\s*)(\\d+)(\\s*)/to(.+)";
     private static final String REMOVE_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/from(.+)";
+    private static final String REMOVE_FLOWER_AND_COLOUR_REGEX = "(.+)/c(\\s*)(.+)(\\s*)/q(\\s*)(\\d+)(\\s*)/from(.+)";
     private static final String PARSE_OCCASION_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
     private static final String PARSE_COLOUR_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
     private static final String SAVE_BOUQUET_REGEX = "^\\s*(yes|no)\\s*$";
@@ -110,39 +115,42 @@ public class Parser {
      */
     public static String[] commandHandler(String input) throws FlorizzException {
         String[] outputs = new String[2];
-        String trimmedInput = input.trim();
-        int firstWhitespace = trimmedInput.indexOf(" ");
+        int firstWhitespace = input.indexOf(" ");
 
         if (firstWhitespace != -1) {
-            outputs[0] = FuzzyLogic.detectItem(trimmedInput.substring(0,firstWhitespace).toLowerCase());
+            outputs[0] = FuzzyLogic.detectItem(input.substring(0,firstWhitespace).toLowerCase());
             switch (outputs[0]) {
             case ("save"):
             case ("delete"): // Fallthrough
             case ("new"):
-                outputs[1] = trimmedInput.substring(firstWhitespace).trim();
+                outputs[1] = input.substring(firstWhitespace).trim();
                 break;
             case ("remove"): // Fallthrough
             case ("add"):
                 String[] arguments = new String[2];
-                String trimmedArgument = trimmedInput.substring(firstWhitespace).trim();
+                String trimmedArgument = input.substring(firstWhitespace).trim();
                 int secondWhitespace = trimmedArgument.indexOf(" ");
                 if (secondWhitespace < 0 && outputs[0].equals("remove")){
                     throw new FlorizzException("Incorrect usage of remove." +
-                            " Correct format: remove <flowerName> /q <quantity> /from <bouquetName>");
+                            " Correct format: remove <flowerName> " +
+                            "/c <flowerColour> (optional) " +
+                            "/q <quantity> /from <bouquetName>");
                 } else if (secondWhitespace < 0 && outputs[0].equals("add")) {
                     throw new FlorizzException("Incorrect usage of add." +
-                            " Correct format: add <flowerName> /q <quantity> /to <bouquetName>");
+                            " Correct format: add <flowerName> " +
+                            "/c <flowerColour> (optional) " +
+                            "/q <quantity> /to <bouquetName>");
                 }
                 arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,secondWhitespace));
                 arguments[1] = trimmedArgument.substring(secondWhitespace).trim();
                 outputs[1] = arguments[0] + " " + arguments[1];
                 break;
             default:
-                outputs[1] = FuzzyLogic.detectItem(trimmedInput.substring(firstWhitespace).trim());
+                outputs[1] = FuzzyLogic.detectItem(input.substring(firstWhitespace).trim());
                 break;
             }
         } else {
-            outputs[0] = FuzzyLogic.detectItem(trimmedInput.toLowerCase());
+            outputs[0] = FuzzyLogic.detectItem(input.toLowerCase());
         }
 
         if (firstWhitespace == -1 && (outputs[0].equals("save"))) {
@@ -210,6 +218,7 @@ public class Parser {
      * @throws FlorizzException If the input does not match the required format.
      */
     private static AddFlowerCommand handleAddFlower(String argument, boolean enableUi) throws FlorizzException {
+        boolean includeColour = false;
         if (argument == null) {
             throw new FlorizzException("No argument detected! " +
                     "Please use the correct format of 'add <flowerName> /q <quantity> /to <bouquetName>");
@@ -220,6 +229,9 @@ public class Parser {
                     "Please use the correct format of 'add <flowerName> /q <quantity> /to <bouquetName>");
         }
 
+        if (argument.matches(ADD_FLOWER_AND_COLOUR_REGEX)){
+            includeColour = true;
+        }
         // [WARNING] might need to check for extra slash k
 
         int prefixIndex = argument.indexOf(ADD_FLOWER_PREFIX);
@@ -230,7 +242,18 @@ public class Parser {
         // [WARNING] might need to check if it's a valid integer
         int quantity = Integer.parseInt(quantityString);
         String bouquetName = removePrefix(argument.substring(prefixIndex), ADD_FLOWER_PREFIX).trim();
-
+        if (includeColour){
+            int colourIndex = argument.indexOf(COLOUR);
+            try{
+                flowerName = argument.substring(0,colourIndex).trim();
+                String colourString = removePrefix(argument.substring(colourIndex, quantityIndex), COLOUR).trim();
+                Flower.Colour colourToAdd = Flower.stringToColour(colourString);
+                return new AddFlowerCommand(flowerName, colourToAdd, quantity, bouquetName, enableUi);
+            } catch( IllegalArgumentException error){
+                throw new FlorizzException("Tried to add a non recognised colour" +
+                        "Type 'flowers' to view all the currently available flowers and their colours.");
+            }
+        }
         return new AddFlowerCommand(flowerName, quantity, bouquetName, enableUi);
     }
 
@@ -241,6 +264,7 @@ public class Parser {
      * @throws FlorizzException If the input does not match the required format.
      */
     private static RemoveFlowerCommand handleRemoveFlower(String argument) throws FlorizzException {
+        boolean includeColour = false;
         if (argument == null) {
             throw new FlorizzException("No argument detected! " +
                     "Please use the correct format of 'remove <flowerName> /q <quantity> /from <bouquetName>");
@@ -250,7 +274,9 @@ public class Parser {
             throw new FlorizzException("Incorrect format detected! " +
                     "Please use the correct format of 'remove <flowerName> /q <quantity> /from <bouquetName>");
         }
-
+        if (argument.matches(REMOVE_FLOWER_AND_COLOUR_REGEX)){
+            includeColour = true;
+        }
         // [WARNING] might need to check for extra slash k
 
         int prefixIndex = argument.indexOf(REMOVE_FLOWER_PREFIX);
@@ -261,7 +287,18 @@ public class Parser {
         // [WARNING] might need to check if it's a valid integer
         int quantity = Integer.parseInt(quantityString);
         String bouquetName = removePrefix(argument.substring(prefixIndex), REMOVE_FLOWER_PREFIX).trim();
-
+        if (includeColour){
+            int colourIndex = argument.indexOf(COLOUR);
+            try{
+                flowerName = argument.substring(0,colourIndex).trim();
+                String colourString = removePrefix(argument.substring(colourIndex, quantityIndex), COLOUR).trim();
+                Flower.Colour colourToAdd = Flower.stringToColour(colourString);
+                return new RemoveFlowerCommand(flowerName, colourToAdd, quantity, bouquetName);
+            } catch(IllegalArgumentException error){
+                throw new FlorizzException("Tried to add a non recognised colour" +
+                        "Type 'flowers' to view all the currently available flowers and their colours.");
+            }
+        }
         return new RemoveFlowerCommand(flowerName, quantity, bouquetName);
     }
 

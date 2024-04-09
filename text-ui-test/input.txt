@@ -1,2 +1,13 @@
 help
+new test
+mybouquets
+add rose /c red /q 5 /to test
+mybouquets
+add rose /q 5 /to test
+dark crimson
+mybouquets
+remove rose /c red /q 4 /from test
+remove rose /q 4 /from test
+dark crimson
+mybouquets
 bye
