@@ -3,4 +3,7 @@ new test
 mybouquets
 add rose /c red /q 5 /to test
 mybouquets
+add rose /q 5 /to test
+dark crimson
+mybouquets
 bye
