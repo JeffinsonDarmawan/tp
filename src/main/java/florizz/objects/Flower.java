@@ -165,9 +165,9 @@ public class Flower {
      * @return The name and colour of the flower.
      */
     public String getNameAndColour() {
-        return colour.toString().charAt(0) +
-                colour.toString().replaceAll("_", " " ).substring(1).toLowerCase() + " " +
-                name;
+        return name + " (" + colour.toString().charAt(0) +
+                colour.toString().replaceAll("_", " " ).substring(1).toLowerCase() +
+                ")";
     }
 
     /**
