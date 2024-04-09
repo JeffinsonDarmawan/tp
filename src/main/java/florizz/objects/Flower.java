@@ -200,6 +200,8 @@ public class Flower {
      */
     @Override
     public String toString() {
+        String finalOccasion;
+        String finalMeaning;
         StringBuilder occasionsString = new StringBuilder("Occasions: ");
         StringBuilder meaningsString = new StringBuilder("Meanings: ");
         for (Occasion occasion : occasions){
@@ -211,11 +213,24 @@ public class Flower {
             meaningsString.append(meaning);
             meaningsString.append(", ");
         }
+        // Check if occasionString was updated
+        if (!(occasionsString.toString().equals("Occasions: "))) {
+            finalOccasion = occasionsString.substring(0,occasionsString.lastIndexOf(","));
+        } else {
+            finalOccasion = occasionsString.toString();
+        }
+        // Check if meaning String was updated
+        if (!(meaningsString.toString().equals("Meanings: "))) {
+            finalMeaning = meaningsString.substring(0,meaningsString.lastIndexOf(","));
+        } else {
+            finalMeaning = occasionsString.toString();
+        }
+
         return ("Name: " + name + "\n" +
                 "Colour: " + colourToString(colour) + "\n" +
-                occasionsString.substring(0, occasionsString.lastIndexOf(",")) + "\n" +
+                finalOccasion + "\n" +
                 "Price: $" + String.format("%.2f", price) + "\n" +
-                meaningsString.substring(0, meaningsString.lastIndexOf(",")));
+                finalMeaning);
     }
 
     @Override
