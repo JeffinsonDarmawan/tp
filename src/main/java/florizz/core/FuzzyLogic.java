@@ -187,6 +187,16 @@ public class FuzzyLogic {
             arguments[0] = userInput.substring(0,firstWhitespace).toLowerCase();
             arguments[1] = userInput.substring(firstWhitespace).trim();
             correctedInput = detectItem(arguments[0]) + " " + arguments[1];
+        } else if ((firstWhitespace == -1)
+                && userInput.equals("help")
+                || userInput.equals("mybouquets")
+                || userInput.equals("flowers")
+                || userInput.equals("recommend")
+                || userInput.equals("bye")
+                || userInput.equals("occasion")
+                || userInput.equals("back")
+                || userInput.equals("next")) {
+            correctedInput = userInput;
         } else {
             correctedInput = splitAndMergeInput(userInput);
         }

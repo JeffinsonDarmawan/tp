@@ -125,7 +125,6 @@ public class Parser {
             case ("save"): // Fallthrough
             case ("delete"): // Fallthrough
             case ("new"):
-
                 outputs[1] = processedInput.substring(firstWhitespace).trim();
                 break;
             case ("remove"): // Fallthrough
@@ -133,7 +132,7 @@ public class Parser {
                 String[] arguments = new String[2];
                 String trimmedArgument = processedInput.substring(firstWhitespace).trim();
                 int secondWhitespace = trimmedArgument.indexOf(" ");
-                if (secondWhitespace < 0 && outputs[0].equals("remove")){
+                if (secondWhitespace < 0 && outputs[0].equals("remove")) {
                     throw new FlorizzException("Incorrect usage of remove." +
                             " Correct format: remove <flowerName> " +
                             "/c <flowerColour> (optional) " +

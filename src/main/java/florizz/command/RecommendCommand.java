@@ -92,8 +92,7 @@ public class RecommendCommand extends Command{
      * Asks user for occasion
      * @return Occasion enum
      */
-
-    private Flower.Occasion askOccasion(Ui ui) throws FlorizzException{
+    private Flower.Occasion askOccasion(Ui ui) throws FlorizzException {
         logger.entering(RecommendCommand.class.getName(), "askOccasion");
         boolean isValidFormat = false;
         boolean isValidOccasion = false;
