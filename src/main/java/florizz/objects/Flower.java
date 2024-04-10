@@ -20,7 +20,7 @@ public class Flower {
      * Enumerates different colours a flower can have.
      */
     public enum Colour {
-        WHITE, BLUE, RED, PINK, DARK_CRIMSON,GREEN, YELLOW, PURPLE
+        WHITE, BLUE, RED, PINK, DARK_CRIMSON,GREEN, YELLOW, PURPLE, ORANGE
     }
 
     /**
@@ -223,7 +223,7 @@ public class Flower {
         if (!(meaningsString.toString().equals("Meanings: "))) {
             finalMeaning = meaningsString.substring(0,meaningsString.lastIndexOf(","));
         } else {
-            finalMeaning = occasionsString.toString();
+            finalMeaning = meaningsString.toString();
         }
 
         return ("Name: " + name + "\n" +

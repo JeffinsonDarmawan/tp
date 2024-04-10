@@ -50,25 +50,27 @@ public class RemoveFlowerCommand extends Command {
 
         ArrayList<Flower> matchingFlowers = FlowerDictionary.filterByName(
                 bouquetToRemoveFlower.getFlowerList(), flowerName);
-
+        Flower flowerToRemove;
         if (hasColour){
             ArrayList<Flower> matchedFlowerAndColour = FlowerDictionary.filterByColour(matchingFlowers, colour);
             if (!matchedFlowerAndColour.isEmpty()){
-                bouquetToRemoveFlower.removeFlower(matchedFlowerAndColour.get(0),this.quantity);
-                ui.printRemoveFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
+                flowerToRemove = matchedFlowerAndColour.get(0);
+                bouquetToRemoveFlower.removeFlower(flowerToRemove,this.quantity);
+                ui.printRemoveFlowerSuccess(bouquetList, flowerToRemove.getNameAndColour(), quantity, bouquetName);
             } else {
                 throw new FlorizzException("This bouquet does not contain that colour" +
                         "Type mybouquets to view all your bouquets.");
             }
         } else if (matchingFlowers.size()==1){
-            bouquetToRemoveFlower.removeFlower(matchingFlowers.get(0), this.quantity);
-            ui.printAddFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
+            flowerToRemove = matchingFlowers.get(0);
+            bouquetToRemoveFlower.removeFlower(flowerToRemove, this.quantity);
+            ui.printRemoveFlowerSuccess(bouquetList, flowerToRemove.getNameAndColour(), quantity, bouquetName);
 
         } else {
-            Flower flowerToRemove = ui.chooseColour(matchingFlowers, flowerName);
+            flowerToRemove = ui.chooseColour(matchingFlowers, flowerName);
             if (!flowerToRemove.getFlowerName().isBlank()){
                 bouquetToRemoveFlower.removeFlower(flowerToRemove, this.quantity);
-                ui.printRemoveFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
+                ui.printRemoveFlowerSuccess(bouquetList, flowerToRemove.getNameAndColour(), quantity, bouquetName);
             } else {
                 ui.printCancelCommand();
             }

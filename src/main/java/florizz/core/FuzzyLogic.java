@@ -75,7 +75,7 @@ public class FuzzyLogic {
 
         // Iterate over predefined commands
         for (String item : ITEMS.keySet()) {
-            int distance = computeDLDistance(item, userInput);
+            int distance = computeDLDistance(item.toUpperCase(), userInput.toUpperCase());
             if (distance < bestDistance) {
                 bestDistance = distance;
                 bestMatch = item;

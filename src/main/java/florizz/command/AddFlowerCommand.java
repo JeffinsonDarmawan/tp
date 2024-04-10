@@ -50,29 +50,31 @@ public class AddFlowerCommand extends Command{
         }
 
         ArrayList<Flower> matchingFlowers = FlowerDictionary.filterByName(flowerName);
-
+        Flower flowerToAdd;
         if (hasColour){
             ArrayList<Flower> matchedFlowerAndColour = FlowerDictionary.filterByColour(matchingFlowers, colour);
             if (!matchedFlowerAndColour.isEmpty()){
-                bouquetToAddFlower.addFlower(matchedFlowerAndColour.get(0),this.quantity);
+                flowerToAdd = matchedFlowerAndColour.get(0);
+                bouquetToAddFlower.addFlower(flowerToAdd,this.quantity);
                 if (enableUi) {
-                    ui.printAddFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
+                    ui.printAddFlowerSuccess(bouquetList, flowerToAdd.getNameAndColour(), quantity, bouquetName);
                 }
             } else {
                 throw new FlorizzException("This flower does not exist in that colour. " +
                         "Type info <flower> to view all available colours for this flower");
             }
         } else if (matchingFlowers.size()==1){
+            flowerToAdd = matchingFlowers.get(0);
             bouquetToAddFlower.addFlower(matchingFlowers.get(0), this.quantity);
             if (enableUi) {
-                ui.printAddFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
+                ui.printAddFlowerSuccess(bouquetList, flowerToAdd.getNameAndColour(), quantity, bouquetName);
             }
         } else {
-            Flower flowerToAdd = ui.chooseColour(matchingFlowers, flowerName);
+            flowerToAdd = ui.chooseColour(matchingFlowers, flowerName);
             if (!flowerToAdd.getFlowerName().isBlank()){
                 bouquetToAddFlower.addFlower(flowerToAdd, this.quantity);
                 if (enableUi) {
-                    ui.printAddFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
+                    ui.printAddFlowerSuccess(bouquetList, flowerToAdd.getNameAndColour(), quantity, bouquetName);
                 }
             } else {
                 ui.printCancelCommand();
