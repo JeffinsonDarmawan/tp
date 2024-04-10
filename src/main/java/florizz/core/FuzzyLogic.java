@@ -1,14 +1,17 @@
 package florizz.core;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Provides functionality for detecting the closest command based on user input,
- * and computing Levenshtein Distance between strings.
+ * by computing Levenshtein Distance between strings;
+ * removing unnecessary whitespaces within command word (e.g. h e l p, flo wer s);
+ * and splitting inputs with the correct words but wrong format (e.g. infoRose, deletebouquetname),
+ * for the purpose of reducing the impact human error and improving programme flow.
  */
 public class FuzzyLogic {
 
@@ -67,7 +70,7 @@ public class FuzzyLogic {
 
         // Iterate over predefined commands
         for (String item : ITEMS.keySet()) {
-            int distance = computeDLDistance(item, userInput);
+            int distance = computeDLDistance(item.toLowerCase(), userInput.toLowerCase());
             if (distance < bestDistance) {
                 bestDistance = distance;
                 bestMatch = item;
@@ -95,8 +98,9 @@ public class FuzzyLogic {
      * @param item The first string.
      * @param userInput The second string.
      * @return The Damerau-Levenshtein distance between the two strings.
+     * @throws FlorizzException if the loop tries to access elements beyond the array bounds.
      */
-    private static int computeDLDistance(String item, String userInput) {
+    private static int computeDLDistance(String item, String userInput) throws FlorizzException {
         assert item != null && userInput != null : "Strings cannot be null";
 
         int itemLength = item.length();
@@ -115,6 +119,10 @@ public class FuzzyLogic {
             currentRow[0] = i;
 
             for (int j = 1; j <= inputLength; j++) {
+                if (i > itemLength || j > inputLength) {
+                    throw new FlorizzException("Fuzzy Logic: Accessing element outside of array bounds");
+                }
+
                 int substitutionCost = (item.charAt(i - 1) == userInput.charAt(j - 1)) ? 0 : 1;
                 currentRow[j] = Math.min(Math.min(
                                 previousRow[j] + 1,             // deletion
@@ -139,74 +147,116 @@ public class FuzzyLogic {
         return previousRow[inputLength];
     }
 
-    // doesnt account for deletes abc --> something must be done before split and merge input
-    // my bouquets
-    //
-
+    /**
+     * Processes the user input command and returns the input string at the correct format.
+     *
+     *
+     * @param userInput The user input command string.
+     * @return The corrected input string after processing.
+     * @throws FlorizzException if the input is null or empty.
+     */
     protected static String processCommand(String userInput) throws FlorizzException {
         if (userInput == null) {
             throw new FlorizzException("Input cannot be empty.");
         }
-        String correctedInput = splitAndMergeInput(userInput);
+        String correctedInput;
+        String trimmedInput = userInput.trim();
+        int firstWhitespace = trimmedInput.indexOf(" ");
+        if ((firstWhitespace != -1)
+                && (userInput.startsWith("delete")
+                || userInput.startsWith("save")
+                || userInput.startsWith("new")
+                || userInput.startsWith("remove")
+                || userInput.startsWith("add")
+                || userInput.startsWith("info")
+                || userInput.startsWith("flowers"))) {
+            String[] arguments = new String[2];
+            arguments[0] = userInput.substring(0,firstWhitespace).toLowerCase();
+            arguments[1] = userInput.substring(firstWhitespace).trim();
+            correctedInput = detectItem(arguments[0]) + " " + arguments[1];
+        } else {
+            correctedInput = splitAndMergeInput(userInput);
+        }
         return correctedInput;
     }
 
+    /**
+     * Splits and merges the user input command into an input string with the correct format.
+     *
+     * @param userInput The user input command string.
+     * @return The corrected input string after splitting and merging.
+     * @throws FlorizzException if there is an issue processing the input.
+     */
     protected static String splitAndMergeInput(String userInput) throws FlorizzException {
-        String correctedInput = "";
-        String mergedInput = mergeInput(userInput);
-        String splitMergedInput = splitInput(mergedInput);
-        String[] arguments = splitMergedInput.split(" ");
-        System.out.println(Arrays.toString(arguments));
-        String bouquetName = "";
-        String removeArgument = "";
-        String addArgument = "";
+        try {
+            String correctedInput;
+            String mergedInput = mergeInput(userInput);
+            String splitMergedInput = splitInput(mergedInput);
+            String[] arguments = splitMergedInput.split(" ");
+            String bouquetName;
+            String removeArgument;
+            String addArgument;
+            Ui uiFuzzy = new Ui();
 
-        if (arguments.length == 1 && !arguments[0].matches("(mybouquets|flowers|occasion|recommend|bye|help)")) {
-            correctedInput = userInput;
-        } else if (arguments[0].matches("(mybouquets|flowers|occasion|recommend|bye|help)")) {
-            correctedInput = detectItem(mergedInput);
-        } else if (arguments[0].matches("(info|flowers)")) {
-            correctedInput = detectItem(arguments[0]) + " " + detectItem(arguments[1]);
-        } else if (arguments[0].matches("(new)")) {
-            bouquetName = userInput.replace("n", "")
-                    .replace("e", "")
-                    .replace("w", "")
-                    .strip();
-            correctedInput = "new " + bouquetName;
-        } else if (arguments[0].matches("(delete)")) {
-            bouquetName = userInput.replace("d", "")
-                    .replace("e", "")
-                    .replace("l", "")
-                    .replace("e", "")
-                    .replace("t", "")
-                    .replace("e", "")
-                    .strip();
-            correctedInput = "delete " + bouquetName;
-        } else if (arguments[0].matches("(save)")) {
-            bouquetName = userInput.replace("s", "")
-                    .replace("a", "")
-                    .replace("v", "")
-                    .replace("e", "")
-                    .strip();
-            correctedInput = "save " + bouquetName;
-        } else if (arguments[0].matches("(remove)")) {
-            removeArgument = userInput.replace("r", "")
-                    .replace("e", "")
-                    .replace("m", "")
-                    .replace("o", "")
-                    .replace("v", "")
-                    .replace("e", "")
-                    .strip();
-            correctedInput = "remove " + removeArgument;
-        } else if (arguments[0].matches("(add)")) {
-            addArgument = userInput.replace("a", "")
-                    .replace("d", "")
-                    .replace("d", "")
-                    .strip();
-            correctedInput = "add " + addArgument;
+            if (arguments.length == 1 && arguments[0]
+                    .matches("(mybouquets|flowers|occasion|recommend|bye|help|back|next)")) {
+                correctedInput = arguments[0];
+                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+            } else if (arguments[0].matches("(info|flowers)")) {
+                if (Objects.equals(arguments[1].toLowerCase(), "mothersday")) {
+                    arguments[1] = "Mothers Day";
+                }
+                correctedInput = arguments[0] + " " + arguments[1];
+                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+            } else if (arguments[0].matches("(new)")) {
+                bouquetName = userInput.replaceFirst("n", "")
+                        .replaceFirst("e", "")
+                        .replaceFirst("w", "")
+                        .strip();
+                correctedInput = "new " + bouquetName;
+                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+            } else if (arguments[0].matches("(delete)")) {
+                bouquetName = userInput.replaceFirst("d", "")
+                        .replaceFirst("e", "")
+                        .replaceFirst("l", "")
+                        .replaceFirst("e", "")
+                        .replaceFirst("t", "")
+                        .replaceFirst("e", "")
+                        .strip();
+                correctedInput = "delete " + bouquetName;
+                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+            } else if (arguments[0].matches("(save)")) {
+                bouquetName = userInput.replaceFirst("s", "")
+                        .replaceFirst("a", "")
+                        .replaceFirst("v", "")
+                        .replaceFirst("e", "")
+                        .strip();
+                correctedInput = "save " + bouquetName;
+                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+            } else if (arguments[0].matches("(remove)")) {
+                removeArgument = userInput.replaceFirst("r", "")
+                        .replaceFirst("e", "")
+                        .replaceFirst("m", "")
+                        .replaceFirst("o", "")
+                        .replaceFirst("v", "")
+                        .replaceFirst("e", "")
+                        .strip();
+                correctedInput = "remove " + removeArgument;
+                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+            } else if (arguments[0].matches("(add)")) {
+                addArgument = userInput.replaceFirst("a", "")
+                        .replaceFirst("d", "")
+                        .replaceFirst("d", "")
+                        .strip();
+                correctedInput = "add " + addArgument;
+                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+            } else {
+                correctedInput = userInput;
+            }
+            return correctedInput;
+        } catch (Exception e) {
+            throw new FlorizzException("Error processing input: " + e.getMessage());
         }
-        System.out.println(correctedInput);
-        return correctedInput;
     }
 
     /**
@@ -227,27 +277,25 @@ public class FuzzyLogic {
 
         String correctedInput = "";
         if (userInput.matches("(info)[a-zA-Z].*")) {
-            String argumentInfo = userInput.replaceAll("(info)", "");
+            String argumentInfo = userInput.replaceFirst("(info)", "");
             correctedInput = "info " + argumentInfo;
         } else if (userInput.matches("(delete).+")) {
-            String argumentDelete = userInput.replace("delete", "");
+            String argumentDelete = userInput.replaceFirst("delete", "");
             correctedInput = "delete " + argumentDelete;
         } else if (userInput.matches("(flowers)[a-zA-Z].*")) {
-            String argumentFlowers = userInput.replaceAll("(flowers)", "");
+            String argumentFlowers = userInput.replaceFirst("(flowers)", "");
             correctedInput = "flowers " + argumentFlowers;
         } else if (userInput.matches("(new).+")) {
-            String argumentNew = userInput.replace("new", "");
+            String argumentNew = userInput.replaceFirst("new", "");
             correctedInput = "new " + argumentNew;
         } else if (userInput.matches("(add)[a-zA-Z].+")) {
-            System.out.println(userInput);
-            String argumentAdd = userInput.replace("add", "");
-            System.out.println(argumentAdd);
+            String argumentAdd = userInput.replaceFirst("add", "");
             correctedInput = "add " + argumentAdd;
         } else if (userInput.matches("(remove)[a-zA-Z].+")) {
-            String argumentRemove = userInput.replace("remove", "");
+            String argumentRemove = userInput.replaceFirst("remove", "");
             correctedInput = "remove " + argumentRemove;
         } else if (userInput.matches("(save)[a-zA-Z].+")) {
-            String argumentSave = userInput.replace("save", "");
+            String argumentSave = userInput.replaceFirst("save", "");
             correctedInput = "save " + argumentSave;
         }
 
@@ -257,11 +305,17 @@ public class FuzzyLogic {
         return correctedInput;
     }
 
+    /**
+     * Merges the user input command by removing all whitespace characters.
+     *
+     * @param userInput The user input command string.
+     * @return The merged input string with whitespace removed.
+     * @throws FlorizzException if the input is null.
+     */
     protected static String mergeInput(String userInput) throws FlorizzException {
         if (userInput == null) {
             throw new FlorizzException("Input cannot be empty.");
         }
         return userInput.replaceAll("\\s", "");
     }
-
 }
