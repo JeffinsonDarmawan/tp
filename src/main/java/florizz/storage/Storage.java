@@ -70,7 +70,7 @@ public class Storage {
             for (Map.Entry<Flower, Integer> k : tempHashMap.entrySet()) {
                 Flower flower = k.getKey();
                 Integer quantity = k.getValue();
-                bouquetStorageWriter.write("add " + flower.getFlowerName() +
+                bouquetStorageWriter.write("add " + flower.getFlowerName() + " /c " + flower.getColour() +
                         " /q " + quantity + " /to " + bouquetName + "\n");
             }
         }

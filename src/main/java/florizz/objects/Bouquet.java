@@ -4,6 +4,7 @@ package florizz.objects;
 
 import florizz.core.FlorizzException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.Objects;
@@ -121,5 +122,9 @@ public class Bouquet {
 
     public void setName(String newName) {
         this.bouquetName = newName;
+    }
+
+    public ArrayList<Flower> getFlowerList (){
+        return new ArrayList<Flower> (flowerHashMap.keySet());
     }
 }

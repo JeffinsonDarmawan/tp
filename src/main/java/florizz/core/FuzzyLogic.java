@@ -46,6 +46,19 @@ public class FuzzyLogic {
         ITEMS.put("Valentines", "Occasion");
         ITEMS.put("Mothers Day", "Occasion");
         ITEMS.put("Funeral", "Occasion");
+        ITEMS.put("Eucalyptus", "Flower");
+        ITEMS.put("Dusty Miller", "Flower");
+        ITEMS.put("Pistacia", "Flower");
+        ITEMS.put("Pittosporum", "Flower");
+        ITEMS.put("Chamomile", "Flower");
+        ITEMS.put("Astilbe", "Flower");
+        ITEMS.put("Hypericum", "Flower");
+        ITEMS.put("Freesia", "Flower");
+        ITEMS.put("Helichrysum", "Flower");
+        ITEMS.put("Limonium", "Flower");
+        ITEMS.put("Limonium Perezii", "Flower");
+        ITEMS.put("Statice", "Flower");
+        ITEMS.put("Rice Flower", "Flower");
     }
 
     /**

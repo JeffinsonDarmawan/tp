@@ -39,7 +39,7 @@ Removing Bouquets follows a similar logic, just that instead of calling `Bouquet
 
 `info <flowerName>` command prints information about the specified flower
 
-![Info Command Sequence Diagram](/docs/UML-diagrams/Ian/InfoCommandUML.png)
+![Info Command Sequence Diagram](UML-diagrams/Ian/InfoCommandUML.png)
 
 Step 1: Flower information mechanism utilize the `parser` class to parse user command for a specific flower name inputted.
 
@@ -85,7 +85,7 @@ Help command utilises the `parser` class to identify the keyword `help`
 
 `add <flower> /q <quantity> /to <targetBouquet>` command adds specified number of flower to a bouquet
 
-![Add Flower Command Diagram](/docs/UML-diagrams/Ijaaz/Ijaaz-UML.png)
+![Add Flower Command Diagram](UML-diagrams/Ijaaz/Ijaaz-UML.png)
 
 Step 1: Firstly the input is put into the `Parser.parse()` method to identify that it is infact an add flower command.
 
@@ -103,7 +103,7 @@ Step 5: A confirmation message is then sent back to the user
 
 The proposed storage mechanism will utilize a class `storage` who is in charge of getting the file, `encoder` which will encode current model into a .txt file format, `decoder` which will decode .txt file into a usable model.
 
-![Storage Class Diagram](/docs/UML-diagrams/Ian/storage.png)
+![Storage Class Diagram](UML-diagrams/Ian/storage.png)
 
 #### Design Considerations:
 - Alternative 1 (current choice): use .txt files as storage
@@ -159,7 +159,7 @@ Priorities: High (must have) `* * *`, Medium (nice to have) `* *`, Low (unlikely
 
 ## Use cases
 
-(For all all use cases below, the System is `Florizz` and the Actor is the `user`, unless specified otherwise)
+(For all use cases below, the System is `Florizz` and the Actor is the `user`, unless specified otherwise)
 
 **Use case: Create a new bouquet named "for valentine" and add 3 stalks of rose into the bouquet**
 
