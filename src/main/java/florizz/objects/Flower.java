@@ -1,6 +1,8 @@
 package florizz.objects;
 
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Represents a flower with its name, colour, occasions, and price.
@@ -18,7 +20,7 @@ public class Flower {
      * Enumerates different colours a flower can have.
      */
     public enum Colour {
-        WHITE, BLUE, RED, PINK, DARK_CRIMSON,GREEN, YELLOW, PURPLE
+        WHITE, BLUE, RED, PINK, DARK_CRIMSON,GREEN, YELLOW, PURPLE, ORANGE
     }
 
     /**
@@ -163,9 +165,9 @@ public class Flower {
      * @return The name and colour of the flower.
      */
     public String getNameAndColour() {
-        return colour.toString().charAt(0) +
-                colour.toString().replaceAll("_", " " ).substring(1).toLowerCase() + " " +
-                name;
+        return name + " (" + colour.toString().charAt(0) +
+                colour.toString().replaceAll("_", " " ).substring(1).toLowerCase() +
+                ")";
     }
 
     /**
@@ -173,7 +175,7 @@ public class Flower {
      * @return The colour of the flower.
      */
     public String getColour (){
-        return colour.toString();
+        return colourToString(colour);
     }
 
     /**
@@ -198,6 +200,8 @@ public class Flower {
      */
     @Override
     public String toString() {
+        String finalOccasion;
+        String finalMeaning;
         StringBuilder occasionsString = new StringBuilder("Occasions: ");
         StringBuilder meaningsString = new StringBuilder("Meanings: ");
         for (Occasion occasion : occasions){
@@ -205,15 +209,47 @@ public class Flower {
             occasionsString.append(", ");
         }
 
-
         for (String meaning : meanings){
             meaningsString.append(meaning);
             meaningsString.append(", ");
         }
+        // Check if occasionString was updated
+        if (!(occasionsString.toString().equals("Occasions: "))) {
+            finalOccasion = occasionsString.substring(0,occasionsString.lastIndexOf(","));
+        } else {
+            finalOccasion = occasionsString.toString();
+        }
+        // Check if meaning String was updated
+        if (!(meaningsString.toString().equals("Meanings: "))) {
+            finalMeaning = meaningsString.substring(0,meaningsString.lastIndexOf(","));
+        } else {
+            finalMeaning = meaningsString.toString();
+        }
+
         return ("Name: " + name + "\n" +
                 "Colour: " + colourToString(colour) + "\n" +
-                occasionsString.substring(0, occasionsString.lastIndexOf(",")) + "\n" +
+                finalOccasion + "\n" +
                 "Price: $" + String.format("%.2f", price) + "\n" +
-                meaningsString.substring(0, meaningsString.lastIndexOf(",")));
+                finalMeaning);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        /* Check if o is an instance of Complex or not
+          "null instanceof [type]" also returns false */
+        if (!(obj instanceof Flower)) {
+            return false;
+        }
+
+        // typecast o to Complex so that we can compare data members
+        Flower c = (Flower) obj;
+
+        // Compare the data members and return accordingly
+        return (Objects.equals(c.name.toUpperCase(), this.name.toUpperCase()) &&
+                Objects.equals(c.colour, this.colour));
     }
 }

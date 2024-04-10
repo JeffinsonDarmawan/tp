@@ -11,12 +11,9 @@ public class Ui {
     private static ArrayList<Flower> lastShownList = new ArrayList<>();
     private static int lastPageNo = 0;
     private static final int PAGE_SIZE = 5;
-    private final Scanner inputScanner = new Scanner (System.in);
+    private static final Scanner inputScanner = new Scanner (System.in);
 
-
-
-
-    private String lastCommand = "";
+    private static String lastCommand = "";
     /**
      * Prints the introductory message.
      */
@@ -53,7 +50,7 @@ public class Ui {
      */
     public void printBouquetAdded(Bouquet bouquetAdded){
         lastCommand = "OTHERS";
-        System.out.println("Added new bouquet to list: \n" + bouquetAdded);
+        System.out.println("Added new bouquet to list:\n" + bouquetAdded);
         printBreakLine();
 
     }
@@ -64,7 +61,7 @@ public class Ui {
      */
     public void printBouquetDeleted(Bouquet bouquetDeleted){
         lastCommand = "OTHERS";
-        System.out.println("Deleted bouquet: \n" + bouquetDeleted);
+        System.out.println("Deleted bouquet:\n" + bouquetDeleted);
         printBreakLine();
 
     }
@@ -85,7 +82,7 @@ public class Ui {
             if (!flowerHashMap.isEmpty() ) {
                 for (Flower j : flowerHashMap.keySet()) {
                     if (flowerHashMap.get(j) != 0) {
-                        System.out.println("    - " + flowerHashMap.get(j) + " x " + j.getFlowerName());
+                        System.out.println("    - " + flowerHashMap.get(j) + " x " + j.getNameAndColour());
                         totalPrice += (flowerHashMap.get(j) * j.getPrice());
                     }
                 }
@@ -125,8 +122,10 @@ public class Ui {
         System.out.println("2. delete <bouquetName> - Delete a bouquets");
         System.out.println("3. mybouquets - List current saved bouquets");
         System.out.println("4. info <flowerName> - Provide information on chosen flower");
-        System.out.println("5. add <flowerName> /q <quantity> /to <bouquetName> - add flower to a bouquet");
-        System.out.println("6. remove <flowerName> /q <quantity> /from <bouquetName> - remove flower from a bouquet");
+        System.out.println("5. add <flowerName> /c <colour> (optional) /q <quantity> " +
+                "/to <bouquetName> - add flower to a bouquet");
+        System.out.println("6. remove <flowerName> /c <colour> (optional) /q <quantity> " +
+                "/from <bouquetName> - remove flower from a bouquet");
         System.out.println("7. flowers - Shows a list of flowers that can be added into mybouquets");
         System.out.println("8. flowers <occasion> - Shows a list of flowers associated with said occasion");
         System.out.println("9. occasion - Shows a list of occasions associated with available flowers");
@@ -155,16 +154,10 @@ public class Ui {
     }
 
     private static void printNextOrBack(int pageNo, int maxPages){
-        if (pageNo < maxPages && pageNo > 1){
-            System.out.println("Type 'next' to go to the next page, or 'back' to go to the previous page.");
-        } else if (pageNo < maxPages){
-            System.out.println("Type 'next' to go to the next page.");
-        } else if (pageNo > 1){
-            System.out.println("Type 'back' to go to the previous page.");
-        }
+
     }
 
-    private static void printFlowerList(boolean needsInfo){
+    private void printFlowerList(boolean needsInfo){
         int maxPages = (int) Math.ceil((double)lastShownList.size() / PAGE_SIZE);
         for (int i = (lastPageNo-1)*PAGE_SIZE; i < Math.min(lastPageNo*PAGE_SIZE, lastShownList.size()); i++) {
             if (needsInfo) {
@@ -173,7 +166,13 @@ public class Ui {
                 System.out.println(i + 1 + ". " + lastShownList.get(i).getNameAndColour());
             }
         }
-        printNextOrBack(lastPageNo, maxPages);
+        if (lastPageNo < maxPages && lastPageNo > 1){
+            System.out.println("Type 'next' to go to the next page, or 'back' to go to the previous page.");
+        } else if (lastPageNo < maxPages){
+            System.out.println("Type 'next' to go to the next page.");
+        } else if (lastPageNo > 1){
+            System.out.println("Type 'back' to go to the previous page.");
+        }
         printBreakLine();
     }
     /**
@@ -185,7 +184,7 @@ public class Ui {
         lastCommand = "ALL_FLOWERS";
         int maxPages = (int) Math.ceil((double)lastShownList.size() / PAGE_SIZE);
         System.out.println("Showing page "  + pageNo + "/" + maxPages
-                + " of all the flowers you can add: ");
+                + " of all the flowers you can add:");
         printFlowerList(false);
     }
 
@@ -200,7 +199,7 @@ public class Ui {
         lastCommand = "FILTERED_FLOWERS " + filter;
         int maxPages = (int) Math.ceil((double)lastShownList.size() / PAGE_SIZE);
         System.out.println("Here is page " + lastPageNo + "/" + maxPages +
-                " of all the flowers related to " + filter + ": ");
+                " of all the flowers related to " + filter + ":");
         printFlowerList(false);
     }
 
@@ -215,7 +214,7 @@ public class Ui {
         lastCommand = "INFO_FLOWERS " + targetFlower;
         int maxPages = (int) Math.ceil((double)lastShownList.size() / PAGE_SIZE);
         System.out.println("Here is page " + lastPageNo + "/" + maxPages +
-                " of info regarding flowers whose name contains " + targetFlower + ": ");
+                " of info regarding flowers whose name contains " + targetFlower + ":");
         printFlowerList(true);
     }
 
@@ -243,29 +242,31 @@ public class Ui {
             throw new FlorizzException("There is no list of flowers to view. " +
                     "Type 'flowers' to view a list of all flowers.");
         }
-
-
     }
 
     public void printBackPage() throws FlorizzException{
-        if (lastPageNo == 1){
-            throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
-        } else {
-            switch (lastCommand.split(" ")[0]) {
-            case ("ALL_FLOWERS"):
-                printAllDictFlowerName(lastPageNo-1);
-                break;
-            case ("FILTERED_FLOWERS"):
-                printFilteredFlowers(lastShownList, lastCommand.split(" ")[1],lastPageNo-1);
-                break;
-            case ("INFO_FLOWERS"):
-                printFlowerInfo(lastShownList, lastCommand.split(" ")[1], lastPageNo-1);
-                break;
-            default:
-                throw new FlorizzException("There is no list of flowers to view. " +
-                        "Type 'flowers' to view a list of all flowers.");
+        switch (lastCommand.split(" ")[0]) {
+        case ("ALL_FLOWERS"):
+            if (lastPageNo == 1){
+                throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
             }
-
+            printAllDictFlowerName(lastPageNo-1);
+            break;
+        case ("FILTERED_FLOWERS"):
+            if (lastPageNo == 1){
+                throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
+            }
+            printFilteredFlowers(lastShownList, lastCommand.split(" ")[1],lastPageNo-1);
+            break;
+        case ("INFO_FLOWERS"):
+            if (lastPageNo == 1){
+                throw new FlorizzException("There is no previous page, type 'next' to go to the next page");
+            }
+            printFlowerInfo(lastShownList, lastCommand.split(" ")[1], lastPageNo-1);
+            break;
+        default:
+            throw new FlorizzException("There is no list of flowers to view. " +
+                    "Type 'flowers' to view a list of all flowers.");
         }
     }
     /**
@@ -273,7 +274,7 @@ public class Ui {
      */
     public void printAllOccasions() {
         lastCommand = "OTHERS";
-        System.out.println("Here are all the occasions associated with the available flowers: ");
+        System.out.println("Here are all the occasions associated with the available flowers:");
         for (Flower.Occasion occasion : Flower.Occasion.values()){
             System.out.println("- " + Flower.occasionToString(occasion));
         }
@@ -292,7 +293,7 @@ public class Ui {
     public void printAddFlowerSuccess(ArrayList<Bouquet> bouquetList,
                                       String flowerName, Integer quantity, String bouquetName) {
         lastCommand = "OTHERS";
-        System.out.println("You have successfully added the following: " + System.lineSeparator() +
+        System.out.println("You have successfully added the following:" + System.lineSeparator() +
                            "    - " + quantity + " x " + flowerName + " -> Bouquet: " + bouquetName);
         printAllBouquets(bouquetList);
     }
@@ -308,7 +309,7 @@ public class Ui {
     public void printRemoveFlowerSuccess(ArrayList<Bouquet> bouquetList,
                                          String flowerName, Integer quantity, String bouquetName) {
         lastCommand = "OTHERS";
-        System.out.println("You have successfully removed the following: " + System.lineSeparator() +
+        System.out.println("You have successfully removed the following:" + System.lineSeparator() +
                            "    - " + quantity + " x " + flowerName + " -> Bouquet: " + bouquetName);
         printAllBouquets(bouquetList);
     }
@@ -346,29 +347,31 @@ public class Ui {
 
     /**
      * ask user for occasion input
-     * @return String of occasion input
      */
-    public String printAskOccasion() {
+    public void printAskOccasion() {
         System.out.println("For what occasion are you buying flowers for?");
         this.printAllOccasions();
-        return inputScanner.nextLine();
+        System.out.println("Type 'cancel' if you would like to exit the recommendation page");
     }
 
+    /**
+     * Prints prompt to ask user to input bouquet name for recommended bouquet
+     */
     public void printAskBouquetName() {
         System.out.println("Great we managed to find some flowers for you!");
         System.out.println("Before we carry on what would you like to call your bouquet?");
+        System.out.println("Note: please take note 'cancel' cannot be used as a  bouquet name");
     }
 
     /**
      * ask user for colour input
      * @param eligibleFlowers list of flowers that are eligible for the occasion
-     * @return String of colour input
      */
-    public String printAskColour(ArrayList<Flower> eligibleFlowers) {
+    public void printAskColour(ArrayList<Flower> eligibleFlowers) {
         System.out.println("What colour would you like your bouquets to be?");
 
         // print all available colours in a given array list
-        System.out.println("Here is the list of colours available for the occasion: ");
+        System.out.println("Here is the list of colours available for the occasion:");
         // remove duplicate colours in eligible flowers
         ArrayList<String> colourList = new ArrayList<>();
         for (Flower flower : eligibleFlowers) {
@@ -379,8 +382,8 @@ public class Ui {
         for (String colour : colourList){
             System.out.println("- " + colour);
         }
+        System.out.println("Type 'cancel' if you would like to exit the recommendation page");
         printBreakLine();
-        return inputScanner.nextLine();
     }
 
     public String printAskSaveBouquet(Bouquet recommendedBouquet) {
@@ -399,4 +402,56 @@ public class Ui {
                 + bouquetName + ".txt'");
         printBreakLine();
     }
+
+    /**
+     * Asks the user to choose a colour of a flower from a list of the flowers.
+     * @param flowers The list of flowers where the user can choose the colour from
+     * @param flowerName The name of the flower that the user is trying to choose its colour from
+     * @return Flower the specific Flower with the correct colour. Is blank if user chose to cancel the command instead
+     */
+    public Flower chooseColour(ArrayList<Flower> flowers, String flowerName){
+        printGetFlowerColour(flowers, flowerName);
+
+        while (true){
+            String colourInput = getInput().trim().toLowerCase();
+            try {
+                switch (colourInput) {
+                case "back":
+                    printBackPage();
+                    break;
+                case "next":
+                    printNextPage();
+                    break;
+                case "cancel":
+                    return new Flower();
+                default:
+                    Flower.Colour chosenColour = Flower.stringToColour(colourInput);
+                    ArrayList<Flower> chosenFlowerList = FlowerDictionary.filterByColour(flowers, chosenColour);
+                    if (!chosenFlowerList.isEmpty()){
+                        return chosenFlowerList.get(0);
+                    } else {
+                        throw new FlorizzException("This flower is not available in this colour, " +
+                                "try typing a colour shown above!");
+                    }
+
+                }
+            } catch(FlorizzException error){
+                printError(error);
+            } catch(IllegalArgumentException error){
+                System.out.println("Unrecognised input, type a colour that's available for this flower, " +
+                        "or 'cancel' to go back to the main menu.");
+            }
+        }
+    }
+    public void printGetFlowerColour(ArrayList<Flower> flowers, String flowerName){
+        System.out.println("The flower you're looking for has more than one colour available, " +
+                "each with their own vastly different meanings. Here's some info:");
+        printFlowerInfo(flowers, flowerName, 1);
+        System.out.println("Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.");
+    }
+
+    public void printCancelCommand(){
+        System.out.println("Canceled command, returning to main menu.");
+    }
 }
+
