@@ -32,9 +32,10 @@ public class SaveCommand extends Command{
      */
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
+        assert !bouquetName.isEmpty() : "bouquet name cannot be empty";
         int bouquetIdx = bouquetList.indexOf(new Bouquet(bouquetName));
         if (bouquetIdx == -1) {
-            throw new FlorizzException("This bouquet does not exist. Create it by typing 'new <BOUQUETNAME>'");
+            throw new FlorizzException("This bouquet does not exist. Create it by typing 'new <bouquetName>'");
         }
         Storage storage = new Storage();
         try {

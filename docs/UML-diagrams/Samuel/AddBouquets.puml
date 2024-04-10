@@ -44,4 +44,5 @@ deactivate AddBouquetCommand
 destroy AddBouquetCommand
 
 Florizz-->user : "added valentines"
+deactivate Florizz
 @enduml

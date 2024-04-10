@@ -43,8 +43,12 @@ public class FlowerDictionary {
                 new String[]{"Mourning"}, Flower.Type.FLOWER);
         add("Rose", "Red", new String[]{"Valentines", "Wedding", "Mothers Day"}, 2.00,
                 new String[]{"Love"}, Flower.Type.FLOWER);
+        add("Rose", "Yellow", new String[]{}, 2.00,
+                new String[]{"Jealousy, Decrease of love, Infidelity"}, Flower.Type.FLOWER);
         add("Lily", "White", new String[]{"Funeral", "Wedding"}, 2.50,
                 new String[]{"Innocence"}, Flower.Type.FLOWER);
+        add("Lily", "Orange", new String[]{}, 2.50,
+                new String[]{"Hatred"}, Flower.Type.FLOWER);
         add("Daisy", "White", new String[]{"Valentines"}, 0.50,
                 new String[]{"Innocence"}, Flower.Type.FLOWER);
         add("Chrysanthemum", "White", new String[]{"Funeral"}, 1.00,
@@ -53,11 +57,12 @@ public class FlowerDictionary {
                 new String[]{"Forgiveness", "Gratitude"}, Flower.Type.FLOWER);
         add("Carnation", "Pink", new String[]{"Mothers Day"}, 2.00,
                 new String[]{"Gratitude", "Love"}, Flower.Type.FLOWER);
-
+        add("Carnation", "Red", new String[]{"Valentines"}, 2.00,
+                new String[]{"My heart aches", "Deep Love"}, Flower.Type.FLOWER);
         // [Fillers have yet to be implemented]
         add("Baby Breath", "White", new String[]{"Wedding", "Valentines", "Mothers Day"}, 1.00,
                 new String[]{"Innocence", "Kindness", "Care", "Humble"}, Flower.Type.FLOWER);
-        add("Eucalyptus", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FLOWER);
+        add("Eucalyptus", "Green", new String[]{"Wedding"}, 1.5, new String[]{"Love", "Kindness"}, Flower.Type.FLOWER);
         add("Dusty Miller", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
         add("Pistacia", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
         add("Pittosporum", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER);
@@ -118,7 +123,20 @@ public class FlowerDictionary {
     public static ArrayList<Flower> filterByName(String name) throws FlorizzException {
         ArrayList<Flower> filteredFlowers = new ArrayList<>();
         for (Flower flower : flowerDict) {
-            if (flower.getFlowerName().contains(name)) {
+            if (flower.getFlowerName().toLowerCase().contains(name.toLowerCase())) {
+                filteredFlowers.add(flower);
+            }
+        }
+        if (filteredFlowers.isEmpty()) {
+            throw new FlorizzException("Flower name is unidentified.");
+        }
+        return filteredFlowers;
+    }
+
+    public static ArrayList<Flower> filterByName(ArrayList<Flower> listOfFlowers, String name) throws FlorizzException {
+        ArrayList<Flower> filteredFlowers = new ArrayList<>();
+        for (Flower flower : listOfFlowers) {
+            if (flower.getFlowerName().toLowerCase().contains(name.toLowerCase())) {
                 filteredFlowers.add(flower);
             }
         }

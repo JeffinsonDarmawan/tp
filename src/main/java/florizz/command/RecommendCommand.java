@@ -56,12 +56,13 @@ public class RecommendCommand extends Command{
      * @param bouquetList List that contains all bouquets
      * @return The chosen valid bouquetName
      */
-    public String askBouquetName(Ui ui, ArrayList<Bouquet> bouquetList) {
+    public String askBouquetName(Ui ui, ArrayList<Bouquet> bouquetList) throws FlorizzException {
         boolean isValidName = false;
         String bouquetName = "placeHolder";
         ui.printAskBouquetName();
         while (!isValidName) {
             bouquetName = ui.getInput();
+            Parser.checkRecommendExitCondition(bouquetName);
             if (bouquetList.contains(new Bouquet(bouquetName))) {
                 System.out.println("Sorry a bouquet with this name already exists, please enter another name");
             } else {
@@ -91,18 +92,22 @@ public class RecommendCommand extends Command{
      * Asks user for occasion
      * @return Occasion enum
      */
-    private Flower.Occasion askOccasion(Ui ui) {
+
+    private Flower.Occasion askOccasion(Ui ui) throws FlorizzException{
         logger.entering(RecommendCommand.class.getName(), "askOccasion");
         boolean isValidFormat = false;
         boolean isValidOccasion = false;
         String occasionInput = "placeholder";
+        ui.printAskOccasion();
         while (!(isValidFormat && isValidOccasion)) {
-            occasionInput = ui.printAskOccasion();
+            occasionInput = ui.getInput();
+            Parser.checkRecommendExitCondition(occasionInput);
             isValidFormat = Parser.parseOccasion(occasionInput);
             isValidOccasion = Flower.isValidOccasion(occasionInput);
             // check if occasion is in our dictionary
             if (!isValidOccasion) {
-                System.out.println("This occasion does not exist.");
+                System.out.println("This occasion does not exist." +
+                        "Type 'cancel' if you would like to exit the recommendation page");
             }
         }
 
@@ -116,20 +121,23 @@ public class RecommendCommand extends Command{
      * @param eligibleFlowers list of flowers to choose from
      * @return Colour enum
      */
-    private Flower.Colour askColour(Ui ui, ArrayList<Flower> eligibleFlowers) {
+    private Flower.Colour askColour(Ui ui, ArrayList<Flower> eligibleFlowers) throws FlorizzException{
         assert !eligibleFlowers.isEmpty() : "Eligible flowers should not be empty";
         logger.entering(RecommendCommand.class.getName(), "askColour");
         String colourInput = "placeHolder";
         boolean isValidFormat = false;
         boolean isValidColour = false;
+        ui.printAskColour(eligibleFlowers);
         while (!(isValidColour && isValidFormat)) {
-            colourInput = ui.printAskColour(eligibleFlowers);
+            colourInput = ui.getInput();
+            Parser.checkRecommendExitCondition(colourInput);
             isValidFormat = Parser.parseColour(colourInput);
             isValidColour = Flower.isValidColour(colourInput);
 
             // check if colour is in our dictionary
             if (!isValidColour) {
-                System.out.println("This colour does not exist.");
+                System.out.println("This colour does not exist. " +
+                        "Type 'cancel' if you would like to exit the recommendation page");
             }
         }
 
@@ -144,7 +152,7 @@ public class RecommendCommand extends Command{
         boolean isValidFormat = false;
         boolean isValidInput = false;
         while (!(isValidInput && isValidFormat)) {
-            saveInput = ui.printAskSaveBouquet(recommendedBouquet);
+            saveInput = ui.printAskSaveBouquet(recommendedBouquet).toLowerCase();
             isValidFormat = Parser.parseSaveBouquet(saveInput);
             isValidInput = (saveInput.equalsIgnoreCase("yes") || saveInput.equalsIgnoreCase("no"));
         }

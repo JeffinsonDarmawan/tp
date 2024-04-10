@@ -14,6 +14,8 @@ public class RemoveFlowerCommand extends Command {
     private String flowerName;
     private Integer quantity;
     private String bouquetName;
+    private Flower.Colour colour;
+    private boolean hasColour = false;
 
     public RemoveFlowerCommand(String flowerName, int quantity, String bouquetName) {
         this.flowerName = flowerName;
@@ -21,6 +23,13 @@ public class RemoveFlowerCommand extends Command {
         this.bouquetName = bouquetName;
     }
 
+    public RemoveFlowerCommand(String flowerName, Flower.Colour colour, int quantity, String bouquetName) {
+        this.flowerName = flowerName;
+        this.quantity = quantity;
+        this.bouquetName = bouquetName;
+        this.colour = colour;
+        hasColour = true;
+    }
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
         logger.entering(RemoveFlowerCommand.class.getName(), "execute");
@@ -39,28 +48,38 @@ public class RemoveFlowerCommand extends Command {
                     "Create a bouquet by using 'new <bouquetName>`");
         }
 
-        boolean doesFlowerExist = false;
-        Flower flowerToBeAdded = new Flower();
-        for (int i = 0; !doesFlowerExist && i < FlowerDictionary.size(); i++) {
-            if (FlowerDictionary.get(i).getFlowerName().toLowerCase().equals(flowerName)) {
-                flowerToBeAdded = FlowerDictionary.get(i);
-                doesFlowerExist = true;
+        ArrayList<Flower> matchingFlowers = FlowerDictionary.filterByName(
+                bouquetToRemoveFlower.getFlowerList(), flowerName);
+        Flower flowerToRemove;
+        if (hasColour){
+            ArrayList<Flower> matchedFlowerAndColour = FlowerDictionary.filterByColour(matchingFlowers, colour);
+            if (!matchedFlowerAndColour.isEmpty()){
+                flowerToRemove = matchedFlowerAndColour.get(0);
+                bouquetToRemoveFlower.removeFlower(flowerToRemove,this.quantity);
+                ui.printRemoveFlowerSuccess(bouquetList, flowerToRemove.getNameAndColour(), quantity, bouquetName);
+            } else {
+                throw new FlorizzException("This bouquet does not contain that colour" +
+                        "Type mybouquets to view all your bouquets.");
             }
-        }
+        } else if (matchingFlowers.size()==1){
+            flowerToRemove = matchingFlowers.get(0);
+            bouquetToRemoveFlower.removeFlower(flowerToRemove, this.quantity);
+            ui.printRemoveFlowerSuccess(bouquetList, flowerToRemove.getNameAndColour(), quantity, bouquetName);
 
-        if (!doesFlowerExist) {
-            throw new FlorizzException("Mentioned flower is not in our database." + System.lineSeparator() +
-                    "Check available flowers: `flower` " + System.lineSeparator() +
-                    "Add custom flowers: {{TO BE DONE}}");
-        }
-
-        if (bouquetToRemoveFlower.removeFlower(flowerToBeAdded, this.quantity)) {
-            ui.printRemoveFlowerSuccess(bouquetList, flowerName, quantity, bouquetName);
         } else {
-            ui.printRemoveFlowerUnsuccessful(bouquetList, flowerName, bouquetName);
+            flowerToRemove = ui.chooseColour(matchingFlowers, flowerName);
+            if (!flowerToRemove.getFlowerName().isBlank()){
+                bouquetToRemoveFlower.removeFlower(flowerToRemove, this.quantity);
+                ui.printRemoveFlowerSuccess(bouquetList, flowerToRemove.getNameAndColour(), quantity, bouquetName);
+            } else {
+                ui.printCancelCommand();
+            }
+
         }
 
         logger.exiting(RemoveFlowerCommand.class.getName(), "execute");
         return true;
     }
+
+
 }
