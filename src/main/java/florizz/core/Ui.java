@@ -27,6 +27,7 @@ public class Ui {
                 " |_| |_|\\___/|_|  |_/___/___|\n" +
                 "\n";
         System.out.println("Hello from\n" + logo);
+        System.out.println("Type `help`, to view a list of valid commands!");
     }
 
     /**
