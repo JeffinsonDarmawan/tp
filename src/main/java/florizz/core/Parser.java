@@ -94,6 +94,9 @@ public class Parser {
             case ("save"):
                 command = new SaveCommand(decodedInput[1]);
                 break;
+            case ("compare"):
+                command = handleCompareCommand();
+                break;
             default:
                 throw new FlorizzException("Unidentified input, type help to get a list of all commands!");
             }
