@@ -1,13 +1,9 @@
-# Design & Implementation
+# Jeffinson Darmawan - Project Portfolio Page
 
-## Flower Removal Command
+## Overview
+Florizz is a digital florist replacement that helps users choose appropriate
+flowers to put into a bouquet for various occasions. 
 
-**Step 1:** Removing flowers utilise the `parser` class to parse user command to identify which flower to remove, 
-how much to remove and from which bouquet to remove.
-
-**Step 2:** User will input `remove <flowerName> /q <quantity> /from <bouquetName>` and once `parser` identifies the 
-appropriate keywords, it will instantiate the `HelpCommand` class and run its `execute()` method.
-
-**Step 3:** `HelpCommand` class will call `printHelpMessage()` method of `Ui` class
-
-**Step 4:** The list of valid commands will be printed by the `Ui` class
+### Summary of Contributions 
+* Code Contribution: [RepoSense Report](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=jeffinsondarmawan&breakdown=true)
+* 
