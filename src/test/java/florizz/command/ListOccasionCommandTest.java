@@ -1,7 +1,5 @@
 package florizz.command;
 
-
-
 import florizz.core.Ui;
 import florizz.objects.Bouquet;
 import org.junit.jupiter.api.Test;
@@ -10,13 +8,13 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class HelpTest {
+class ListOccasionCommandTest {
+
     @Test
-    void executeHelpCommandTrue(){
-        // next two line might not be necessary
+    void executeListOccasionTest() {
         ArrayList<Bouquet> tempBouquetList = new ArrayList<>();
         Ui ui = new Ui();
-        HelpCommand helpCommand = new HelpCommand();
-        assertTrue(helpCommand.execute(tempBouquetList, ui));
+        ListOccasionCommand occasionCommand = new ListOccasionCommand();
+        assertTrue(occasionCommand.execute(tempBouquetList, ui));
     }
 }
