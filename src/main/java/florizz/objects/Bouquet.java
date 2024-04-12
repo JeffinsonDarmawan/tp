@@ -87,7 +87,7 @@ public class Bouquet {
      * @param flowerName The name of the flower to remove
      * @param quantity The quantity of the flower to remove
      * @return True if the flower was successfully removed, false otherwise
-     * @throws FlorizzException If the specified quantity is less than or equal to 0 or if it exceeds the current quantity of flowers
+     * @throws FlorizzException If the specified quantity is <= 0 or if it exceeds the current quantity of flowers
      */
     public boolean removeFlower(Flower flowerName, Integer quantity) throws FlorizzException {
         // if flower already in bouquet
