@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DeleteBouquetTest {
     @Test
@@ -22,7 +23,7 @@ public class DeleteBouquetTest {
         Command testDeleteBouquetCommand = new DeleteBouquetCommand(testBouquet);
         controlList.remove(testBouquet);
         try {
-            testDeleteBouquetCommand.execute(testList, ui);
+            assertTrue(testDeleteBouquetCommand.execute(testList, ui));
         } catch(FlorizzException error){
             ui.printError(error);
         }
@@ -40,7 +41,7 @@ public class DeleteBouquetTest {
         Command testDeleteBouquetCommand = new DeleteBouquetCommand(testBouquet);
         controlList.remove(testBouquet);
         try {
-            testDeleteBouquetCommand.execute(testList, ui);
+            assertTrue(testDeleteBouquetCommand.execute(testList, ui));
         } catch(FlorizzException error){
             ui.printError(error);
         }

@@ -63,7 +63,7 @@ public class AddFlowerCommand extends Command{
                 throw new FlorizzException("This flower does not exist in that colour. " +
                         "Type info <flower> to view all available colours for this flower");
             }
-        } else if (matchingFlowers.size()==1){
+        } else if (matchingFlowers.size() == 1){
             flowerToAdd = matchingFlowers.get(0);
             bouquetToAddFlower.addFlower(matchingFlowers.get(0), this.quantity);
             if (enableUi) {

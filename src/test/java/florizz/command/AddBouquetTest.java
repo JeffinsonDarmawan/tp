@@ -7,8 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AddBouquetTest {
     @Test
@@ -20,8 +21,8 @@ public class AddBouquetTest {
         controlList.add(testBouquet);
         Command testAddBouquetCommand = new AddBouquetCommand(testBouquet, true);
         try {
-            testAddBouquetCommand.execute(testList, ui);
-        } catch(FlorizzException error){
+            assertTrue(testAddBouquetCommand.execute (testList, ui));
+        } catch (FlorizzException error){
             ui.printError(error);
         }
         assertEquals(controlList, testList);
@@ -36,8 +37,8 @@ public class AddBouquetTest {
         controlList.add(testBouquet);
         Command testAddBouquetCommand = new AddBouquetCommand(testBouquet, true);
         try {
-            testAddBouquetCommand.execute(testList, ui);
-        } catch(FlorizzException error){
+            assertTrue(testAddBouquetCommand.execute (testList, ui));
+        } catch (FlorizzException error){
             ui.printError(error);
         }
         assertEquals(controlList, testList);
@@ -52,8 +53,8 @@ public class AddBouquetTest {
         controlList.add(testBouquet);
         Command testAddBouquetCommand = new AddBouquetCommand(testBouquet, true);
         try {
-            testAddBouquetCommand.execute(testList, ui);
-        } catch(FlorizzException error){
+            assertTrue(testAddBouquetCommand.execute (testList, ui));
+        } catch (FlorizzException error){
             ui.printError(error);
         }
         assertEquals(controlList, testList);

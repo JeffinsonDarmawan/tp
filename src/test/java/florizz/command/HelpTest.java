@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class HelpTest {
     @Test
     void executeHelpCommandTrue(){
-        // next two line might not be necessary
         ArrayList<Bouquet> tempBouquetList = new ArrayList<>();
         Ui ui = new Ui();
         HelpCommand helpCommand = new HelpCommand();

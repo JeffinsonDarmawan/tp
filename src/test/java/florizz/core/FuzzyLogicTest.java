@@ -24,6 +24,14 @@ class FuzzyLogicTest {
     }
 
     @Test
+    void testComputeDLDistance3() throws FlorizzException { // Two-word command input
+        String userInput = "mybouquets";
+        String validCommand = "mybouquets";
+        int distance = FuzzyLogic.computeDLDistance(userInput, validCommand);
+        assertEquals(0, distance);
+    }
+
+    @Test
     void testDetectItemInfo() throws FlorizzException { // Two-word command input
         String userInput = "invo";
         String decodedInput = FuzzyLogic.detectItem(userInput);
