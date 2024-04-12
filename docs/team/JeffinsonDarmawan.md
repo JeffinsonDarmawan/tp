@@ -59,6 +59,8 @@ Code Contribution: [Jeffinson Darmawan RepoSense Report](https://nus-cs2113-ay23
 2. Added price information to bouquets (Pull Request [#65](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/65))
 3. Improving Parser class by applying FuzzyLogic.detectItem() 
 (Pull Request [#71](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/71))
+4. Wrote additional JUnit tests for `AddBouquetTest`, `AddFlowerCommandTest`, `DeleteBouquetTest`, `HelpTest`, 
+   `InfoCommandTest`, `ListOccasionCommandTest`, `RemoveFlowerCommandTest`, `FuzzyLogicTest`, `ParserTest`.
 
 **Documentation**
 1. Developer Guide
