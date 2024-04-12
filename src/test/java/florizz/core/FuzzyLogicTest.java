@@ -8,6 +8,22 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class FuzzyLogicTest {
 
     @Test
+    void testComputeDLDistance() throws FlorizzException { // Two-word command input
+        String userInput = "invo";
+        String validCommand = "info";
+        int distance = FuzzyLogic.computeDLDistance(userInput, validCommand);
+        assertEquals(1, distance);
+    }
+
+    @Test
+    void testComputeDLDistance2() throws FlorizzException { // Two-word command input
+        String userInput = "rimof";
+        String validCommand = "remove";
+        int distance = FuzzyLogic.computeDLDistance(userInput, validCommand);
+        assertEquals(3, distance);
+    }
+
+    @Test
     void testDetectItemInfo() throws FlorizzException { // Two-word command input
         String userInput = "invo";
         String decodedInput = FuzzyLogic.detectItem(userInput);
