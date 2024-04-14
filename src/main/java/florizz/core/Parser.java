@@ -41,9 +41,10 @@ public class Parser {
     private static final String REMOVE_FLOWER_REGEX = "(.+)/q(\\s*)(-?\\d+)(\\s*)/from(.+)";
     private static final String REMOVE_FLOWER_AND_COLOUR_REGEX
             = "(.+)/c(\\s*)(.+)(\\s*)/q(\\s*)(-?\\d+)(\\s*)/from(.+)";
-    private static final String PARSE_OCCASION_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
+    //private static final String PARSE_OCCASION_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
     private static final String PARSE_COLOUR_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
     private static final String SAVE_BOUQUET_REGEX = "^\\s*(yes|no)\\s*$";
+    private static final String PARSE_SIZE_REGEX = "^\\s*[A-Za-z]+\\s*$";
 
     public static Command parse (String input, boolean enableUi) throws FlorizzException {
         logger.entering("Parser", "parse");
@@ -403,5 +404,26 @@ public class Parser {
         if (input.equalsIgnoreCase("cancel")) {
             throw new FlorizzException("Leaving recommend");
         }
+    }
+
+    /**
+     * Parses the size from the user input.
+     * @param argument the user input to be parsed.
+     * @return whether it is a valid size format
+     */
+    public static boolean parseSize(String argument) {
+        if (argument == null) {
+            System.out.println("No argument detected! " +
+                    "Please input a size of either small, medium or large");
+            return false;
+        }
+
+        if (!argument.matches(PARSE_SIZE_REGEX)) {
+            System.out.println("Incorrect format detected! " +
+                    "Please input a single size");
+            return false;
+        }
+
+        return true;
     }
 }

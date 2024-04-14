@@ -181,6 +181,15 @@ public class FlowerDictionary {
 
     public static ArrayList<Flower> getAllFlowers(){
         return flowerDict;
+    }
 
+    public static ArrayList<Flower> getFlowersByType(Flower.Type type) {
+        ArrayList<Flower> filteredFlowers = new ArrayList<>();
+        for (Flower flower : flowerDict) {
+            if (flower.getType().equals(type)) {
+                filteredFlowers.add(flower);
+            }
+        }
+        return filteredFlowers;
     }
 }

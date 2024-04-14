@@ -360,7 +360,7 @@ public class Ui {
     public void printAskBouquetName() {
         System.out.println("Great we managed to find some flowers for you!");
         System.out.println("Before we carry on what would you like to call your bouquet?");
-        System.out.println("Note: please take note 'cancel' cannot be used as a  bouquet name");
+        System.out.println("Note: please take note 'cancel' cannot be used as a bouquet name");
     }
 
     /**
@@ -453,5 +453,19 @@ public class Ui {
     public void printCancelCommand(){
         System.out.println("Canceled command, returning to main menu.");
     }
+
+    /**
+     * Prints text to ask user for size of bouquet
+     * @return raw string of user input
+     */
+    public String printAskSize() {
+        System.out.println("What size would you like your recommended bouquet to be?" + System.lineSeparator() +
+                            "1. Small" + System.lineSeparator() +
+                            "2. Medium" + System.lineSeparator() +
+                            "3. Large" + System.lineSeparator() +
+                            "Type 'cancel' if you would like to exit the recommendation page");
+        return inputScanner.nextLine();
+    }
+
 }
 

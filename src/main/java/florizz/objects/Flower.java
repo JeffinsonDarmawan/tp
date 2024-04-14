@@ -195,6 +195,14 @@ public class Flower {
     }
 
     /**
+     * Gets type of flower in enum Type
+     * @return Type of flower
+     */
+    public Flower.Type getType() {
+        return type;
+    }
+
+    /**
      * Generates a string representation of the Flower object.
      * @return A string representation of the Flower object.
      */
