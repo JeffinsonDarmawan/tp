@@ -79,8 +79,9 @@ Code Contribution: [Jeffinson Darmawan RepoSense Report](https://nus-cs2113-ay23
 3. Improving Parser class by applying FuzzyLogic.detectItem() 
 (Pull Request [#71](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/71))
 4. Wrote JUnit tests for `AddFlowerCommandTest`, `HelpTest`, `InfoCommandTest`, `ListOccasionCommandTest`, 
-   `RemoveFlowerCommandTest`, `FuzzyLogicTest`, `ParserTest`, and wrote additional JUnit tests for `AddBouquetTest`,
-   `DeleteBouquetTest` which increases classes coverage from 54% to 61% and lines coverage from 29% to 50%.
+   `RemoveFlowerCommandTest`, `FuzzyLogicTest`, `ParserTest`, `CompareCommandTest`
+   and wrote additional JUnit tests for `AddBouquetTest`,
+   `DeleteBouquetTest` which increases classes coverage from 54% to 63% and lines coverage from 29% to 51%.
 
 **Documentation**
 1. Developer Guide
