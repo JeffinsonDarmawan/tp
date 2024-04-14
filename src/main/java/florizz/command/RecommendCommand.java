@@ -84,7 +84,7 @@ public class RecommendCommand extends Command{
      * @param eligibleFlowers list of flowers to choose from
      * @param recommendedBouquet bouquet to add flowers to
      */
-    private void addRandomFlowers(ArrayList<Flower> eligibleFlowers,
+    public void addRandomFlowers(ArrayList<Flower> eligibleFlowers,
                                   Bouquet recommendedBouquet, String size, Flower.Colour colour)
             throws FlorizzException {
         logger.entering(RecommendCommand.class.getName(), "addRandomFlowers");
@@ -138,7 +138,7 @@ public class RecommendCommand extends Command{
      * Asks user for occasion
      * @return Occasion enum
      */
-    private Flower.Occasion askOccasion(Ui ui) throws FlorizzException {
+    public Flower.Occasion askOccasion(Ui ui) throws FlorizzException {
         logger.entering(RecommendCommand.class.getName(), "askOccasion");
         boolean isValidFormat = false;
         boolean isValidOccasion = false;
@@ -213,7 +213,7 @@ public class RecommendCommand extends Command{
     /**
      * Asks user for size of bouquet
      * @param ui Ui to take input and print messages
-     * @return size of bouquet
+     * @return size of bouquet in lower case string
      */
     private String askSize(Ui ui) {
         logger.entering(RecommendCommand.class.getName(), "askSize");
