@@ -5,6 +5,7 @@ import florizz.objects.Flower;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Ui {
@@ -42,7 +43,11 @@ public class Ui {
      * @return Returns the user input as one String.
      */
     public String getInput(){
-        return inputScanner.nextLine();
+        try{
+            return inputScanner.nextLine();
+        } catch(NoSuchElementException | IllegalStateException error){
+            return "bye";
+        }
     }
 
     /**
