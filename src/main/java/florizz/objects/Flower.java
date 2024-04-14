@@ -194,6 +194,9 @@ public class Flower {
         return price;
     }
 
+    public ArrayList<String> getMeanings() {
+        return meanings;
+    }
     /**
      * Generates a string representation of the Flower object.
      * @return A string representation of the Flower object.

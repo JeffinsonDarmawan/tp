@@ -34,6 +34,7 @@ public class FuzzyLogic {
         ITEMS.put("recommend", "Command: Get a recommended bouquet");
         ITEMS.put("next", "Command: Goes to next page");
         ITEMS.put("back", "Command: Goes to previous page");
+        ITEMS.put("compare", "Command: Compare two flowers");
         ITEMS.put("Orchid", "Flower");
         ITEMS.put("Rose", "Flower");
         ITEMS.put("Lily", "Flower");
@@ -182,6 +183,7 @@ public class FuzzyLogic {
                 || userInput.startsWith("remove")
                 || userInput.startsWith("add")
                 || userInput.startsWith("info")
+                || userInput.startsWith("compare")
                 || userInput.startsWith("flowers"))) {
             String[] arguments = new String[2];
             arguments[0] = userInput.substring(0,firstWhitespace).toLowerCase();
@@ -273,6 +275,18 @@ public class FuzzyLogic {
                         .strip();
                 correctedInput = "add " + addArgument;
                 uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+            } else if (arguments[0].matches("(compare)")) {
+                String argument = userInput.replaceFirst("c", "")
+                        .replaceFirst("o", "")
+                        .replaceFirst("m", "")
+                        .replaceFirst("p", "")
+                        .replaceFirst("a", "")
+                        .replaceFirst("r", "")
+                        .replaceFirst("e", "")
+                        .strip();
+                String[] flowerNames = argument.split("/vs/");
+                correctedInput = "compare " + flowerNames[0] + " /vs/ " + flowerNames[1];
+                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
             } else {
                 correctedInput = userInput;
             }
@@ -320,6 +334,9 @@ public class FuzzyLogic {
         } else if (userInput.matches("(save)[a-zA-Z].+")) {
             String argumentSave = userInput.replaceFirst("save", "");
             correctedInput = "save " + argumentSave;
+        } else if (userInput.matches("(compare)[a-zA-Z].+")) {
+            String argumentCompare = userInput.replaceFirst("compare", "");
+            correctedInput = "compare " + argumentCompare;
         }
 
         if (correctedInput.isEmpty()) {
