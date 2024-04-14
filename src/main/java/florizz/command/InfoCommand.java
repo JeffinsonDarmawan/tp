@@ -30,7 +30,6 @@ public class InfoCommand extends Command{
         } else{
             ui.printFlowerInfo(filteredFlowers, flowerName, 1);
         }
-
         return true;
     }
 }

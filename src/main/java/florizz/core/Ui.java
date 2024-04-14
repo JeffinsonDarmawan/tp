@@ -129,7 +129,7 @@ public class Ui {
      */
     public void printHelpMessage() {
         lastCommand = "OTHERS";
-        System.out.println("Here is the table of commands you can use:");
+        System.out.println("Here is the table showing a list of commands you can use:");
         List<TableData> tableData = Arrays.asList(
                 new TableData(1, "new <bouquetName>"
                         , "Add a bouquet"
@@ -144,7 +144,7 @@ public class Ui {
                         , "Provide information on chosen flower"
                         , "info Rose"),
                 new TableData(5, "add <flowerName> /c <colour> (optional) /q <quantity> /to <bouquetName>"
-                        , "Sdd flower to a bouquet"
+                        , "Add flower to a bouquet"
                         , "add Rose /c Red /q 5 /to Birthday Bouquet"),
                 new TableData(6, "remove <flowerName> /c <colour> (optional) /q <quantity> /from <bouquetName>"
                         , "Remove flower from a bouquet"
@@ -166,7 +166,7 @@ public class Ui {
                         , "recommend"),
                 new TableData(12, "compare <1st flowerName> /vs/ <2nd flowerName>"
                         , "Show information regarding two flowers side-by-side for comparison"
-                        , "compare Rose vs Lily"),
+                        , "compare Rose /vs/ Lily"),
                 new TableData(13, "bye"
                         , "Exits the programme"
                         , "bye")
@@ -201,9 +201,6 @@ public class Ui {
         printBreakLine();
     }
 
-    private static void printNextOrBack(int pageNo, int maxPages){
-
-    }
     /**
      * Prints a list of flowers with optional additional information.
      *
@@ -260,14 +257,23 @@ public class Ui {
      * @param targetFlower The name of the flower the user searched for.
      * @param flowers The list of flowers that contain that name.
      */
-    public void printFlowerInfo(ArrayList<Flower> flowers, String targetFlower, int pageNo) {
-        lastShownList = flowers;
-        lastPageNo = pageNo;
-        lastCommand = "INFO_FLOWERS " + targetFlower;
-        int maxPages = (int) Math.ceil((double)lastShownList.size() / PAGE_SIZE);
-        System.out.println("Here is page " + lastPageNo + "/" + maxPages +
-                " of info regarding flowers whose name contains " + targetFlower + ":");
-        printFlowerList(true);
+    public void printFlowerInfo(ArrayList<Flower> flowers, String targetFlower, int pageNo) throws FlorizzException {
+        List<TableData> tableData = new ArrayList<>(List.of());
+        int id = 1;
+
+        for (Flower flower : flowers) {
+            tableData.add(new TableData(id, flower.getFlowerName(), flower.getColour(), flower.getOccasion().toString(),
+                    flower.getMeanings().toString(), String.format("%.2f", flower.getPrice())
+                    , flower.getType().toString()));
+            id++;
+        }
+        System.out.println("Here is a table of information about the flower " + targetFlower + ":");
+        try {
+            printFlowersTable(tableData);
+            printBreakLine();
+        } catch (FlorizzException error){
+            printError(error);
+        }
     }
 
     /**
@@ -479,7 +485,7 @@ public class Ui {
      * @param flowerName The name of the flower that the user is trying to choose its colour from
      * @return Flower the specific Flower with the correct colour. Is blank if user chose to cancel the command instead
      */
-    public Flower chooseColour(ArrayList<Flower> flowers, String flowerName){
+    public Flower chooseColour(ArrayList<Flower> flowers, String flowerName) throws FlorizzException {
         printGetFlowerColour(flowers, flowerName);
 
         while (true){
@@ -522,20 +528,65 @@ public class Ui {
      * @param flowers The list of flowers containing the flower with multiple colors
      * @param flowerName The name of the flower with multiple colors
      */
-    public void printGetFlowerColour(ArrayList<Flower> flowers, String flowerName){
+    public void printGetFlowerColour(ArrayList<Flower> flowers, String flowerName) throws FlorizzException {
         System.out.println("The flower you're looking for has more than one colour available, " +
-                "each with their own vastly different meanings. Here's some info:");
+                "each with their own vastly different meanings.");
         printFlowerInfo(flowers, flowerName, 1);
         System.out.println("Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.");
     }
 
-    public void printCompareFlowers(ArrayList<Flower> firstFilteredFlowers, ArrayList<Flower> secondFilteredFlowers) {
-        System.out.println("Here is the comparison between the two flowers:");
-        System.out.println("First flower: " + firstFilteredFlowers.get(0).getNameAndColour());
-        System.out.println("Second flower: " + secondFilteredFlowers.get(0).getNameAndColour());
-        System.out.println("Price: $" + firstFilteredFlowers.get(0).getPrice() + " vs $" + secondFilteredFlowers.get(0).getPrice());
-        System.out.println("Meanings: " + firstFilteredFlowers.get(0).getMeanings() + " vs " + secondFilteredFlowers.get(0).getMeanings());
+
+    /**
+     * Prints a table comparing two flowers.
+     */
+    public void printCompareFlowers(ArrayList<Flower> firstFilteredFlowers, ArrayList<Flower> secondFilteredFlowers)
+            throws FlorizzException {
+        List<TableData> tableData = new ArrayList<>(List.of());
+        int id = 1;
+
+        for (Flower flower : firstFilteredFlowers) {
+            tableData.add(new TableData(id, flower.getFlowerName(), flower.getColour(), flower.getOccasion().toString(),
+                    flower.getMeanings().toString(), String.format("%.2f", flower.getPrice())
+                    , flower.getType().toString()));
+            id++;
+        }
+        for (Flower flower : secondFilteredFlowers) {
+            tableData.add(new TableData(id, flower.getFlowerName(), flower.getColour(), flower.getOccasion().toString(),
+                    flower.getMeanings().toString(), String.format("%.2f", flower.getPrice())
+                    , flower.getType().toString()));
+            id++;
+        }
         printBreakLine();
+        System.out.println("Here is a table of comparison between the two flowers:");
+        printFlowersTable(tableData);
+        printBreakLine();
+    }
+
+    /**
+     * Prints a table of flowers.
+     *
+     * @param tableData The list of flowers to be printed in a table
+     * @throws FlorizzException If there are no flowers to display
+     */
+    protected void printFlowersTable(List<TableData> tableData) throws FlorizzException{
+        if (tableData.isEmpty()){
+            throw new FlorizzException("No flowers to display.");
+        }
+        System.out.println(AsciiTable.getTable(tableData, Arrays.asList(
+                new Column().header("No.").dataAlign(HorizontalAlign.CENTER)
+                        .with((TableData data) -> Integer.toString(data.getId())),
+                new Column().header("Flower Name").dataAlign(HorizontalAlign.LEFT)
+                        .with(TableData::getFlowerName),
+                new Column().header("Colour").dataAlign(HorizontalAlign.LEFT)
+                        .with(TableData::getFlowerColor),
+                new Column().header("Occasion").dataAlign(HorizontalAlign.LEFT)
+                        .with(TableData::getFlowerOccasion),
+                new Column().header("Meaning").dataAlign(HorizontalAlign.LEFT)
+                        .with(TableData::getFlowerMeaning),
+                new Column().header("Type").dataAlign(HorizontalAlign.LEFT)
+                        .with(TableData::getType),
+                new Column().header("Price ($)").dataAlign(HorizontalAlign.RIGHT)
+                        .with(TableData::getFlowerPrice))));
     }
 
     /**

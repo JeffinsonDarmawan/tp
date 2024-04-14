@@ -283,12 +283,13 @@ public class Parser {
         String bouquetName = removePrefix(argument.substring(prefixIndex), ADD_FLOWER_PREFIX).trim();
         if (includeColour) {
             int colourIndex = argument.indexOf(COLOUR);
-            try{
+            try {
                 flowerName = argument.substring(0,colourIndex).trim();
-                String colourString = removePrefix(argument.substring(colourIndex, quantityIndex), COLOUR).trim();
+                String colourString = FuzzyLogic.detectItem(
+                        removePrefix(argument.substring(colourIndex, quantityIndex), COLOUR).trim());
                 Flower.Colour colourToAdd = Flower.stringToColour(colourString);
                 return new AddFlowerCommand(flowerName, colourToAdd, quantity, bouquetName, enableUi);
-            } catch( IllegalArgumentException error){
+            } catch ( IllegalArgumentException error) {
                 throw new FlorizzException("Tried to add a non recognised colour" +
                         "Type 'flowers' to view all the currently available flowers and their colours.");
             }

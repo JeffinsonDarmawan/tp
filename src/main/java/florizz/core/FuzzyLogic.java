@@ -60,6 +60,14 @@ public class FuzzyLogic {
         ITEMS.put("Limonium Perezii", "Flower");
         ITEMS.put("Statice", "Flower");
         ITEMS.put("Rice Flower", "Flower");
+        ITEMS.put("Red", "Colour");
+        ITEMS.put("Yellow", "Colour");
+        ITEMS.put("White", "Colour");
+        ITEMS.put("Blue", "Colour");
+        ITEMS.put("Pink", "Colour");
+        ITEMS.put("Green", "Colour");
+        ITEMS.put("Purple", "Colour");
+        ITEMS.put("Dark Crimson", "Colour");
     }
 
     /**
@@ -75,7 +83,7 @@ public class FuzzyLogic {
         }
 
         if (userInput.length() == 1) {
-            throw new FlorizzException("No matching command/item/occasion found for input: " + userInput);
+            throw new FlorizzException("No matching command/flower/occasion/colour match the input: " + userInput);
         }
 
         String bestMatch = null;
@@ -175,6 +183,7 @@ public class FuzzyLogic {
         }
         String correctedInput;
         String trimmedInput = userInput.trim();
+        String[] words = trimmedInput.split(" ");
         int firstWhitespace = trimmedInput.indexOf(" ");
         if ((firstWhitespace != -1)
                 && (userInput.startsWith("delete")
@@ -183,7 +192,7 @@ public class FuzzyLogic {
                 || userInput.startsWith("remove")
                 || userInput.startsWith("add")
                 || userInput.startsWith("info")
-                || userInput.startsWith("compare")
+                || (userInput.startsWith("compare") && words.length == 4 || words.length == 5)
                 || userInput.startsWith("flowers"))) {
             String[] arguments = new String[2];
             arguments[0] = userInput.substring(0,firstWhitespace).toLowerCase();
@@ -213,87 +222,82 @@ public class FuzzyLogic {
      * @throws FlorizzException if there is an issue processing the input.
      */
     protected static String splitAndMergeInput(String userInput) throws FlorizzException {
-        try {
-            String correctedInput;
-            String mergedInput = mergeInput(userInput);
-            String splitMergedInput = splitInput(mergedInput);
-            String[] arguments = splitMergedInput.split(" ");
-            String bouquetName;
-            String removeArgument;
-            String addArgument;
-            Ui uiFuzzy = new Ui();
+        String correctedInput;
+        String mergedInput = mergeInput(userInput);
+        String splitMergedInput = splitInput(mergedInput);
+        String[] arguments = splitMergedInput.split(" ");
+        String bouquetName;
+        String removeArgument;
+        String addArgument;
+        Ui uiFuzzy = new Ui();
 
-            if (arguments.length == 1 && arguments[0]
-                    .matches("(mybouquets|flowers|occasion|recommend|bye|help|back|next)")) {
-                correctedInput = arguments[0];
-                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
-            } else if (arguments[0].matches("(info|flowers)")) {
-                if (Objects.equals(arguments[1].toLowerCase(), "mothersday")) {
-                    arguments[1] = "Mothers Day";
-                }
-                correctedInput = arguments[0] + " " + arguments[1];
-                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
-            } else if (arguments[0].matches("(new)")) {
-                bouquetName = userInput.replaceFirst("n", "")
-                        .replaceFirst("e", "")
-                        .replaceFirst("w", "")
-                        .strip();
-                correctedInput = "new " + bouquetName;
-                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
-            } else if (arguments[0].matches("(delete)")) {
-                bouquetName = userInput.replaceFirst("d", "")
-                        .replaceFirst("e", "")
-                        .replaceFirst("l", "")
-                        .replaceFirst("e", "")
-                        .replaceFirst("t", "")
-                        .replaceFirst("e", "")
-                        .strip();
-                correctedInput = "delete " + bouquetName;
-                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
-            } else if (arguments[0].matches("(save)")) {
-                bouquetName = userInput.replaceFirst("s", "")
-                        .replaceFirst("a", "")
-                        .replaceFirst("v", "")
-                        .replaceFirst("e", "")
-                        .strip();
-                correctedInput = "save " + bouquetName;
-                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
-            } else if (arguments[0].matches("(remove)")) {
-                removeArgument = userInput.replaceFirst("r", "")
-                        .replaceFirst("e", "")
-                        .replaceFirst("m", "")
-                        .replaceFirst("o", "")
-                        .replaceFirst("v", "")
-                        .replaceFirst("e", "")
-                        .strip();
-                correctedInput = "remove " + removeArgument;
-                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
-            } else if (arguments[0].matches("(add)")) {
-                addArgument = userInput.replaceFirst("a", "")
-                        .replaceFirst("d", "")
-                        .replaceFirst("d", "")
-                        .strip();
-                correctedInput = "add " + addArgument;
-                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
-            } else if (arguments[0].matches("(compare)")) {
-                String argument = userInput.replaceFirst("c", "")
-                        .replaceFirst("o", "")
-                        .replaceFirst("m", "")
-                        .replaceFirst("p", "")
-                        .replaceFirst("a", "")
-                        .replaceFirst("r", "")
-                        .replaceFirst("e", "")
-                        .strip();
-                String[] flowerNames = argument.split("/vs/");
-                correctedInput = "compare " + flowerNames[0] + " /vs/ " + flowerNames[1];
-                uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
-            } else {
-                correctedInput = userInput;
-            }
-            return correctedInput;
-        } catch (Exception e) {
-            throw new FlorizzException("Error processing input: " + e.getMessage());
+        if (arguments[0] == null) {
+            throw new FlorizzException("Input cannot be empty.");
         }
+
+        if (arguments.length == 1 && arguments[0]
+                .matches("(mybouquets|flowers|occasion|recommend|bye|help|back|next)")) {
+            correctedInput = arguments[0];
+            uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+        } else if (arguments[0].matches("(info|flowers)")) {
+            if (Objects.equals(arguments[1].toLowerCase(), "mothersday")) {
+                arguments[1] = "Mothers Day";
+            }
+            correctedInput = arguments[0] + " " + arguments[1];
+            uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+        } else if (arguments[0].matches("(new)")) {
+            bouquetName = userInput.replaceFirst("n", "")
+                    .replaceFirst("e", "")
+                    .replaceFirst("w", "")
+                    .strip();
+            correctedInput = "new " + bouquetName;
+            uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+        } else if (arguments[0].matches("(delete)")) {
+            bouquetName = userInput.replaceFirst("d", "")
+                    .replaceFirst("e", "")
+                    .replaceFirst("l", "")
+                    .replaceFirst("e", "")
+                    .replaceFirst("t", "")
+                    .replaceFirst("e", "")
+                    .strip();
+            correctedInput = "delete " + bouquetName;
+            uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+        } else if (arguments[0].matches("(save)")) {
+            bouquetName = userInput.replaceFirst("s", "")
+                    .replaceFirst("a", "")
+                    .replaceFirst("v", "")
+                    .replaceFirst("e", "")
+                    .strip();
+            correctedInput = "save " + bouquetName;
+            uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+        } else if (arguments[0].matches("(remove)")) {
+            removeArgument = userInput.replaceFirst("r", "")
+                    .replaceFirst("e", "")
+                    .replaceFirst("m", "")
+                    .replaceFirst("o", "")
+                    .replaceFirst("v", "")
+                    .replaceFirst("e", "")
+                    .strip();
+            correctedInput = "remove " + removeArgument;
+            uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+        } else if (arguments[0].matches("(add)")) {
+            addArgument = userInput.replaceFirst("a", "")
+                    .replaceFirst("d", "")
+                    .replaceFirst("d", "")
+                    .strip();
+            correctedInput = "add " + addArgument;
+            uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+        } else if (arguments[0].matches("(compare)")) {
+            String[] flowerNames = arguments[1].split("/vs/");
+            if (flowerNames.length != 2 || flowerNames[0].length() <= 2 || flowerNames[1].length() <= 2) {
+                throw new FlorizzException("Please input 2 flowers to compare.");
+            }
+            correctedInput = "compare " + flowerNames[0].strip() + " /vs/ " + flowerNames[1].strip();
+            uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
+        } else {
+            correctedInput = userInput;
+        }
+        return correctedInput;
     }
 
     /**

@@ -10,6 +10,7 @@ public class TableData {
     private String flowerPrice;
     private String flowerColor;
     private String flowerMeaning;
+    private String type;
 
     public TableData(int id, String command, String explanation, String example) {
         this.id = id;
@@ -18,13 +19,15 @@ public class TableData {
         this.example = example;
     }
 
-    public TableData(String flowerName, String flowerOccasion, String flowerPrice
-            , String flowerColor, String flowerMeaning) {
+    public TableData(int id, String flowerName, String flowerColor, String flowerOccasion,
+                     String flowerMeaning, String flowerPrice, String type) {
+        this.id = id;
         this.flowerName = flowerName;
         this.flowerOccasion = flowerOccasion;
-        this.flowerPrice = flowerPrice;
         this.flowerColor = flowerColor;
         this.flowerMeaning = flowerMeaning;
+        this.flowerPrice = flowerPrice;
+        this.type = type;
     }
 
     public int getId() {
@@ -41,5 +44,28 @@ public class TableData {
 
     public String getExample() {
         return example;
+    }
+
+    public String getFlowerName() {
+        return flowerName;
+    }
+
+    public String getFlowerOccasion() {
+        return flowerOccasion;
+    }
+
+    public String getFlowerPrice() {
+        return flowerPrice;
+    }
+
+    public String getFlowerColor() {
+        return flowerColor;
+    }
+
+    public String getFlowerMeaning() {
+        return flowerMeaning;
+    }
+    public String getType() {
+        return type;
     }
 }

@@ -236,6 +236,10 @@ public class Flower {
                 finalMeaning);
     }
 
+    public Type getType() {
+        return type;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
