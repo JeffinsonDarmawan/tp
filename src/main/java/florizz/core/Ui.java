@@ -1,10 +1,16 @@
 package florizz.core;
 
+import com.github.freva.asciitable.AsciiTable;
+import com.github.freva.asciitable.Column;
+import com.github.freva.asciitable.HorizontalAlign;
 import florizz.objects.Bouquet;
 import florizz.objects.Flower;
+import florizz.objects.TableData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -28,7 +34,7 @@ public class Ui {
                 " |_| |_|\\___/|_|  |_/___/___|\n" +
                 "\n";
         System.out.println("Hello from\n" + logo);
-        System.out.println("Type `help`, to view a list of valid commands!");
+        System.out.println("Type `help`, to view a table of valid commands!");
     }
 
     /**
@@ -119,25 +125,61 @@ public class Ui {
     }
 
     /**
-     * print all available command
+     * print all available commands
      */
     public void printHelpMessage() {
         lastCommand = "OTHERS";
-        System.out.println("Here are the list of commands you can use:");
-        System.out.println("1. new <bouquetName> - Add a bouquet");
-        System.out.println("2. delete <bouquetName> - Delete a bouquets");
-        System.out.println("3. mybouquets - List current saved bouquets");
-        System.out.println("4. info <flowerName> - Provide information on chosen flower");
-        System.out.println("5. add <flowerName> /c <colour> (optional) /q <quantity> " +
-                "/to <bouquetName> - add flower to a bouquet");
-        System.out.println("6. remove <flowerName> /c <colour> (optional) /q <quantity> " +
-                "/from <bouquetName> - remove flower from a bouquet");
-        System.out.println("7. flowers - Shows a list of flowers that can be added into mybouquets");
-        System.out.println("8. flowers <occasion> - Shows a list of flowers associated with said occasion");
-        System.out.println("9. occasion - Shows a list of occasions associated with available flowers");
-        System.out.println("10. save <bouquetName> - Saves a bouquet to an external <bouquetName>.txt file");
-        System.out.println("11. recommend - Recommends a bouquet based on the chosen occasion and colour");
-        System.out.println("12. bye - Exits the programme");
+        System.out.println("Here is the table of commands you can use:");
+        List<TableData> tableData = Arrays.asList(
+                new TableData(1, "new <bouquetName>"
+                        , "Add a bouquet"
+                        , "new Birthday Bouquet"),
+                new TableData(2, "delete <bouquetName>"
+                        , "Delete a bouquets"
+                        , "delete Birthday Bouquet"),
+                new TableData(3, "mybouquets"
+                        , "List current saved bouquets"
+                        , "mybouquets"),
+                new TableData(4, "info <flowerName>"
+                        , "Provide information on chosen flower"
+                        , "info Rose"),
+                new TableData(5, "add <flowerName> /c <colour> (optional) /q <quantity> /to <bouquetName>"
+                        , "Sdd flower to a bouquet"
+                        , "add Rose /c Red /q 5 /to Birthday Bouquet"),
+                new TableData(6, "remove <flowerName> /c <colour> (optional) /q <quantity> /from <bouquetName>"
+                        , "Remove flower from a bouquet"
+                        , "remove Rose /c Red /q 5 /from Birthday Bouquet"),
+                new TableData(7, "flowers"
+                        , "Shows a list of flowers that can be added into mybouquets"
+                        , "flowers"),
+                new TableData(8, "flowers <occasion>"
+                        , "Shows a list of flowers associated with said occasion"
+                        , "flowers Valentines"),
+                new TableData(9, "occasion"
+                        , "Shows a list of occasions associated with available flowers"
+                        , "occasion"),
+                new TableData(10, "save <bouquetName>"
+                        , "Saves a bouquet to an external <bouquetName>.txt file"
+                        , "save Birthday Bouquet"),
+                new TableData(11, "recommend"
+                        , "Recommends a bouquet based on the chosen occasion and colour"
+                        , "recommend"),
+                new TableData(12, "compare <1st flowerName> /vs/ <2nd flowerName>"
+                        , "Show information regarding two flowers side-by-side for comparison"
+                        , "compare Rose vs Lily"),
+                new TableData(13, "bye"
+                        , "Exits the programme"
+                        , "bye")
+        );
+        System.out.println(AsciiTable.getTable(tableData, Arrays.asList(
+                new Column().header("No.").dataAlign(HorizontalAlign.CENTER)
+                        .with((TableData data) -> Integer.toString(data.getId())),
+                new Column().header("Command").dataAlign(HorizontalAlign.LEFT).maxWidth(58)
+                        .with(TableData::getCommand),
+                new Column().header("Explanation").dataAlign(HorizontalAlign.LEFT).maxWidth(40)
+                        .with(TableData::getExplanation),
+                new Column().header("Example").dataAlign(HorizontalAlign.LEFT)
+                        .with(TableData::getExample))));
         printBreakLine();
     }
 
@@ -485,6 +527,15 @@ public class Ui {
                 "each with their own vastly different meanings. Here's some info:");
         printFlowerInfo(flowers, flowerName, 1);
         System.out.println("Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.");
+    }
+
+    public void printCompareFlowers(ArrayList<Flower> firstFilteredFlowers, ArrayList<Flower> secondFilteredFlowers) {
+        System.out.println("Here is the comparison between the two flowers:");
+        System.out.println("First flower: " + firstFilteredFlowers.get(0).getNameAndColour());
+        System.out.println("Second flower: " + secondFilteredFlowers.get(0).getNameAndColour());
+        System.out.println("Price: $" + firstFilteredFlowers.get(0).getPrice() + " vs $" + secondFilteredFlowers.get(0).getPrice());
+        System.out.println("Meanings: " + firstFilteredFlowers.get(0).getMeanings() + " vs " + secondFilteredFlowers.get(0).getMeanings());
+        printBreakLine();
     }
 
     /**
