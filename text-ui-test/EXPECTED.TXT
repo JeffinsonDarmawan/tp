@@ -8,7 +8,7 @@ Hello from
  |_| |_|\___/|_|  |_/___/___|
 
 
-Type `help`, to view a list of valid commands!
+Type `help`, to view a table of valid commands!
 What can I do for you?
 Added new bouquet to list:
 test
