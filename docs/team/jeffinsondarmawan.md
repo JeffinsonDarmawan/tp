@@ -27,7 +27,8 @@ Code Contribution: [Jeffinson Darmawan RepoSense Report](https://nus-cs2113-ay23
       strong case that `invo Ross` is definitely closer to `info Rose` compared to `zjgh bfre`. Thus, Fuzzy Logic helps
       users by correcting their typos due to accidental human errors and increase the overall convenience of using the 
       programme. Imagine having to retype `adds Rose /q 1 /to Bouquet for My 3th Anniversary with My Girlfriend` because
-      of a small mistake of having an "s" after "add"!
+      of a small mistake of having an "s" after "add" and repeating this over and over again!
+
    
     - How it works: 
 
@@ -59,6 +60,9 @@ Code Contribution: [Jeffinson Darmawan RepoSense Report](https://nus-cs2113-ay23
 2. Added price information to bouquets (Pull Request [#65](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/65))
 3. Improving Parser class by applying FuzzyLogic.detectItem() 
 (Pull Request [#71](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/71))
+4. Wrote JUnit tests for `AddFlowerCommandTest`, `HelpTest`, `InfoCommandTest`, `ListOccasionCommandTest`, 
+   `RemoveFlowerCommandTest`, `FuzzyLogicTest`, `ParserTest`, and wrote additional JUnit tests for `AddBouquetTest`,
+   `DeleteBouquetTest` which increases classes coverage from 54% to 61% and lines coverage from 29% to 50%.
 
 **Documentation**
 1. Developer Guide
