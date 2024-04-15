@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class RecommendCommand extends Command{
-    private final int SMALL_BOUQUET_FLOWER_COUNT = 1;
-    private final int MEDIUM_BOUQUET_FLOWER_COUNT = 3;
-    private final int LARGE_BOUQUET_FLOWER_COUNT = 5;
-    private final int SMALL_BOUQUET_FILLER_COUNT = 2;
-    private final int MEDIUM_BOUQUET_FILLER_COUNT = 4;
-    private final int LARGE_BOUQUET_FILLER_COUNT = 6;
-    private Logger logger = Logger.getLogger(RecommendCommand.class.getName());
+    private static final int SMALL_BOUQUET_FLOWER_COUNT = 1;
+    private static final int MEDIUM_BOUQUET_FLOWER_COUNT = 3;
+    private static final int LARGE_BOUQUET_FLOWER_COUNT = 5;
+    private static final int SMALL_BOUQUET_FILLER_COUNT = 2;
+    private static final int MEDIUM_BOUQUET_FILLER_COUNT = 4;
+    private static final int LARGE_BOUQUET_FILLER_COUNT = 6;
+    private final Logger logger = Logger.getLogger(RecommendCommand.class.getName());
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
         logger.entering(RecommendCommand.class.getName(), "execute");
@@ -117,7 +117,7 @@ public class RecommendCommand extends Command{
         }
 
         // get all fillers
-        ArrayList<Flower> fillers = FlowerDictionary.getFlowersByType(Flower.Type.FILLER);
+        ArrayList<Flower> fillers = FlowerDictionary.getFlowersByType(Flower.Type.FILLER_FLOWER);
         for (int i = 0; i < fillerCount; i++) {
             int randomIndex = (int) (Math.random() * fillers.size());
             // filler colour must be green or same as main flower
@@ -151,8 +151,9 @@ public class RecommendCommand extends Command{
             isValidOccasion = Flower.isValidOccasion(occasionInput);
             // check if occasion is in our dictionary
             if (!isValidOccasion) {
-                System.out.println("This occasion does not exist." +
-                        "Type 'cancel' if you would like to exit the recommendation page");
+                System.out.println("This occasion does not exist.");
+                Ui.printBreakLine();
+                System.out.println("Type 'cancel' if you would like to exit the recommendation page");
             }
         }
 
@@ -174,7 +175,7 @@ public class RecommendCommand extends Command{
         boolean isValidColour = false;
         ui.printAskColour(eligibleFlowers);
         while (!(isValidColour && isValidFormat)) {
-            colourInput = ui.getInput();
+            colourInput = ui.getInput().trim();
             Parser.checkRecommendExitCondition(colourInput);
             isValidFormat = Parser.parseColour(colourInput);
             isValidColour = Flower.isValidColour(colourInput);
@@ -190,6 +191,12 @@ public class RecommendCommand extends Command{
         return Flower.stringToColour(colourInput);
     }
 
+    /**
+     * Asks user if they want to save the bouquet
+     * @param ui Ui to take input and print messages
+     * @param bouquetList List that contains all bouquets
+     * @param recommendedBouquet Bouquet to be saved
+     */
     private void askSaveBouquet(Ui ui, ArrayList<Bouquet> bouquetList,
                                 Bouquet recommendedBouquet) {
         logger.entering(RecommendCommand.class.getName(), "askSaveBouquet");
@@ -207,6 +214,11 @@ public class RecommendCommand extends Command{
             ui.printBouquetAdded(recommendedBouquet);
             assert !bouquetList.isEmpty() : "Bouquet list should not be empty";
         }
+
+        if (saveInput.equalsIgnoreCase("no")) {
+            ui.printBouquetNotAdded(recommendedBouquet);
+        }
+
         logger.exiting(RecommendCommand.class.getName(), "askSaveBouquet");
     }
 

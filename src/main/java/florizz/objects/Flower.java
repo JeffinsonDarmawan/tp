@@ -31,7 +31,7 @@ public class Flower {
     }
 
     public enum Type {
-        FLOWER, FILLER
+        MAIN_FLOWER, FILLER_FLOWER
     }
 
     /**
@@ -172,7 +172,7 @@ public class Flower {
 
     /**
      * Gets the colour of the flower.
-     * @return The colour of the flower.
+     * @return The colour of the flower in lower case.
      */
     public String getColour (){
         return colourToString(colour);

@@ -48,11 +48,15 @@ public class Ui {
      * Prints the message indicating a new bouquet has been added.
      * @param bouquetAdded The bouquet that has been added.
      */
-    public void printBouquetAdded(Bouquet bouquetAdded){
+    public void printBouquetAdded(Bouquet bouquetAdded) {
         lastCommand = "OTHERS";
         System.out.println("Added new bouquet to list:\n" + bouquetAdded);
         printBreakLine();
+    }
 
+    public void printBouquetNotAdded(Bouquet bouquetDiscarded) {
+        System.out.println("Discarded the bouquet: " + bouquetDiscarded);
+        printBreakLine();
     }
 
     /**
@@ -361,6 +365,8 @@ public class Ui {
         System.out.println("Great we managed to find some flowers for you!");
         System.out.println("Before we carry on what would you like to call your bouquet?");
         System.out.println("Note: please take note 'cancel' cannot be used as a bouquet name");
+        printBreakLine();
+        System.out.println("Type 'cancel' if you would like to exit the recommendation page");
     }
 
     /**
@@ -382,14 +388,16 @@ public class Ui {
         for (String colour : colourList){
             System.out.println("- " + colour);
         }
-        System.out.println("Type 'cancel' if you would like to exit the recommendation page");
         printBreakLine();
+        System.out.println("Type 'cancel' if you would like to exit the recommendation page");
     }
 
     public String printAskSaveBouquet(Bouquet recommendedBouquet) {
         System.out.println("Would you like to save this bouquet to your list?");
         printFullBouquet(recommendedBouquet);
         System.out.println("Type 'yes' to save, 'no' to discard");
+        printBreakLine();
+        System.out.println("Type 'cancel' if you would like to exit the recommendation page");
         return inputScanner.nextLine();
     }
 
@@ -462,9 +470,10 @@ public class Ui {
         System.out.println("What size would you like your recommended bouquet to be?" + System.lineSeparator() +
                             "1. Small" + System.lineSeparator() +
                             "2. Medium" + System.lineSeparator() +
-                            "3. Large" + System.lineSeparator() +
-                            "Type 'cancel' if you would like to exit the recommendation page");
-        return inputScanner.nextLine();
+                            "3. Large");
+        printBreakLine();
+        System.out.println("Type 'cancel' if you would like to exit the recommendation page");
+        return inputScanner.nextLine().trim();
     }
 
 }
