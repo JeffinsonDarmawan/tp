@@ -53,11 +53,17 @@ Click [here](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=ianfh&so
 
 ### Contributions to the DG
 - Responsible for the add flower command sequence diagram and descriptions [proof](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/78/files)
-- Responsible for proposed storage implementation for DG draft [proof](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/78/files)
+- Responsible for proposed storage implementation and storage class diagram for DG draft [proof](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/78/files)
 - Responsible for recommend command sequence diagram and descriptions [proof](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/178/files)
 - Responsible for askOccasion sequence diagram and description [proof](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/178/files)
 - Responsible for Appendix of product scope, value proposition, user stories, and use cases [proof](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/72/files)
 - Updated info command, remove flower command sequence diagram based on TA's feedback [proof](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/169/files)
+
+#### Diagram Added
+![Add Flower Command Diagram](../UML-diagrams/Ijaaz/AddFlowerCommand.png)
+![Recommend Command Sequence Diagram](../UML-diagrams/Ian/RecommendCommand.png)
+![askOccasion Sequence Diagram](../UML-diagrams/Ian/askOccasion.png)
+![Unused storage class diagram](../UML-diagrams/Ian/storage.png)
 
 ### Contributions to Team-based Tasks
 - Helped to set up the issue tracker for the team (i.e. milestones, tagging)
