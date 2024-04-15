@@ -1,20 +1,21 @@
 package florizz.core;
 
-import florizz.command.InfoCommand;
-import florizz.command.HelpCommand;
-import florizz.command.SaveCommand;
-import florizz.command.FlowerCommand;
-import florizz.command.ExitCommand;
-import florizz.command.RemoveFlowerCommand;
-import florizz.command.ListOccasionCommand;
-import florizz.command.ListBouquetCommand;
-import florizz.command.DeleteBouquetCommand;
-import florizz.command.AddFlowerCommand;
-import florizz.command.Command;
 import florizz.command.AddBouquetCommand;
+import florizz.command.AddFlowerCommand;
 import florizz.command.BackCommand;
+import florizz.command.Command;
+import florizz.command.CompareCommand;
+import florizz.command.DeleteBouquetCommand;
+import florizz.command.ExitCommand;
+import florizz.command.FlowerCommand;
+import florizz.command.HelpCommand;
+import florizz.command.InfoCommand;
+import florizz.command.ListBouquetCommand;
+import florizz.command.ListOccasionCommand;
 import florizz.command.NextCommand;
 import florizz.command.RecommendCommand;
+import florizz.command.RemoveFlowerCommand;
+import florizz.command.SaveCommand;
 import florizz.objects.Bouquet;
 import florizz.objects.Flower;
 
@@ -95,6 +96,9 @@ public class Parser {
             case ("save"):
                 command = new SaveCommand(decodedInput[1]);
                 break;
+            case ("compare"):
+                command = handleCompareCommand(decodedInput[1], decodedInput[2]);
+                break;
             default:
                 throw new FlorizzException("Unidentified input, type help to get a list of all commands!");
             }
@@ -116,7 +120,7 @@ public class Parser {
      * @return String[] output; output[0] = item ; output[1] = argument(s)
      */
     public static String[] commandHandler(String input) throws FlorizzException {
-        String[] outputs = new String[2];
+        String[] outputs = new String[3];
         String trimmedInput = input.trim();
         String processedInput = FuzzyLogic.processCommand(trimmedInput);
         int firstWhitespace = processedInput.indexOf(" ");
@@ -149,6 +153,16 @@ public class Parser {
                 arguments[1] = trimmedArgument.substring(firstSlash).trim();
                 outputs[1] = arguments[0] + " " + arguments[1];
                 break;
+            case ("compare"):
+                outputs[1] = processedInput.substring(firstWhitespace).trim();
+                String[] flowers = outputs[1].split(" /vs/ ");
+                if (flowers.length != 2) {
+                    throw new FlorizzException("Incorrect usage of compare." +
+                            " Correct format: compare <flowerName1> /vs/ <flowerName2>");
+                }
+                outputs[1] = FuzzyLogic.detectItem(flowers[0]);
+                outputs[2] = FuzzyLogic.detectItem(flowers[1]);
+                break;
             default:
                 outputs[1] = FuzzyLogic.detectItem(processedInput.substring(firstWhitespace).trim());
                 break;
@@ -161,6 +175,22 @@ public class Parser {
         }
 
         return outputs;
+    }
+
+    /**
+     * Handles the parsing and creation of a CompareCommand object based on user input.
+     *
+     * @param firstFlowerName The name of the first flower to compare.
+     * @param secondFlowerName The name of the second flower to compare.
+     * @return A CompareCommand object corresponding to the parsed input.
+     * @throws FlorizzException If the input does not contain the required flower names.
+     */
+    private static CompareCommand handleCompareCommand(String firstFlowerName, String secondFlowerName)
+            throws FlorizzException {
+        if (firstFlowerName == null || secondFlowerName == null) {
+            throw new FlorizzException("Please specify two flowers to compare!");
+        }
+        return new CompareCommand(firstFlowerName, secondFlowerName);
     }
 
     /**
@@ -254,12 +284,13 @@ public class Parser {
         String bouquetName = removePrefix(argument.substring(prefixIndex), ADD_FLOWER_PREFIX).trim();
         if (includeColour) {
             int colourIndex = argument.indexOf(COLOUR);
-            try{
+            try {
                 flowerName = argument.substring(0,colourIndex).trim();
-                String colourString = removePrefix(argument.substring(colourIndex, quantityIndex), COLOUR).trim();
+                String colourString = FuzzyLogic.detectItem(
+                        removePrefix(argument.substring(colourIndex, quantityIndex), COLOUR).trim());
                 Flower.Colour colourToAdd = Flower.stringToColour(colourString);
                 return new AddFlowerCommand(flowerName, colourToAdd, quantity, bouquetName, enableUi);
-            } catch( IllegalArgumentException error){
+            } catch ( IllegalArgumentException error) {
                 throw new FlorizzException("Tried to add a non recognised colour" +
                         "Type 'flowers' to view all the currently available flowers and their colours.");
             }

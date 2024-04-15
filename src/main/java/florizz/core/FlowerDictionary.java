@@ -2,6 +2,7 @@ package florizz.core;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import florizz.objects.Flower;
 
@@ -25,10 +26,7 @@ public class FlowerDictionary {
         for (String occasion : occasions) {
             occasionsArrayList.add(Flower.Occasion.valueOf(occasion.replaceAll(" ", "_").toUpperCase()));
         }
-        ArrayList<String> meaningsArrayList = new ArrayList<>();
-        for (String meaning : meanings) {
-            meaningsArrayList.add(meaning);
-        }
+        ArrayList<String> meaningsArrayList = new ArrayList<>(Arrays.asList(meanings));
         flowerDict.add(new Flower(name, colourEnum, occasionsArrayList, price, meaningsArrayList, type));
     }
 
@@ -62,6 +60,7 @@ public class FlowerDictionary {
         // [Fillers have yet to be implemented]
         add("Baby Breath", "White", new String[]{"Wedding", "Valentines", "Mothers Day"}, 1.00,
                 new String[]{"Innocence", "Kindness", "Care", "Humble"}, Flower.Type.MAIN_FLOWER);
+
         add("Eucalyptus", "Green", new String[]{"Wedding"}, 1.5, new String[]{"Love", "Kindness"}, Flower.Type.MAIN_FLOWER);
         add("Dusty Miller", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);
         add("Pistacia", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);

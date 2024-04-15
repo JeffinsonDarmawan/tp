@@ -194,6 +194,9 @@ public class Flower {
         return price;
     }
 
+    public ArrayList<String> getMeanings() {
+        return meanings;
+    }
     /**
      * Gets type of flower in enum Type
      * @return Type of flower
@@ -239,6 +242,48 @@ public class Flower {
                 finalOccasion + "\n" +
                 "Price: $" + String.format("%.2f", price) + "\n" +
                 finalMeaning);
+    }
+
+    /**
+     * Generates a string representation of the occasion of the Flower object for the table.
+     * @return A string representation of the occasion of the Flower object for the table.
+     */
+    public String tableOccasionToString() {
+        String finalOccasion;
+        StringBuilder occasionsString = new StringBuilder();
+        for (Occasion occasion : occasions){
+            occasionsString.append(occasionToString(occasion));
+            occasionsString.append(", ");
+        }
+        if (!(occasionsString.toString().isEmpty())) {
+            finalOccasion = occasionsString.substring(0,occasionsString.lastIndexOf(","));
+        } else {
+            finalOccasion = "-";
+        }
+        return finalOccasion;
+    }
+
+    /**
+     * Generates a string representation of the meaning of the Flower object for the table.
+     * @return A string representation of the meaning of the Flower object for the table.
+     */
+    public String tableMeaningToString() {
+        String finalMeaning;
+        StringBuilder meaningsString = new StringBuilder();
+        for (String meaning : meanings){
+            meaningsString.append(meaning);
+            meaningsString.append(", ");
+        }
+        if (!(meaningsString.toString().isEmpty())) {
+            finalMeaning = meaningsString.substring(0,meaningsString.lastIndexOf(","));
+        } else {
+            finalMeaning = "-";
+        }
+        return finalMeaning;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     @Override
