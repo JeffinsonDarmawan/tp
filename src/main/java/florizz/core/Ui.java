@@ -171,12 +171,12 @@ public class Ui {
                         , "Exits the programme"
                         , "bye")
         );
-        System.out.println(AsciiTable.getTable(tableData, Arrays.asList(
+        System.out.println(AsciiTable.getTable(AsciiTable.BASIC_ASCII_NO_DATA_SEPARATORS, tableData, Arrays.asList(
                 new Column().header("No.").dataAlign(HorizontalAlign.CENTER)
                         .with((TableData data) -> Integer.toString(data.getId())),
-                new Column().header("Command").dataAlign(HorizontalAlign.LEFT).maxWidth(58)
+                new Column().header("Command").dataAlign(HorizontalAlign.LEFT)
                         .with(TableData::getCommand),
-                new Column().header("Explanation").dataAlign(HorizontalAlign.LEFT).maxWidth(40)
+                new Column().header("Explanation").dataAlign(HorizontalAlign.LEFT)
                         .with(TableData::getExplanation),
                 new Column().header("Example").dataAlign(HorizontalAlign.LEFT)
                         .with(TableData::getExample))));
@@ -262,8 +262,8 @@ public class Ui {
         int id = 1;
 
         for (Flower flower : flowers) {
-            tableData.add(new TableData(id, flower.getFlowerName(), flower.getColour(), flower.getOccasion().toString(),
-                    flower.getMeanings().toString(), String.format("%.2f", flower.getPrice())
+            tableData.add(new TableData(id, flower.getFlowerName(), flower.getColour(), flower.tableOccasionToString(),
+                    flower.tableMeaningToString(), String.format("%.2f", flower.getPrice())
                     , flower.getType().toString()));
             id++;
         }
@@ -545,14 +545,14 @@ public class Ui {
         int id = 1;
 
         for (Flower flower : firstFilteredFlowers) {
-            tableData.add(new TableData(id, flower.getFlowerName(), flower.getColour(), flower.getOccasion().toString(),
-                    flower.getMeanings().toString(), String.format("%.2f", flower.getPrice())
+            tableData.add(new TableData(id, flower.getFlowerName(), flower.getColour(), flower.tableOccasionToString(),
+                    flower.tableMeaningToString(), String.format("%.2f", flower.getPrice())
                     , flower.getType().toString()));
             id++;
         }
         for (Flower flower : secondFilteredFlowers) {
-            tableData.add(new TableData(id, flower.getFlowerName(), flower.getColour(), flower.getOccasion().toString(),
-                    flower.getMeanings().toString(), String.format("%.2f", flower.getPrice())
+            tableData.add(new TableData(id, flower.getFlowerName(), flower.getColour(), flower.tableOccasionToString(),
+                    flower.tableMeaningToString(), String.format("%.2f", flower.getPrice())
                     , flower.getType().toString()));
             id++;
         }
@@ -572,7 +572,7 @@ public class Ui {
         if (tableData.isEmpty()){
             throw new FlorizzException("No flowers to display.");
         }
-        System.out.println(AsciiTable.getTable(tableData, Arrays.asList(
+        System.out.println(AsciiTable.getTable(AsciiTable.BASIC_ASCII_NO_DATA_SEPARATORS, tableData, Arrays.asList(
                 new Column().header("No.").dataAlign(HorizontalAlign.CENTER)
                         .with((TableData data) -> Integer.toString(data.getId())),
                 new Column().header("Flower Name").dataAlign(HorizontalAlign.LEFT)

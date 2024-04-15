@@ -83,7 +83,7 @@ public class FuzzyLogic {
         }
 
         if (userInput.length() == 1) {
-            throw new FlorizzException("No matching command/flower/occasion/colour match the input: " + userInput);
+            throw new FlorizzException("No command/flower/occasion/colour matches the input: " + userInput);
         }
 
         String bestMatch = null;
@@ -107,8 +107,8 @@ public class FuzzyLogic {
         } else if (bestDistance == 0) {
             return bestMatch;
         } else {
-            logger.log(Level.SEVERE, "No matching command/item/occasion found for input: {0}", userInput);
-            throw new FlorizzException("No matching command/item/occasion found for input: " + userInput);
+            logger.log(Level.SEVERE, "No command/flower/occasion/colour matches the input: {0}", userInput);
+            throw new FlorizzException("No command/flower/occasion/colour matches the input: " + userInput);
         }
     }
 
@@ -240,12 +240,23 @@ public class FuzzyLogic {
             correctedInput = arguments[0];
             uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
         } else if (arguments[0].matches("(info|flowers)")) {
+            if (arguments.length == 1 && arguments[0].matches("(info)")) {
+                throw new FlorizzException("Incorrect format for " + arguments[0] + ". Correct format: "
+                        + arguments[0] + " <flowerName>");
+            }
+            if (arguments.length == 1 && arguments[0].matches("(flowers)")) {
+                throw new FlorizzException("Incorrect format for " + arguments[0] + ". Correct format: "
+                        + arguments[0] + " <occasion>");
+            }
             if (Objects.equals(arguments[1].toLowerCase(), "mothersday")) {
                 arguments[1] = "Mothers Day";
             }
             correctedInput = arguments[0] + " " + arguments[1];
             uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
         } else if (arguments[0].matches("(new)")) {
+            if (arguments.length == 1) {
+                throw new FlorizzException("Incorrect format for new. Correct format: new <bouquetName>");
+            }
             bouquetName = userInput.replaceFirst("n", "")
                     .replaceFirst("e", "")
                     .replaceFirst("w", "")
@@ -253,6 +264,9 @@ public class FuzzyLogic {
             correctedInput = "new " + bouquetName;
             uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
         } else if (arguments[0].matches("(delete)")) {
+            if (arguments.length == 1) {
+                throw new FlorizzException("Incorrect format for delete. Correct format: delete <bouquetName>");
+            }
             bouquetName = userInput.replaceFirst("d", "")
                     .replaceFirst("e", "")
                     .replaceFirst("l", "")
@@ -263,6 +277,9 @@ public class FuzzyLogic {
             correctedInput = "delete " + bouquetName;
             uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
         } else if (arguments[0].matches("(save)")) {
+            if (arguments.length == 1) {
+                throw new FlorizzException("Incorrect format for save. Correct format: save <bouquetName>");
+            }
             bouquetName = userInput.replaceFirst("s", "")
                     .replaceFirst("a", "")
                     .replaceFirst("v", "")
@@ -271,6 +288,10 @@ public class FuzzyLogic {
             correctedInput = "save " + bouquetName;
             uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
         } else if (arguments[0].matches("(remove)")) {
+            if (arguments.length == 1) {
+                throw new FlorizzException("Incorrect format for remove. Correct format: remove <flowerName>" +
+                        " /c <colour> /q <quantity> /from <bouquetName>");
+            }
             removeArgument = userInput.replaceFirst("r", "")
                     .replaceFirst("e", "")
                     .replaceFirst("m", "")
@@ -281,6 +302,10 @@ public class FuzzyLogic {
             correctedInput = "remove " + removeArgument;
             uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
         } else if (arguments[0].matches("(add)")) {
+            if (arguments.length == 1) {
+                throw new FlorizzException("Incorrect format for add. Correct format: add <flowerName>" +
+                        " /c <colour> /q <quantity> /to <bouquetName>");
+            }
             addArgument = userInput.replaceFirst("a", "")
                     .replaceFirst("d", "")
                     .replaceFirst("d", "")
@@ -288,7 +313,18 @@ public class FuzzyLogic {
             correctedInput = "add " + addArgument;
             uiFuzzy.printFuzzyInputDetection(userInput, correctedInput);
         } else if (arguments[0].matches("(compare)")) {
-            String[] flowerNames = arguments[1].split("/vs/");
+            if (arguments.length == 1) {
+                throw new FlorizzException("Incorrect format for compare. Correct format: compare <firstFlowerName>" +
+                        " /vs/ <secondFlowerName>");
+            }
+            String[] flowerNames;
+            if (arguments[1].contains("/vs/")) {
+                flowerNames = arguments[1].split("/vs/");
+            } else {
+                throw new FlorizzException("Incorrect format for compare. Correct format: compare <firstFlowerName>" +
+                        " /vs/ <secondFlowerName>");
+            }
+
             if (flowerNames.length != 2 || flowerNames[0].length() <= 2 || flowerNames[1].length() <= 2) {
                 throw new FlorizzException("Please input 2 flowers to compare.");
             }

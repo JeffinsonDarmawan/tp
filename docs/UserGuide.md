@@ -343,6 +343,9 @@ Examples of typos that Florizz can rectify include:
    - `flowersmothersday`
    - `infoDaisy`
 
+Note: Fuzzy Logic only works for commands, flower names, colours and occasions, and it cannot rectify typos which
+combine no. 1 with no. 2 or no. 3.
+
 Expected output:
 
 ```

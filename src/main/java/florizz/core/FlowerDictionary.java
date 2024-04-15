@@ -36,31 +36,32 @@ public class FlowerDictionary {
      */
     public static void startup() {
         add("Orchid", "White", new String[]{"Wedding"}, 10.00,
-                new String[]{"Innocence", "Respect", "Beauty"}, Flower.Type.FLOWER);
+                new String[]{"Innocence", "Respect", "Beauty"}, Flower.Type.MAIN_FLOWER);
         add("Rose", "Dark Crimson", new String[]{"Funeral"}, 2.00,
-                new String[]{"Mourning"}, Flower.Type.FLOWER);
+                new String[]{"Mourning"}, Flower.Type.MAIN_FLOWER);
         add("Rose", "Red", new String[]{"Valentines", "Wedding", "Mothers Day"}, 2.00,
-                new String[]{"Love"}, Flower.Type.FLOWER);
+                new String[]{"Love"}, Flower.Type.MAIN_FLOWER);
         add("Rose", "Yellow", new String[]{}, 2.00,
-                new String[]{"Jealousy, Decrease of love, Infidelity"}, Flower.Type.FLOWER);
+                new String[]{"Jealousy, Decrease of love, Infidelity"}, Flower.Type.MAIN_FLOWER);
         add("Lily", "White", new String[]{"Funeral", "Wedding"}, 2.50,
-                new String[]{"Innocence"}, Flower.Type.FLOWER);
+                new String[]{"Innocence"}, Flower.Type.MAIN_FLOWER);
         add("Lily", "Orange", new String[]{}, 2.50,
-                new String[]{"Hatred"}, Flower.Type.FLOWER);
+                new String[]{"Hatred"}, Flower.Type.MAIN_FLOWER);
         add("Daisy", "White", new String[]{"Valentines"}, 0.50,
-                new String[]{"Innocence"}, Flower.Type.FLOWER);
+                new String[]{"Innocence"}, Flower.Type.MAIN_FLOWER);
         add("Chrysanthemum", "White", new String[]{"Funeral"}, 1.00,
-                new String[]{"Love", "Loyalty", "Innocence"}, Flower.Type.FLOWER);
+                new String[]{"Love", "Loyalty", "Innocence"}, Flower.Type.MAIN_FLOWER);
         add("Hydrangea", "Blue", new String[]{"Wedding"}, 9.00,
-                new String[]{"Forgiveness", "Gratitude"}, Flower.Type.FLOWER);
+                new String[]{"Forgiveness", "Gratitude"}, Flower.Type.MAIN_FLOWER);
         add("Carnation", "Pink", new String[]{"Mothers Day"}, 2.00,
-                new String[]{"Gratitude", "Love"}, Flower.Type.FLOWER);
+                new String[]{"Gratitude", "Love"}, Flower.Type.MAIN_FLOWER);
         add("Carnation", "Red", new String[]{"Valentines"}, 2.00,
-                new String[]{"My heart aches", "Deep Love"}, Flower.Type.FLOWER);
+                new String[]{"My heart aches", "Deep Love"}, Flower.Type.MAIN_FLOWER);
         // [Fillers have yet to be implemented]
         add("Baby Breath", "White", new String[]{"Wedding", "Valentines", "Mothers Day"}, 1.00,
-                new String[]{"Innocence", "Kindness", "Care", "Humble"}, Flower.Type.FLOWER);
-        add("Eucalyptus", "Green", new String[]{"Wedding"}, 1.50, new String[]{"Love", "Kindness"}, Flower.Type.FLOWER);
+                new String[]{"Innocence", "Kindness", "Care", "Humble"}, Flower.Type.MAIN_FLOWER);
+        add("Eucalyptus", "Green", new String[]{"Wedding"}, 1.50, new String[]{"Love", "Kindness"}
+                , Flower.Type.MAIN_FLOWER);
         add("Dusty Miller", "Green", new String[]{}, 1.50, new String[]{}, Flower.Type.FILLER);
         add("Pistacia", "Green", new String[]{}, 1.50, new String[]{}, Flower.Type.FILLER);
         add("Pittosporum", "Green", new String[]{}, 1.50, new String[]{}, Flower.Type.FILLER);
