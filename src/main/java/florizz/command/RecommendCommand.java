@@ -182,8 +182,9 @@ public class RecommendCommand extends Command{
 
             // check if colour is in our dictionary
             if (!isValidColour) {
-                System.out.println("This colour does not exist. " +
-                        "Type 'cancel' if you would like to exit the recommendation page");
+                System.out.println("This colour does not exist.");
+                Ui.printBreakLine();
+                System.out.println("Type 'cancel' if you would like to exit the recommendation page");
             }
         }
 

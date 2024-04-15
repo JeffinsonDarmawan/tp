@@ -41,7 +41,7 @@ public class Parser {
     private static final String REMOVE_FLOWER_REGEX = "(.+)/q(\\s*)(-?\\d+)(\\s*)/from(.+)";
     private static final String REMOVE_FLOWER_AND_COLOUR_REGEX
             = "(.+)/c(\\s*)(.+)(\\s*)/q(\\s*)(-?\\d+)(\\s*)/from(.+)";
-    //private static final String PARSE_OCCASION_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
+    private static final String PARSE_OCCASION_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
     private static final String PARSE_COLOUR_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
     private static final String SAVE_BOUQUET_REGEX = "^\\s*(yes|no)\\s*$";
     private static final String PARSE_SIZE_REGEX = "^\\s*[A-Za-z]+\\s*$";
@@ -338,13 +338,13 @@ public class Parser {
      * @return The parsed occasion.
      */
     public static boolean parseOccasion(String argument) throws FlorizzException {
-        if (argument == null) {
+        if (argument == null || argument.isEmpty()) {
             System.out.println("No argument detected! " +
                     "Please input an occasion");
             return false;
         }
-        String detectedOccasion = FuzzyLogic.detectItem(argument);
-        if (detectedOccasion.isEmpty()) {
+
+        if (!argument.matches(PARSE_OCCASION_REGEX)) {
             System.out.println("Incorrect format detected! " +
                     "Please input a single occasion");
             return false;
@@ -359,7 +359,7 @@ public class Parser {
      * @return The parsed colour String
      */
     public static boolean parseColour(String argument) {
-        if (argument == null) {
+        if (argument == null || argument.isEmpty()) {
             System.out.println("No argument detected! " +
                     "Please input a colour");
             return false;
@@ -380,7 +380,7 @@ public class Parser {
      * @return The parsed save bouquet String
      */
     public static boolean parseSaveBouquet(String argument) {
-        if (argument == null) {
+        if (argument == null || argument.isEmpty()) {
             System.out.println("No argument detected! " +
                     "Please input a bouquet name to save");
             return false;
@@ -412,7 +412,7 @@ public class Parser {
      * @return whether it is a valid size format
      */
     public static boolean parseSize(String argument) {
-        if (argument == null) {
+        if (argument == null || argument.isEmpty()) {
             System.out.println("No argument detected! " +
                     "Please input a size of either small, medium or large");
             return false;
