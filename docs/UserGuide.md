@@ -168,9 +168,8 @@ Here is the list of your saved bouquets:
 __________________________________
 ```
 - `add Rose /q 3 /to For Girlfriend`
+
 ```
-What can I do for you?
-add rose /q 3 /to For Girlfriend
 The flower you're looking for has more than one colour available, each with their own vastly different meanings.
 Here is a table of information about the flower rose:
 +-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
@@ -190,10 +189,9 @@ Here is the list of your saved bouquets:
     - 3 x Rose (Red)
   Total estimated price = $6.00
 ```
+- `add daisy /q 3 /to For Girlfriend`
 
 ```
-What can I do for you?
-add daisy /q 3 /to For Girlfriend
 You have successfully added the following:
     - 3 x Daisy (White) -> Bouquet: For Girlfriend
 Here is the list of your saved bouquets:
