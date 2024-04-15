@@ -204,3 +204,7 @@ Main Success Scenario (MSS):
     - 2a1. Florizz shows an error message
 
       Use case ends. 
+
+**Acknowledgements**
+Florizz implemented a third-party JTextUtil ASCII-Table library to create ASCII tables for the `help`, `compare` and `info` 
+command. The library can be found at [ASCII-Table GitHub Page](https://github.com/freva/ascii-table).

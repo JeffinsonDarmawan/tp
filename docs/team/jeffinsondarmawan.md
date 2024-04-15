@@ -7,16 +7,8 @@ flowers to put into a bouquet for various occasions.
 ### Summary of Contributions 
 Code Contribution: [Jeffinson Darmawan RepoSense Report](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=jeffinsondarmawan&breakdown=true)
 
-**New Features:**
-
-1. Fuzzy Logic (Pull Request [#71](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/71), 
-[#83](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/83),
-[#84](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/84),
-[#87](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/87),
-[#162](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/162))
-
-    - What it is: 
-   
+ - **New Features:** Fuzzy Logic (Pull Request [#71](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/71), [#83](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/83), [#84](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/84), [#87](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/87), [#162](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/162))
+    - What it is:
       Theoretically, Fuzzy Logic is a mathematical framework that deals with uncertainty and imprecision in 
       decision-making. Rather than only accepting a binary value of truth (i.e. true or false), Fuzzy Logic allows variables
       to have a degree of truth which gives it the sense of "Fuzziness". Practically, Fuzzy Logic is implemented in 
@@ -32,8 +24,7 @@ Code Contribution: [Jeffinson Darmawan RepoSense Report](https://nus-cs2113-ay23
        Fuzzy Logic, Florizz is able to correct these typos and provide the user with the intended output thereby reducing 
        the effect of human errors.Imagine having to retype `adds Rose /q 1 /to Bouquet for My 3th Anniversary with My Girlfriend`
        because of a small mistake of having an "s" after "add" and repeating this over and over again!
-    - How it works: 
-
+    - How it works:
       Fuzzy Logic in Florizz works primarily in 3 ways. Firstly, applying 
       `detectItem(userInput, validCommand)`, Florizz will calculate the Damerau-Levenshtein distance which is a metric 
       used to measure the similarity between the user input and a list of predetermined valid commands. 
@@ -46,21 +37,21 @@ Code Contribution: [Jeffinson Darmawan RepoSense Report](https://nus-cs2113-ay23
       into `help` or `re mov e Lily /q 1 /from bouquet`into `remove Lily /q 1 /from bouquet`. Thirdly, Florizz can 
       also correct inputs which are mistakenly glued to each other, such as `flowersmothersday` into `flowers Mothers Day`.
 
-2. Listing Available Occasion (Pull Request [#26](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/26))
+- **New Feature:** Listing Available Occasion (Pull Request [#26](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/26))
    - What it is:
       `occasion` lists out all the occasions which are associated will all flowers in our database. This
       allows users to have a quick look at what occasions they can choose for their flowers. Once users know what occasion 
       they can input `flowers <occasion>` to see all the flowers associated with the occasion of choosing.
    - Justification:
        This feature is especially useful for users who are unsure of what flowers to choose for a specific occasion.
-3. Help Command (Pull Request [#16](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/16))
+- **New Feature:** Help Command (Pull Request [#16](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/16))
    - What it is:
      `help` assists users in using Florizz by showing a quick list of commands that users can use.
    - Justification:
      This feature is especially useful for new users who are unfamiliar with the commands available in Florizz.
    - Highlights: 
       This feature uses an ASCII table to increase readability of the list of available commands.
-4. Compare Command
+- **New Feature:** Compare Command
    - What it is:
       `compare` allows users to compare the colour, occasion, meaning, type and price of two flowers.
    - Justification:
@@ -85,13 +76,13 @@ Code Contribution: [Jeffinson Darmawan RepoSense Report](https://nus-cs2113-ay23
 
 **Documentation**
 1. Developer Guide
-(Pull Request [#82](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/82))
-   - Added UML diagrams and implementation details for `remove` and `help`
+(Pull Request [#82](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/82), [#180](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/180))
+   - Added UML diagrams and implementation details for `compare`, `remove` and `help`
 2. User Guide 
 (Pull Request [#106](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/106))
-   - Added documentation on `compare` and Fuzzy Logic 
+   - Added documentation on `compare` and `Fuzzy Logic`
    - Updated documentation on `help`, `new`, `add` and `remove`
 
 **Tools**
-1. Integrated a third party JTextUtil library called "freva ascii-table" to create ASCII tables for the `help` 
-and `compare` commands. (Link to Github Page: [Freva ASCII Table](https://github.com/freva/ascii-table))
+1. Integrated a third party JTextUtil ascii-table library to create ASCII tables for the `help`, `info` 
+and `compare` commands. (Link to GitHub Page: [ASCII-Table GitHub Page](https://github.com/freva/ascii-table)).
