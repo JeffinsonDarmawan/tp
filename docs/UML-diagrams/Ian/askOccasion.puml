@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include Ian-style.puml
+
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant "a:RecommendCommand" as RecommendCommand LOGIC_COLOUR_T1
+participant "b:Flower" as Flower LOGIC_COLOUR_T1
+
+box Ui UI_COLOUR
+participant ":Ui" as Ui UI_COLOUR_T1
+
+activate RecommendCommand
+
+loop !isValidFormat && !isValidOccasion
+RecommendCommand -> Ui : printAskOccasion()
+
+activate Ui
+Ui --> RecommendCommand : input
+deactivate Ui
+
+RecommendCommand -> Parser : parseOccasion(input)
+activate Parser
+Parser --> RecommendCommand : isValidFormat
+deactivate Parser
+
+RecommendCommand -> Flower : isValidOccasion()
+activate Flower
+Flower --> RecommendCommand :isValidOccasion
+deactivate Flower
+
+end
+@enduml

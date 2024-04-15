@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include Ian-style.puml
+
+actor "user" as user
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant "a:RecommendCommand" as RecommendCommand LOGIC_COLOUR_T1
+
+[-> Florizz : execute("recommend")
+activate Florizz
+
+Florizz -> Parser : parse("recommend")
+activate Parser
+
+create RecommendCommand
+Parser -> RecommendCommand : RecommendCommand("rose")
+activate RecommendCommand
+
+RecommendCommand --> Parser : a
+deactivate RecommendCommand
+
+Parser --> Florizz : a
+deactivate Parser
+
+Florizz -> RecommendCommand : execute()
+activate RecommendCommand
+
+RecommendCommand -> RecommendCommand: askOccasion(...)
+RecommendCommand -> RecommendCommand: askColour(...)
+RecommendCommand -> RecommendCommand: askBouquetName(...)
+RecommendCommand -> RecommendCommand: askSize(...);
+RecommendCommand -> RecommendCommand: addRandomFlowers(...)
+RecommendCommand -> RecommendCommand: askSaveBouquet(...);
+
+RecommendCommand --> Florizz
+deactivate RecommendCommand
+
+<--Florizz
+deactivate Florizz
+@enduml

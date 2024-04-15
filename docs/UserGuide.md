@@ -2,8 +2,30 @@
 Florizz is your personal digital florist which helps people in Singapore to curate flowers to create bouquets for all 
 occasions.
 
-## Features
-### Viewing help: `help`
+## Table of Contents
+<!-- TOC -->
+* [User Guide](#user-guide)
+  * [Table of Contents](#table-of-contents)
+  * [Features <a name="Features"></a>](#features-a-namefeaturesa)
+    * [Viewing help: `help` <a name="help"></a>](#viewing-help-help-a-namehelpa)
+    * [Create a new bouquet: `new`](#create-a-new-bouquet-new)
+    * [Delete existing bouquet: `delete`](#delete-existing-bouquet-delete)
+    * [View existing bouquets: `mybouquets`](#view-existing-bouquets-mybouquets)
+    * [List all available flowers: `flowers`](#list-all-available-flowers-flowers)
+    * [View detailed info of a flower: `info`](#view-detailed-info-of-a-flower-info)
+    * [Add flower: `add`](#add-flower-add)
+    * [Remove flower: `remove`](#remove-flower-remove)
+    * [List occasions: `occasion`](#list-occasions-occasion)
+    * [Recommend A Bouquet: `recommend`](#recommend-a-bouquet-recommend)
+    * [Save a bouquet to device: `save`](#save-a-bouquet-to-device-save)
+    * [Compare two flowers: `compare`](#compare-two-flowers-compare)
+    * [Exit programme: `bye`](#exit-programme-bye)
+    * [Fuzzy Logic](#fuzzy-logic)
+    * [Autosave](#autosave)
+<!-- TOC -->
+
+## Features <a name="Features"></a>
+### Viewing help: `help` <a name="help"></a>
 Shows a list of commands and its corresponding function
 
 Format: `help`
@@ -208,30 +230,34 @@ Here are all the occasions associated with the available flowers:
 ____________________________________________________________
 ```
 ### Recommend A Bouquet: `recommend`
-Recommends a bouquet based on the occasion and the recipient's preference
+
+Recommends a bouquet based on the occasion and the recipient's preference. Will enter user into 'recommend mode'. Type `cancel` to exit recommend mode.
 
 Steps:
 1. Type command: `recommend`
 
    Expected output:
    ```
-   For what occasion are you buying flowers for?
-   Here is the list of our available occasion:
-   Here are all the occasions associated with the available flowers: 
-   - Funeral
-   - Wedding
-   - Valentines
-   - Mothers day
-   ____________________________________________________________
+    For what occasion are you buying flowers for?
+    Here are all the occasions associated with the available flowers:
+    - Funeral
+    - Wedding
+    - Valentines
+    - Mothers day
+    ____________________________________________________________
+    Type 'cancel' if you would like to exit the recommendation page
    ```
+   
 2. Type occasion: `Funeral`
    
    Expected output:
    ```
    What colour would you like your bouquets to be?
-   Here is the list of colours available for the occasion: 
-   - DARK_CRIMSON
-   - WHITE
+   Here is the list of colours available for the occasion:
+   - Dark crimson
+   - White
+    ____________________________________________________________
+    Type 'cancel' if you would like to exit the recommendation page
    ```
 
 3. Select colour of bouquet: `WHITE`
@@ -239,19 +265,51 @@ Steps:
    Expected output:
    
    ```
-   Would you like to save this bouquet to your list?
-   Here is the full list of flowers in Recommended Bouquet:
-       - 3 x Lily
-       - 2 x Chrysanthemum
-   ____________________________________________________________
-   Type 'yes' to save, 'no' to discard
+    Great we managed to find some flowers for you!
+    Before we carry on what would you like to call your bouquet?
+    Note: please take note 'cancel' cannot be used as a bouquet name
+    ____________________________________________________________
+    Type 'cancel' if you would like to exit the recommendation page
    ```
-4. Confirm whether you want to add the recommended bouquet to your mybouquets list: `yes`
+   
+4. Type bouquet name: `for grandma`
+
+   Expected output:
+   ```
+    What size would you like your recommended bouquet to be?
+    1. Small
+    2. Medium
+    3. Large
+    ____________________________________________________________
+    Type 'cancel' if you would like to exit the recommendation page
+   ```
+   
+5. Select bouquet size: `Large`
+
+   Expected output:
+   ```
+    Would you like to save this bouquet to your list?
+    Here is the full list of flowers in for grandma:
+    - 2 x Pittosporum
+    - 2 x Freesia
+    - 1 x Dusty Miller
+    - 3 x Chrysanthemum
+    - 1 x Pistacia
+    - 2 x Lily
+    ____________________________________________________________
+    Type 'yes' to save, 'no' to discard
+    Type 'cancel' if you would like to exit the recommendation page
+   ```
+   *Note: The flowers in the bouquet are randomly generated and may differ from the example*
+
+
+6. Confirm whether you want to add the recommended bouquet to your mybouquets list: `yes`
    
    ```
-   Added new bouquet to list: 
-   Recommended Bouquet
-   ____________________________________________________________
+    Added new bouquet to list:
+    for grandma
+    ____________________________________________________________
+    What can I do for you?
    ```
 
 ### Save a bouquet to device: `save`

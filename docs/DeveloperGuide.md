@@ -49,11 +49,41 @@ Step 3: `InfoCommand` class will call `printFlowerInfo()` method of `Ui` class
 
 Step 4: `get()` of `FlowerDictionary` class will then be called in order to retrive information about the specified flower. This information will be printed by the `Ui` class
 
-### Flower Remove Command
+### Flower Help Command
+
+`help` Shows a list of valid commands
+
+![Help Command Sequence Diagram](UML-diagrams/Jeffinson/Jeffinson-UML-Help.png);
+
+Help command utilises the `parser` class to identify the keyword `help`
+
+**Step 1:** User will write `help` and `HelpCommand` class will be instantiated and `execute()` method will run.
+
+**Step 2:** `HelpCommand` class will call `printHelpMessage()` method of `Ui` class
+
+**Step 3:** The list of valid commands will be printed by the `Ui` class
+
+### Add Flower Command
+
+`add <flower> /q <quantity> /to <targetBouquet>` command adds specified number of flower to a bouquet
+
+![Add Flower Command Diagram](UML-diagrams/Ijaaz/Ijaaz-UML.png)
+
+**Step 1:** Firstly the input is put into the `Parser.parse()` method to identify that it is infact an add flower command.
+
+**Step 2:** Then an object of type `AddFlowerCommand` is returned which contains the name, quantity of the flower to be added, as well as the target bouquet
+
+**Step 3:** The `execute()` method is called to execute the add flower command 
+
+**Step 4:** The target bouquet, which is under model, is updated accordingly
+
+**Step 5:** A confirmation message is then sent back to the user
+
+### Remove Flower Command
 
 `remove <flowerName> /q <quantity> /from <bouquetName>` removes flower(s) from a bouquet
 
-![Remove Command Sequence Diagram](UML-diagrams/Jeffinson/Jeffinson-UML-Remove.png);
+![Remove Command Sequence Diagram](UML-diagrams/Jeffinson/Jeffinson-UML-Remove.png)
 
 Removing flowers utilise the `parser` class to parse user command to identify which flower to remove,
 how much to remove and from which bouquet to remove.
@@ -67,35 +97,36 @@ class will be instantiated and run its `execute()` method.
 
 **Step 4:** The flowers are removed and a confirmation message is sent back to the user
 
-### Flower Help Command
+### Recommend Command
 
-`help` Shows a list of valid commands
+`recommend` recommends a bouquet based on user input
 
-![Help Command Sequence Diagram](UML-diagrams/Jeffinson/Jeffinson-UML-Help.png);
+![Recommend Command Sequence Diagram](UML-diagrams/Ian/RecommendCommand.png)
+*simplified version of the sequence diagram*
 
-Help command utilises the `parser` class to identify the keyword `help`
+**Step 1:** User will input `recommend` into the CLI, which will be parsed by the `parser` class to identify.
 
-**Step 1: ** User will write `help` and `HelpCommand` class will be instantiated and `execute()` method will run.
+**Step 2:** `RecommendCommand` class will be instantiated and run its `execute()` method.
 
-**Step 2:** `HelpCommand` class will call `printHelpMessage()` method of `Ui` class
+**Step 3:** Various methods will be called to get the user input. In order, the methods are `askOccasion(...)`, `askColour(...)`, `askSize(...)`, `askBouquetName(...)`, `askSize()`, `addRandomFlowers()`, `askSaveBouquet()`.
 
-**Step 3:** The list of valid commands will be printed by the `Ui` class
+#### askOccasion(...)
 
-### Add Flower Command
+A deeper look into the `askOccasion(...)` method
 
-`add <flower> /q <quantity> /to <targetBouquet>` command adds specified number of flower to a bouquet
+![askOccasion Sequence Diagram](UML-diagrams/Ian/askOccasion.png)
 
-![Add Flower Command Diagram](UML-diagrams/Ijaaz/Ijaaz-UML.png)
+**Step 1:** `askOccasion(...)` method will call `Ui.askOccasion()` to get the user input.
 
-Step 1: Firstly the input is put into the `Parser.parse()` method to identify that it is infact an add flower command.
+**Step 2:** `askOccasion(...)` method will call `Parser` to validate the format of user input.
 
-Step 2: Then an object of type `AddFlowerCommand` is returned which contains the name, quantity of the flower to be added, as well as the target bouquet
+**Step 3:** `askOccasion(...)` method will check with `Flower` class to see if the occasion is valid.
 
-Step 3: The `execute()` method is called to execute the add flower command 
+**Step 4:** once format is validated and the occasion inputted is valid, the method will return the occasion.
 
-Step 4: The target bouquet, which is under model, is updated accordingly
+#### askColour(...), askSize(...), askBouquetName(...), askSize(...), addRandomFlowers(...), askSaveBouquet()
 
-Step 5: A confirmation message is then sent back to the user
+The other methods will follow a similar structure as `askOccasion(...)` method, where the user input is taken, validated, and then stored in the `RecommendCommand` class to be further processed.
 
 ### [Proposed] Storage
 
@@ -170,7 +201,7 @@ Main Success Scenario (MSS):
 4. Programme responds that the 3 stalks of rose has been successfully added
 5. Programme displays the current state of "for valentine" bouquet and all the flowers inside it
 
-** Use case: Removing flowers from a bouquet named "for valentine" **
+**Use case: Removing flowers from a bouquet named "for valentine"**
 
 Main Success Scenario (MSS):
 1. User removes 5 stalks of rose from the bouquet named "for valentine"
