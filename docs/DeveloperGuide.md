@@ -85,7 +85,7 @@ Help command utilises the `parser` class to identify the keyword `help`
 
 `add <flower> /q <quantity> /to <targetBouquet>` command adds specified number of flower to a bouquet
 
-![Add Flower Command Diagram](UML-diagrams/Ijaaz/Ijaaz-UML.png)
+![Add Flower Command Diagram](UML-diagrams/Ijaaz/AddFlowerCommand.png)
 
 Step 1: Firstly the input is put into the `Parser.parse()` method to identify that it is infact an add flower command.
 
@@ -97,28 +97,21 @@ Step 4: The target bouquet, which is under model, is updated accordingly
 
 Step 5: A confirmation message is then sent back to the user
 
-### [Proposed] Storage
+### Save Command
 
-#### Proposed Implementation:
+`save <bouquetName>` command adds specified number of flower to a bouquet
 
-The proposed storage mechanism will utilize a class `storage` who is in charge of getting the file, `encoder` which will encode current model into a .txt file format, `decoder` which will decode .txt file into a usable model.
+![Save Command Diagram](UML-diagrams/Ijaaz/SaveCommand.png)
 
-![Storage Class Diagram](UML-diagrams/Ian/storage.png)
+Step 1: Firstly the input is put into the `Parser.parse()` method to identify that it is infact a save command.
 
-#### Design Considerations:
-- Alternative 1 (current choice): use .txt files as storage
-    - Pros:
-        - Easier to implement
-        - .txt file is very readable even outside of programme
-    - Cons:
-        - .txt file can be easily changed outside of programme, making storage of model prone to parsing failure
-- Alternative 2: use .csv files as storage
-    - Pros:
-        - A more standardize format that is easily accepted by other 3rd party software
-    - Cons:
-        - More difficulty to set up the decoder
-        - .csv file can be easily changed outside of programme, making storage of model prone to parsing failure
+Step 2: Then an object of type `SaveCommand` is returned which contains the name of the bouquet to be saved
 
+Step 3: The `execute()` method is called to execute the save command
+
+Step 4: The target bouquet is then sent to Storage to be saved locally
+
+Step 5: A confirmation message is then sent back to the user
 
 # Appendix: Requirements
 

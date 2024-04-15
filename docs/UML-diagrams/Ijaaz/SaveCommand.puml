@@ -1,0 +1,71 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include Ijaaz-style.puml
+
+actor "user" as user
+box Ui UI_COLOUR
+participant ":Ui" as Ui UI_COLOUR_T1
+end box
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant ":FuzzyLogic" as Fuzzy LOGIC_COLOUR_T1
+participant "s:SaveCommand" as SaveCommand LOGIC_COLOUR_T1
+end box
+
+box Model MODEL_COLOUR
+participant ":Model" as Model MODEL_COLOUR_T1
+end box
+
+box Storage STORAGE_COLOUR
+participant ":Storage" as Storage STORAGE_COLOUR_T1
+end box
+
+user -> Ui : readInput("save mum")
+activate Ui
+
+Ui -> Florizz : execute("save mum")
+activate Florizz
+
+Florizz -> Parser : parse("save mum")
+activate Parser
+
+Parser -> Fuzzy : CommandHandler("save mum")
+activate Fuzzy
+
+Fuzzy --> Parser : {"save","mum", null}
+deactivate Fuzzy
+
+create SaveCommand
+Parser -> SaveCommand : SaveCommand("mum")
+activate SaveCommand
+
+SaveCommand --> Parser : s
+deactivate SaveCommand
+
+Parser --> Florizz : s
+deactivate Parser
+
+Florizz -> SaveCommand : execute()
+activate SaveCommand
+
+SaveCommand -> Model : bouquetList.get(idx)
+activate Model
+
+Model --> SaveCommand : bouquetToSave
+deactivate Model
+
+SaveCommand -> Storage : saveBouquet(bouquetToSave)
+activate Storage
+
+Storage --> SaveCommand
+deactivate Storage
+
+SaveCommand --> Ui : printSaveSuccess()
+Ui --> user : "Successfully saved..."
+deactivate Ui
+
+SaveCommand --> Florizz : true
+deactivate SaveCommand
+@enduml
