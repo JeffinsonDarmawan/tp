@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include Ijaaz-style.puml
+
+actor "user" as user
+box Ui UI_COLOUR
+participant ":Ui" as Ui UI_COLOUR_T1
+end box
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant ":FuzzyLogic" as Fuzzy LOGIC_COLOUR_T1
+participant "a:AddFlowerCommand" as AddFlowerCommand LOGIC_COLOUR_T1
+end box
+
+box Model MODEL_COLOUR
+participant ":Model" as Model MODEL_COLOUR_T1
+end box
+
+user -> Ui : readInput("add rose /c red /q 1 /to mum")
+activate Ui
+
+Ui -> Florizz : execute("add rose /c red /q 1 /to mum")
+activate Florizz
+
+Florizz -> Parser : parse("add rose /c red /q 1 /to mum")
+activate Parser
+
+Parser -> Fuzzy : CommandHandler(""add rose /c red /q 1 /to mum")
+activate Fuzzy
+
+Fuzzy --> Parser : {"add","Rose /c red /q 1 /to mum", null}
+deactivate Fuzzy
+
+Parser -> Parser : handleAddFlowerCommand()
+
+create AddFlowerCommand
+Parser -> AddFlowerCommand : AddFlowerCommand("rose", "red", 1, "mum")
+activate AddFlowerCommand
+
+AddFlowerCommand --> Parser : a
+deactivate AddFlowerCommand
+
+Parser --> Florizz : a
+deactivate Parser
+
+Florizz -> AddFlowerCommand : execute()
+activate AddFlowerCommand
+
+AddFlowerCommand -> Model : addFlower("rose", "red", 1)
+activate Model
+
+Model --> AddFlowerCommand
+deactivate Model
+
+AddFlowerCommand --> Ui : printAddFlowerSuccess()
+Ui --> user : "Successfully added..."
+deactivate Ui
+
+AddFlowerCommand --> Florizz : true
+deactivate AddFlowerCommand
+@enduml

@@ -33,35 +33,15 @@ flowers to put into a bouquet for various occasions.
   flowers related to a specific occasion if one was specified.
 
 * **Enhancements to Existing Features**
-  * Helped to change the logic of the `recommend command` mostly implemented by my teammate Ian, so that it did not kick 
+  * Helped to change the logic of the `recommend` command mostly implemented by my teammate Ian, so that it did not kick 
   users out of 'recommend mode' when given a bad input. [proof](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/155/files)
   * Updated the `info` command to allow it to display the information for a flower even if its meaning and ocassions had 
   no entries. This required updating the item key for the fuzzy logic function implemented by my teammate Jeff. [proof](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/157/files)
 
 * **Documentation**
   * **UG**:
-  ### List all available flowers: `flowers`
-  List all available flowers in the database currently, also able to filter presented flowers according to occasion
-  ### Save a bouquet to device: `save`
-  Saves chosen bouquet, if it exists, locally to the users device
-  
-  Format: `save <bouquetName>`
-  
-  - Bouquet must exist before it can be saved
-  
-  Examples:
-  - `save moms bouquet`
-  
-  Expected Output:
-  ```
-  Successfully saved moms bouquet. You can find it at 'florizz-out/saved/moms bouquet.txt
-  ```
-  ### Autosave
-  Florizz automatically backs up all your bouquet data onto your device in a `FlorizzBouquets.txt` file.
-  As such the user can transfer their bouquet data between devices by simply moving the text file to the `florizz-out/data/`
-  folder. However, editing this text file is not recommended as the format is very specific, so users
-  should do so at their own risk
+    * Added documentation for `save` and `flowers` as well as AutoSave
 
   * **DG**:
-  ![Add Flower Command Diagram](/docs/UML-diagrams/Ijaaz/(old)Ijaaz-UML.png)
+    * Created sequence diagrams for save command and addFlower command
   

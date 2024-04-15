@@ -1,4 +1,4 @@
-@startuml
+    @startuml
 'https://plantuml.com/sequence-diagram
 
 !define LOGIC_COLOUR #bcf5c9
@@ -7,4 +7,6 @@
 !define MODEL_COLOUR_T1 #fc1e1e
 !define UI_COLOUR #FFDA17
 !define UI_COLOUR_T1 #FFF5C0
+!define STORAGE_COLOUR #9fb5f5
+!define STORAGE_COLOUR_T1 #3667f5
 @enduml
