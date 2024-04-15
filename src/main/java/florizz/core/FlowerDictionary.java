@@ -61,7 +61,8 @@ public class FlowerDictionary {
         add("Baby Breath", "White", new String[]{"Wedding", "Valentines", "Mothers Day"}, 1.00,
                 new String[]{"Innocence", "Kindness", "Care", "Humble"}, Flower.Type.MAIN_FLOWER);
 
-        add("Eucalyptus", "Green", new String[]{"Wedding"}, 1.5, new String[]{"Love", "Kindness"}, Flower.Type.MAIN_FLOWER);
+        add("Eucalyptus", "Green", new String[]{"Wedding"}, 1.5,
+                new String[]{"Love", "Kindness"}, Flower.Type.MAIN_FLOWER);
         add("Dusty Miller", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);
         add("Pistacia", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);
         add("Pittosporum", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);

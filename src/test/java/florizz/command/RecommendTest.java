@@ -27,7 +27,8 @@ public class RecommendTest {
         Flower.Occasion occasion = Flower.Occasion.VALENTINES;
         ArrayList<Flower> eligibleFlowersByOccasion = FlowerDictionary.filterByOccasion(occasion);
         Bouquet recommendedBouquet = new Bouquet("TestBouquet");
-        // NOTE: testSize must be in lowercase. In actual case, validation will be done before addRandomFlower is called.
+        // NOTE: testSize must be in lowercase. In actual case,
+        // validation will be done before addRandomFlower is called.
         String testSize = "small";
         Flower.Colour testColour = Flower.Colour.WHITE;
         ArrayList<Flower> eligibleFlowersByOccasionAndColour =
