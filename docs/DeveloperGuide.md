@@ -128,6 +128,23 @@ A deeper look into the `askOccasion(...)` method
 
 The other methods will follow a similar structure as `askOccasion(...)` method, where the user input is taken, validated, and then stored in the `RecommendCommand` class to be further processed.
 
+### Compare Flower Command
+
+`compare <flower1> /vs/ <flower2>` command compares two flowers based on their flowers names.
+
+![Compare Flower Command Diagram](UML-diagrams/Jeffinson/Jeffinson-UML-compare.png)
+
+Step 1: User will input the two flower names into the `Parser.parse()` method to identify the `compare` command keyword
+and the presence of the 2 flowers in the userInput to compare 
+
+Step 2: An object of type `CompareCommand` is then returned which contains the names of the two flowers to be compared.
+
+Step 3: The `execute()` method is called to execute the compare command
+
+Step 4: Ui.printCompareFlowers() is called to print the comparison of the two flowers
+
+Step 5: A table is printed out to the user showing the comparison between the two flowers
+
 ### [Proposed] Storage
 
 #### Proposed Implementation:
