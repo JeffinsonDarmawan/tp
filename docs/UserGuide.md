@@ -12,43 +12,31 @@ Expected output:
 
 ```
 Here is the table showing a list of commands you can use:
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-| No. | Command                                                  | Explanation                            | Example                                        |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-|  1  | new <bouquetName>                                        | Add a bouquet                          | new Birthday Bouquet                           |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-|  2  | delete <bouquetName>                                     | Delete a bouquets                      | delete Birthday Bouquet                        |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-|  3  | mybouquets                                               | List current saved bouquets            | mybouquets                                     |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-|  4  | info <flowerName>                                        | Provide information on chosen flower   | info Rose                                      |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-|  5  | add <flowerName> /c <colour> (optional) /q <quantity>    | Add flower to a bouquet                | add Rose /c Red /q 5 /to Birthday Bouquet      |
-|     | /to <bouquetName>                                        |                                        |                                                |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-|  6  | remove <flowerName> /c <colour> (optional) /q <quantity> | Remove flower from a bouquet           | remove Rose /c Red /q 5 /from Birthday Bouquet |
-|     | /from <bouquetName>                                      |                                        |                                                |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-|  7  | flowers                                                  | Shows a list of flowers that can be    | flowers                                        |
-|     |                                                          | added into mybouquets                  |                                                |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-|  8  | flowers <occasion>                                       | Shows a list of flowers associated     | flowers Valentines                             |
-|     |                                                          | with said occasion                     |                                                |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-|  9  | occasion                                                 | Shows a list of occasions associated   | occasion                                       |
-|     |                                                          | with available flowers                 |                                                |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-| 10  | save <bouquetName>                                       | Saves a bouquet to an external         | save Birthday Bouquet                          |
-|     |                                                          | <bouquetName>.txt file                 |                                                |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-| 11  | recommend                                                | Recommends a bouquet based on the      | recommend                                      |
-|     |                                                          | chosen occasion and colour             |                                                |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-| 12  | compare <1st flowerName> /vs/ <2nd flowerName>           | Show information regarding two flowers | compare Rose /vs/ Lily                         |
-|     |                                                          | side-by-side for comparison            |                                                |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
-| 13  | bye                                                      | Exits the programme                    | bye                                            |
-+-----+----------------------------------------------------------+----------------------------------------+------------------------------------------------+
++-----+------------------------------------------------+----------------------------------------+------------------------------+
+| No. | Command                                        | Explanation                            | Example                      |
++-----+------------------------------------------------+----------------------------------------+------------------------------+
+|  1  | new <bouquetName>                              | Add a bouquet                          | new Birthday Bouquet         |
+|  2  | delete <bouquetName>                           | Delete a bouquets                      | delete Birthday Bouquet      |
+|  3  | mybouquets                                     | List current saved bouquets            | mybouquets                   |
+|  4  | info <flowerName>                              | Provide information on chosen flower   | info Rose                    |
+|  5  | add <flowerName> /c <colour> (optional) /q     | Add flower to a bouquet                | add Rose /c Red /q 5 /to     |
+|     | <quantity> /to <bouquetName>                   |                                        | Birthday Bouquet             |
+|  6  | remove <flowerName> /c <colour> (optional) /q  | Remove flower from a bouquet           | remove Rose /c Red /q 5      |
+|     | <quantity> /from <bouquetName>                 |                                        | /from Birthday Bouquet       |
+|  7  | flowers                                        | Shows a list of flowers that can be    | flowers                      |
+|     |                                                | added into mybouquets                  |                              |
+|  8  | flowers <occasion>                             | Shows a list of flowers associated     | flowers Valentines           |
+|     |                                                | with said occasion                     |                              |
+|  9  | occasion                                       | Shows a list of occasions associated   | occasion                     |
+|     |                                                | with available flowers                 |                              |
+| 10  | save <bouquetName>                             | Saves a bouquet to an external         | save Birthday Bouquet        |
+|     |                                                | <bouquetName>.txt file                 |                              |
+| 11  | recommend                                      | Recommends a bouquet based on the      | recommend                    |
+|     |                                                | chosen occasion and colour             |                              |
+| 12  | compare <1st flowerName> /vs/ <2nd flowerName> | Show information regarding two flowers | compare Rose /vs/ Lily       |
+|     |                                                | side-by-side for comparison            |                              |
+| 13  | bye                                            | Exits the programme                    | bye                          |
++-----+------------------------------------------------+----------------------------------------+------------------------------+
 ```
 
 ### Create a new bouquet: `new`
@@ -144,13 +132,12 @@ Example: `info Lily`
 Expected Output:
 ```
 Here is a table of information about the flower Lily:
-+-----+-------------+--------+--------------------+-------------+--------+-----------+
-| No. | Flower Name | Colour | Occasion           | Meaning     | Type   | Price ($) |
-+-----+-------------+--------+--------------------+-------------+--------+-----------+
-|  1  | Lily        | White  | [FUNERAL, WEDDING] | [Innocence] | FLOWER |      2.50 |
-+-----+-------------+--------+--------------------+-------------+--------+-----------+
-|  2  | Lily        | Orange | []                 | [Hatred]    | FLOWER |      2.50 |
-+-----+-------------+--------+--------------------+-------------+--------+-----------+
++-----+-------------+--------+------------------+-----------+-------------+-----------+
+| No. | Flower Name | Colour | Occasion         | Meaning   | Type        | Price ($) |
++-----+-------------+--------+------------------+-----------+-------------+-----------+
+|  1  | Lily        | White  | Funeral, Wedding | Innocence | MAIN_FLOWER |      2.50 |
+|  2  | Lily        | Orange | -                | Hatred    | MAIN_FLOWER |      2.50 |
++-----+-------------+--------+------------------+-----------+-------------+-----------+
 ____________________________________________________________
 ```
 
@@ -295,19 +282,15 @@ Examples:
 Expected output:
 ```
 Here is a table of comparison between the two flowers:
-+-----+-------------+--------------+------------------------------------+------------------------------------------+--------+-----------+
-| No. | Flower Name | Colour       | Occasion                           | Meaning                                  | Type   | Price ($) |
-+-----+-------------+--------------+------------------------------------+------------------------------------------+--------+-----------+
-|  1  | Rose        | Dark crimson | [FUNERAL]                          | [Mourning]                               | FLOWER |      2.00 |
-+-----+-------------+--------------+------------------------------------+------------------------------------------+--------+-----------+
-|  2  | Rose        | Red          | [VALENTINES, WEDDING, MOTHERS_DAY] | [Love]                                   | FLOWER |      2.00 |
-+-----+-------------+--------------+------------------------------------+------------------------------------------+--------+-----------+
-|  3  | Rose        | Yellow       | []                                 | [Jealousy, Decrease of love, Infidelity] | FLOWER |      2.00 |
-+-----+-------------+--------------+------------------------------------+------------------------------------------+--------+-----------+
-|  4  | Lily        | White        | [FUNERAL, WEDDING]                 | [Innocence]                              | FLOWER |      2.50 |
-+-----+-------------+--------------+------------------------------------+------------------------------------------+--------+-----------+
-|  5  | Lily        | Orange       | []                                 | [Hatred]                                 | FLOWER |      2.50 |
-+-----+-------------+--------------+------------------------------------+------------------------------------------+--------+-----------+
++-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
+| No. | Flower Name | Colour       | Occasion                         | Meaning                                | Type        | Price ($) |
++-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
+|  1  | Rose        | Dark crimson | Funeral                          | Mourning                               | MAIN_FLOWER |      2.00 |
+|  2  | Rose        | Red          | Valentines, Wedding, Mothers day | Love                                   | MAIN_FLOWER |      2.00 |
+|  3  | Rose        | Yellow       | -                                | Jealousy, Decrease of love, Infidelity | MAIN_FLOWER |      2.00 |
+|  4  | Lily        | White        | Funeral, Wedding                 | Innocence                              | MAIN_FLOWER |      2.50 |
+|  5  | Lily        | Orange       | -                                | Hatred                                 | MAIN_FLOWER |      2.50 |
++-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
 ```
 
 ### Exit programme: `bye`
