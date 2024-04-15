@@ -1,4 +1,3 @@
-help
 new test
 mybouquets
 bye
