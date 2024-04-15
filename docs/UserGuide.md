@@ -44,7 +44,8 @@ Creates an empty bouquet to add flowers to later
 
 Format: `new NAME`
 
-Bouquet name must not already exist
+- Bouquet name must not already exist
+- Bouquet names are not case-sensitive i.e. For Girlfriend = for girlfriend
 
 Examples:
 `new For Girlfriend`
@@ -61,7 +62,7 @@ Deletes a bouquet from the bouquet list
 
 Format:  `delete <bouquetName>`
 
-Bouquet of that name must exist in the list
+- Bouquet of that name must exist in the list
 
 Example:
 `delete For Mother`
@@ -97,25 +98,23 @@ Example: `flowers`
 
 Expected output:
 ```
-Showing page 1/2 of all the flowers you can add: 
-1. White Orchid
-2. Dark crimson Rose
-3. Red Rose
-4. White Lily
-5. White Daisy
+Showing page 1/6 of all the flowers you can add:
+1. Orchid (White)
+2. Rose (Dark crimson)
+3. Rose (Red)
+4. Rose (Yellow)
+5. Lily (White)
 Type 'next' to go to the next page.
-____________________________________________________________
 ```
 
 Example: `flowers Funeral` 
 
 Expected output:
 ```
-Here is page 1/1 of all the flowers related to Funeral: 
-1. Dark crimson Rose
-2. White Lily
-3. White Chrysanthemum
-____________________________________________________________
+Here is page 1/1 of all the flowers related to Funeral:
+1. Rose (Dark crimson)
+2. Lily (White)
+3. Chrysanthemum (White)
 ```
 
 ### View detailed info of a flower: `info`
@@ -145,54 +144,108 @@ ____________________________________________________________
 
 Adds a flower into a bouquet
 
-Format: `add <flowerName> /q <quantity> /to <bouquetName>`
+Format: `add <flowerName> /c <colour> (optional) /q <quantity> /to <bouquetName>`
 
 - Flower must exist in the database
 - Quantity must be a positive integer
 - Bouquet must exist in the database
+- If flower has several colours available, but user did not enter a colour in the command, user will be prompted to choose a colour from the available colours
+- If flower only has one colour available, user does not need to enter a colour
 
 Examples:
-- `add Rose /q 3 /to For Girlfriend`
-- `add Babys breath /q 2 /to Sister’s graduation`
+- `add Rose /c red /q 3 /to For Girlfriend`
 
 Expected Output:
 ```
-You have successfully added the following: 
-    - 3 x rose -> Bouquet: For Girlfriend
+What can I do for you?
+add Rose /c red /q 3 /to For Girlfriend
+You have successfully added the following:
+    - 3 x Rose (Red) -> Bouquet: For Girlfriend
 Here is the list of your saved bouquets:
 1. For Girlfriend :
-    - 3 x Rose
+    - 3 x Rose (Red)
   Total estimated price = $6.00
-____________________________________________________________
+__________________________________
+```
+- `add Rose /q 3 /to For Girlfriend`
+```
 What can I do for you?
+add rose /q 3 /to For Girlfriend
+The flower you're looking for has more than one colour available, each with their own vastly different meanings.
+Here is a table of information about the flower rose:
++-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
+| No. | Flower Name | Colour       | Occasion                         | Meaning                                | Type        | Price ($) |
++-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
+|  1  | Rose        | Dark crimson | Funeral                          | Mourning                               | MAIN_FLOWER |      2.00 |
+|  2  | Rose        | Red          | Valentines, Wedding, Mothers day | Love                                   | MAIN_FLOWER |      2.00 |
+|  3  | Rose        | Yellow       | -                                | Jealousy, Decrease of love, Infidelity | MAIN_FLOWER |      2.00 |
++-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
+____________________________________________________________
+Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.
+red
+You have successfully added the following:
+    - 3 x Rose (Red) -> Bouquet: For Girlfriend
+Here is the list of your saved bouquets:
+1. For Girlfriend :
+    - 3 x Rose (Red)
+  Total estimated price = $6.00
+```
+
+```
+What can I do for you?
+add daisy /q 3 /to For Girlfriend
+You have successfully added the following:
+    - 3 x Daisy (White) -> Bouquet: For Girlfriend
+Here is the list of your saved bouquets:
+1. For Girlfriend :
+    - 3 x Daisy (White)
+    - 3 x Rose (Red)
+  Total estimated price = $7.50
 ```
 
 ### Remove flower: `remove`
 
 Removes a flower from a bouquet
 
-Format: `remove <flowerName> /q <quantity> /from <bouquetName>`
+Format: `remove <flowerName> /c <colour> (optional) /q <quantity> /from <bouquetName>`
 
-- Flower must exist in the database and the bouquet specified
+- Flower of that colour must exist in the database and the bouquet specified
 - Quantity must be between 1 and the current amount of flowers in the bouquet (inclusive).
 - Bouquet must exist in the database
+- If multiple flowers of that colour exist in the bouquet and colour is not specified, user will be prompted to choose a colour from the ones available
 
 Examples:
-- `remove Rose /q 1 /from For Girfriend`
-- `remove Gerbera /q 3 /from Valentine’s Day`
+- `remove Carnation /q 1 /from for mother`
 
 Expected output:
 ```
-You have successfully removed the following: 
-    - 1 x rose -> Bouquet: For Girlfriend
-Here is the list of your saved bouquets:
-1. For Girlfriend :
-    - 2 x Rose
-  Total estimated price = $4.00
+The flower you're looking for has more than one colour available, each with their own vastly different meanings.
+Here is a table of information about the flower carnation:
++-----+-------------+--------+-------------+---------------------------+-------------+-----------+
+| No. | Flower Name | Colour | Occasion    | Meaning                   | Type        | Price ($) |
++-----+-------------+--------+-------------+---------------------------+-------------+-----------+
+|  1  | Carnation   | Pink   | Mothers day | Gratitude, Love           | MAIN_FLOWER |      2.00 |
+|  2  | Carnation   | Red    | Valentines  | My heart aches, Deep Love | MAIN_FLOWER |      2.00 |
++-----+-------------+--------+-------------+---------------------------+-------------+-----------+
 ____________________________________________________________
-What can I do for you?
+Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.
+red
+You have successfully removed the following:
+    - 1 x Carnation (Red) -> Bouquet: for mother
+Here is the list of your saved bouquets:
+1. For Mother :
+    - 1 x Carnation (Pink)
+  Total estimated price = $2.00
 ```
+- `remove carnation /c pink /q 1 /from for mother`
 
+```
+You have successfully removed the following:
+    - 1 x Carnation (Pink) -> Bouquet: for mother
+Here is the list of your saved bouquets:
+1. For Mother :
+      No flowers added so far
+```
 ### List occasions: `occasion`
 Shows a list of occasions that the flowers in the database are associated with.
 

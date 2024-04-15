@@ -37,7 +37,7 @@ public class RemoveFlowerCommand extends Command {
         boolean doesBouquetExist = false;
         Bouquet bouquetToRemoveFlower = new Bouquet();
         for (int i = 0; !doesBouquetExist && i < bouquetList.size(); i++) {
-            if (bouquetList.get(i).getBouquetName().equals(this.bouquetName)) {
+            if (bouquetList.get(i).getBouquetName().equalsIgnoreCase(this.bouquetName)) {
                 bouquetToRemoveFlower = bouquetList.get(i);
                 doesBouquetExist = true;
             }
