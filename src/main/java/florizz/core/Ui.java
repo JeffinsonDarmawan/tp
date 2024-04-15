@@ -396,7 +396,6 @@ public class Ui {
         System.out.println("Would you like to save this bouquet to your list?");
         printFullBouquet(recommendedBouquet);
         System.out.println("Type 'yes' to save, 'no' to discard");
-        printBreakLine();
         System.out.println("Type 'cancel' if you would like to exit the recommendation page");
         return inputScanner.nextLine();
     }
