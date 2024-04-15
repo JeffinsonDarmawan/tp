@@ -137,7 +137,7 @@ public class Bouquet {
     }
 
     /**
-     * get bouquet name
+     * Gets bouquet name
      * @return
      */
     public String getBouquetName() {

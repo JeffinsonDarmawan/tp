@@ -59,3 +59,4 @@ flowers to put into a bouquet for various occasions.
     * Updated documentation for `info` and `flowers` features
   * Developer Guide:
     * Added implementation details for `new bouquet` feature 
+    * Added overall architecture section

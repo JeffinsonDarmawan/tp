@@ -1,0 +1,56 @@
+@startuml
+!include Jeffinson-style.puml
+
+actor "user" as user
+participant ":Florizz" as Florizz
+box Logic LOGIC_COLOUR
+participant ":Parser" as Parser LOGIC_COLOUR_T1
+participant "a:CompareCommand" as CompareCommand LOGIC_COLOUR_T1
+participant "b:FlowerDictionary" as FlowerDictionary LOGIC_COLOUR_T1
+end box
+
+box Ui UI_COLOUR
+participant ":UI" as Ui UI_COLOUR_T1
+end box
+
+[-> Florizz : execute("compare rose /vs/ lily")
+activate Florizz
+
+Florizz -> Parser : parse("compare rose /vs/ lily")
+activate Parser
+
+create CompareCommand
+Parser -> CompareCommand : CompareCommand("rose", "lily")
+activate CompareCommand
+
+CompareCommand --> Parser : a
+deactivate CompareCommand
+
+Parser --> Florizz : a
+deactivate Parser
+
+Florizz -> CompareCommand : execute()
+activate CompareCommand
+
+CompareCommand -> Ui : printCompareFlowers("rose")
+activate Ui
+
+Ui -> FlowerDictionary : get("rose")
+activate FlowerDictionary
+FlowerDictionary ---> Ui
+deactivate FlowerDictionary
+
+Ui -> FlowerDictionary : get("lily")
+activate FlowerDictionary
+FlowerDictionary ---> Ui
+deactivate FlowerDictionary
+
+Ui --> CompareCommand
+deactivate Ui
+
+CompareCommand --> Florizz
+deactivate CompareCommand
+
+<--Florizz
+deactivate Florizz
+@enduml

@@ -1,6 +1,6 @@
 # Florizz
 
-An easy to use bouquet recomendation software using CLI 
+An easy to use bouquet recommendation software using CLI 
 
 Useful links:
 * [User Guide](UserGuide.md)

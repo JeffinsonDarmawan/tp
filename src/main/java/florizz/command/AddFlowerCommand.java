@@ -66,7 +66,7 @@ public class AddFlowerCommand extends Command{
         boolean doesBouquetExist = false;
         Bouquet bouquetToAddFlower = new Bouquet();
         for (int i = 0; !doesBouquetExist && i < bouquetList.size(); i++) {
-            if (bouquetList.get(i).getBouquetName().equals(this.bouquetName)) {
+            if (bouquetList.get(i).getBouquetName().equalsIgnoreCase(this.bouquetName)) {
                 bouquetToAddFlower = bouquetList.get(i);
                 doesBouquetExist = true;
             }

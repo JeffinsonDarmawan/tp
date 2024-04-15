@@ -2,8 +2,30 @@
 Florizz is your personal digital florist which helps people in Singapore to curate flowers to create bouquets for all 
 occasions.
 
-## Features
-### Viewing help: `help`
+## Table of Contents
+<!-- TOC -->
+* [User Guide](#user-guide)
+  * [Table of Contents](#table-of-contents)
+  * [Features <a name="Features"></a>](#features-a-namefeaturesa)
+    * [Viewing help: `help` <a name="help"></a>](#viewing-help-help-a-namehelpa)
+    * [Create a new bouquet: `new`](#create-a-new-bouquet-new)
+    * [Delete existing bouquet: `delete`](#delete-existing-bouquet-delete)
+    * [View existing bouquets: `mybouquets`](#view-existing-bouquets-mybouquets)
+    * [List all available flowers: `flowers`](#list-all-available-flowers-flowers)
+    * [View detailed info of a flower: `info`](#view-detailed-info-of-a-flower-info)
+    * [Add flower: `add`](#add-flower-add)
+    * [Remove flower: `remove`](#remove-flower-remove)
+    * [List occasions: `occasion`](#list-occasions-occasion)
+    * [Recommend A Bouquet: `recommend`](#recommend-a-bouquet-recommend)
+    * [Save a bouquet to device: `save`](#save-a-bouquet-to-device-save)
+    * [Compare two flowers: `compare`](#compare-two-flowers-compare)
+    * [Exit programme: `bye`](#exit-programme-bye)
+    * [Fuzzy Logic](#fuzzy-logic)
+    * [Autosave](#autosave)
+<!-- TOC -->
+
+## Features <a name="Features"></a>
+### Viewing help: `help` <a name="help"></a>
 Shows a list of commands and its corresponding function
 
 Format: `help`
@@ -44,7 +66,8 @@ Creates an empty bouquet to add flowers to later
 
 Format: `new NAME`
 
-Bouquet name must not already exist
+- Bouquet name must not already exist
+- Bouquet names are not case-sensitive i.e. For Girlfriend = for girlfriend
 
 Examples:
 `new For Girlfriend`
@@ -61,7 +84,7 @@ Deletes a bouquet from the bouquet list
 
 Format:  `delete <bouquetName>`
 
-Bouquet of that name must exist in the list
+- Bouquet of that name must exist in the list
 
 Example:
 `delete For Mother`
@@ -97,25 +120,23 @@ Example: `flowers`
 
 Expected output:
 ```
-Showing page 1/2 of all the flowers you can add: 
-1. White Orchid
-2. Dark crimson Rose
-3. Red Rose
-4. White Lily
-5. White Daisy
+Showing page 1/6 of all the flowers you can add:
+1. Orchid (White)
+2. Rose (Dark crimson)
+3. Rose (Red)
+4. Rose (Yellow)
+5. Lily (White)
 Type 'next' to go to the next page.
-____________________________________________________________
 ```
 
 Example: `flowers Funeral` 
 
 Expected output:
 ```
-Here is page 1/1 of all the flowers related to Funeral: 
-1. Dark crimson Rose
-2. White Lily
-3. White Chrysanthemum
-____________________________________________________________
+Here is page 1/1 of all the flowers related to Funeral:
+1. Rose (Dark crimson)
+2. Lily (White)
+3. Chrysanthemum (White)
 ```
 
 ### View detailed info of a flower: `info`
@@ -145,54 +166,106 @@ ____________________________________________________________
 
 Adds a flower into a bouquet
 
-Format: `add <flowerName> /q <quantity> /to <bouquetName>`
+Format: `add <flowerName> /c <colour> (optional) /q <quantity> /to <bouquetName>`
 
 - Flower must exist in the database
 - Quantity must be a positive integer
 - Bouquet must exist in the database
+- If flower has several colours available, but user did not enter a colour in the command, user will be prompted to choose a colour from the available colours
+- If flower only has one colour available, user does not need to enter a colour
 
 Examples:
-- `add Rose /q 3 /to For Girlfriend`
-- `add Babys breath /q 2 /to Sister’s graduation`
+- `add Rose /c red /q 3 /to For Girlfriend`
 
 Expected Output:
 ```
-You have successfully added the following: 
-    - 3 x rose -> Bouquet: For Girlfriend
+What can I do for you?
+add Rose /c red /q 3 /to For Girlfriend
+You have successfully added the following:
+    - 3 x Rose (Red) -> Bouquet: For Girlfriend
 Here is the list of your saved bouquets:
 1. For Girlfriend :
-    - 3 x Rose
+    - 3 x Rose (Red)
   Total estimated price = $6.00
+__________________________________
+```
+- `add Rose /q 3 /to For Girlfriend`
+
+```
+The flower you're looking for has more than one colour available, each with their own vastly different meanings.
+Here is a table of information about the flower rose:
++-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
+| No. | Flower Name | Colour       | Occasion                         | Meaning                                | Type        | Price ($) |
++-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
+|  1  | Rose        | Dark crimson | Funeral                          | Mourning                               | MAIN_FLOWER |      2.00 |
+|  2  | Rose        | Red          | Valentines, Wedding, Mothers day | Love                                   | MAIN_FLOWER |      2.00 |
+|  3  | Rose        | Yellow       | -                                | Jealousy, Decrease of love, Infidelity | MAIN_FLOWER |      2.00 |
++-----+-------------+--------------+----------------------------------+----------------------------------------+-------------+-----------+
 ____________________________________________________________
-What can I do for you?
+Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.
+red
+You have successfully added the following:
+    - 3 x Rose (Red) -> Bouquet: For Girlfriend
+Here is the list of your saved bouquets:
+1. For Girlfriend :
+    - 3 x Rose (Red)
+  Total estimated price = $6.00
+```
+- `add daisy /q 3 /to For Girlfriend`
+
+```
+You have successfully added the following:
+    - 3 x Daisy (White) -> Bouquet: For Girlfriend
+Here is the list of your saved bouquets:
+1. For Girlfriend :
+    - 3 x Daisy (White)
+    - 3 x Rose (Red)
+  Total estimated price = $7.50
 ```
 
 ### Remove flower: `remove`
 
 Removes a flower from a bouquet
 
-Format: `remove <flowerName> /q <quantity> /from <bouquetName>`
+Format: `remove <flowerName> /c <colour> (optional) /q <quantity> /from <bouquetName>`
 
-- Flower must exist in the database and the bouquet specified
+- Flower of that colour must exist in the database and the bouquet specified
 - Quantity must be between 1 and the current amount of flowers in the bouquet (inclusive).
 - Bouquet must exist in the database
+- If multiple flowers of that colour exist in the bouquet and colour is not specified, user will be prompted to choose a colour from the ones available
 
 Examples:
-- `remove Rose /q 1 /from For Girfriend`
-- `remove Gerbera /q 3 /from Valentine’s Day`
+- `remove Carnation /q 1 /from for mother`
 
 Expected output:
 ```
-You have successfully removed the following: 
-    - 1 x rose -> Bouquet: For Girlfriend
-Here is the list of your saved bouquets:
-1. For Girlfriend :
-    - 2 x Rose
-  Total estimated price = $4.00
+The flower you're looking for has more than one colour available, each with their own vastly different meanings.
+Here is a table of information about the flower carnation:
++-----+-------------+--------+-------------+---------------------------+-------------+-----------+
+| No. | Flower Name | Colour | Occasion    | Meaning                   | Type        | Price ($) |
++-----+-------------+--------+-------------+---------------------------+-------------+-----------+
+|  1  | Carnation   | Pink   | Mothers day | Gratitude, Love           | MAIN_FLOWER |      2.00 |
+|  2  | Carnation   | Red    | Valentines  | My heart aches, Deep Love | MAIN_FLOWER |      2.00 |
++-----+-------------+--------+-------------+---------------------------+-------------+-----------+
 ____________________________________________________________
-What can I do for you?
+Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.
+red
+You have successfully removed the following:
+    - 1 x Carnation (Red) -> Bouquet: for mother
+Here is the list of your saved bouquets:
+1. For Mother :
+    - 1 x Carnation (Pink)
+  Total estimated price = $2.00
 ```
+- `remove carnation /c pink /q 1 /from for mother`
 
+```
+You have successfully removed the following:
+    - 1 x Carnation (Pink) -> Bouquet: for mother
+Here is the list of your saved bouquets:
+1. For Mother :
+      No flowers added so far
+```
 ### List occasions: `occasion`
 Shows a list of occasions that the flowers in the database are associated with.
 
@@ -208,30 +281,34 @@ Here are all the occasions associated with the available flowers:
 ____________________________________________________________
 ```
 ### Recommend A Bouquet: `recommend`
-Recommends a bouquet based on the occasion and the recipient's preference
+
+Recommends a bouquet based on the occasion and the recipient's preference. Will enter user into 'recommend mode'. Type `cancel` to exit recommend mode.
 
 Steps:
 1. Type command: `recommend`
 
    Expected output:
    ```
-   For what occasion are you buying flowers for?
-   Here is the list of our available occasion:
-   Here are all the occasions associated with the available flowers: 
-   - Funeral
-   - Wedding
-   - Valentines
-   - Mothers day
-   ____________________________________________________________
+    For what occasion are you buying flowers for?
+    Here are all the occasions associated with the available flowers:
+    - Funeral
+    - Wedding
+    - Valentines
+    - Mothers day
+    ____________________________________________________________
+    Type 'cancel' if you would like to exit the recommendation page
    ```
+   
 2. Type occasion: `Funeral`
    
    Expected output:
    ```
    What colour would you like your bouquets to be?
-   Here is the list of colours available for the occasion: 
-   - DARK_CRIMSON
-   - WHITE
+   Here is the list of colours available for the occasion:
+   - Dark crimson
+   - White
+    ____________________________________________________________
+    Type 'cancel' if you would like to exit the recommendation page
    ```
 
 3. Select colour of bouquet: `WHITE`
@@ -239,19 +316,51 @@ Steps:
    Expected output:
    
    ```
-   Would you like to save this bouquet to your list?
-   Here is the full list of flowers in Recommended Bouquet:
-       - 3 x Lily
-       - 2 x Chrysanthemum
-   ____________________________________________________________
-   Type 'yes' to save, 'no' to discard
+    Great we managed to find some flowers for you!
+    Before we carry on what would you like to call your bouquet?
+    Note: please take note 'cancel' cannot be used as a bouquet name
+    ____________________________________________________________
+    Type 'cancel' if you would like to exit the recommendation page
    ```
-4. Confirm whether you want to add the recommended bouquet to your mybouquets list: `yes`
+   
+4. Type bouquet name: `for grandma`
+
+   Expected output:
+   ```
+    What size would you like your recommended bouquet to be?
+    1. Small
+    2. Medium
+    3. Large
+    ____________________________________________________________
+    Type 'cancel' if you would like to exit the recommendation page
+   ```
+   
+5. Select bouquet size: `Large`
+
+   Expected output:
+   ```
+    Would you like to save this bouquet to your list?
+    Here is the full list of flowers in for grandma:
+    - 2 x Pittosporum
+    - 2 x Freesia
+    - 1 x Dusty Miller
+    - 3 x Chrysanthemum
+    - 1 x Pistacia
+    - 2 x Lily
+    ____________________________________________________________
+    Type 'yes' to save, 'no' to discard
+    Type 'cancel' if you would like to exit the recommendation page
+   ```
+   *Note: The flowers in the bouquet are randomly generated and may differ from the example*
+
+
+6. Confirm whether you want to add the recommended bouquet to your mybouquets list: `yes`
    
    ```
-   Added new bouquet to list: 
-   Recommended Bouquet
-   ____________________________________________________________
+    Added new bouquet to list:
+    for grandma
+    ____________________________________________________________
+    What can I do for you?
    ```
 
 ### Save a bouquet to device: `save`
