@@ -39,4 +39,12 @@ class CompareCommandTest {
         CompareCommand testCompareCommand3 = new CompareCommand("Rose", "Tulip");
         assertThrows(FlorizzException.class, () -> testCompareCommand3.execute(testList, ui));
     }
+
+    @Test
+    void testCompareException3() { // Comparing empty flower names
+        ArrayList<Bouquet> testList = new ArrayList<>();
+        Ui ui = new Ui();
+        CompareCommand testCompareCommand4 = new CompareCommand("", "");
+        assertThrows(FlorizzException.class, () -> testCompareCommand4.execute(testList, ui));
+    }
 }
