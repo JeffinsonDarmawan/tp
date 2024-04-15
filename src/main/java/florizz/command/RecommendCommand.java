@@ -11,7 +11,13 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class RecommendCommand extends Command{
-    private Logger logger = Logger.getLogger(RecommendCommand.class.getName());
+    private static final int SMALL_BOUQUET_FLOWER_COUNT = 1;
+    private static final int MEDIUM_BOUQUET_FLOWER_COUNT = 3;
+    private static final int LARGE_BOUQUET_FLOWER_COUNT = 5;
+    private static final int SMALL_BOUQUET_FILLER_COUNT = 2;
+    private static final int MEDIUM_BOUQUET_FILLER_COUNT = 4;
+    private static final int LARGE_BOUQUET_FILLER_COUNT = 6;
+    private final Logger logger = Logger.getLogger(RecommendCommand.class.getName());
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
         logger.entering(RecommendCommand.class.getName(), "execute");
@@ -35,13 +41,14 @@ public class RecommendCommand extends Command{
         // ask for bouquetName
         String bouquetName = askBouquetName(ui, bouquetList);
 
-        // ask for size [FUTURE IMPLEMENTATION]
+        // ask for size
+        String size = askSize(ui);
 
         // create bouquet with occasion and colour
         Bouquet recommendedBouquet = new Bouquet(bouquetName);
 
         // randomly add 3 flowers to bouquet
-        addRandomFlowers(eligibleFlowers, recommendedBouquet);
+        addRandomFlowers(eligibleFlowers, recommendedBouquet, size, colour);
 
         // ask if they want to save bouquet to array
         askSaveBouquet(ui, bouquetList, recommendedBouquet);
@@ -77,15 +84,53 @@ public class RecommendCommand extends Command{
      * @param eligibleFlowers list of flowers to choose from
      * @param recommendedBouquet bouquet to add flowers to
      */
-    private void addRandomFlowers(ArrayList<Flower> eligibleFlowers, Bouquet recommendedBouquet)
+    public void addRandomFlowers(ArrayList<Flower> eligibleFlowers,
+                                  Bouquet recommendedBouquet, String size, Flower.Colour colour)
             throws FlorizzException {
         logger.entering(RecommendCommand.class.getName(), "addRandomFlowers");
-        // [TEMPORARY CODE]
+
+        int flowerCount = 0;
+        int fillerCount = 0;
+        switch (size) {
+        case "small":
+            flowerCount = SMALL_BOUQUET_FLOWER_COUNT;
+            fillerCount = SMALL_BOUQUET_FILLER_COUNT;
+            break;
+        case "medium":
+            flowerCount = MEDIUM_BOUQUET_FLOWER_COUNT;
+            fillerCount = MEDIUM_BOUQUET_FILLER_COUNT;
+            break;
+        case "large":
+            flowerCount = LARGE_BOUQUET_FLOWER_COUNT;
+            fillerCount = LARGE_BOUQUET_FILLER_COUNT;
+            break;
+        default:
+            // this should not happen at any case since size is validated before this
+            assert false : "Invalid size";
+            throw new FlorizzException("Invalid size");
+        }
+
         // generate random combination of flowers from eligible flowers totaling to 5
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < flowerCount; i++) {
             int randomIndex = (int) (Math.random() * eligibleFlowers.size());
             recommendedBouquet.addFlower(eligibleFlowers.get(randomIndex), 1);
         }
+
+        // get all fillers
+        ArrayList<Flower> fillers = FlowerDictionary.getFlowersByType(Flower.Type.FILLER_FLOWER);
+        for (int i = 0; i < fillerCount; i++) {
+            int randomIndex = (int) (Math.random() * fillers.size());
+            // filler colour must be green or same as main flower
+            boolean isSameColour = fillers.get(randomIndex).getColour().equalsIgnoreCase(colour.toString());
+            boolean isGreen = fillers.get(randomIndex).getColour().equalsIgnoreCase("green");
+            if (isSameColour || isGreen) {
+                recommendedBouquet.addFlower(fillers.get(randomIndex), 1);
+            } else {
+                i--;
+            }
+        }
+
+
         logger.exiting(RecommendCommand.class.getName(), "addRandomFlowers");
     }
 
@@ -93,7 +138,7 @@ public class RecommendCommand extends Command{
      * Asks user for occasion
      * @return Occasion enum
      */
-    private Flower.Occasion askOccasion(Ui ui) throws FlorizzException {
+    public Flower.Occasion askOccasion(Ui ui) throws FlorizzException {
         logger.entering(RecommendCommand.class.getName(), "askOccasion");
         boolean isValidFormat = false;
         boolean isValidOccasion = false;
@@ -106,8 +151,9 @@ public class RecommendCommand extends Command{
             isValidOccasion = Flower.isValidOccasion(occasionInput);
             // check if occasion is in our dictionary
             if (!isValidOccasion) {
-                System.out.println("This occasion does not exist." +
-                        "Type 'cancel' if you would like to exit the recommendation page");
+                System.out.println("This occasion does not exist.");
+                Ui.printBreakLine();
+                System.out.println("Type 'cancel' if you would like to exit the recommendation page");
             }
         }
 
@@ -129,15 +175,16 @@ public class RecommendCommand extends Command{
         boolean isValidColour = false;
         ui.printAskColour(eligibleFlowers);
         while (!(isValidColour && isValidFormat)) {
-            colourInput = ui.getInput();
+            colourInput = ui.getInput().trim();
             Parser.checkRecommendExitCondition(colourInput);
             isValidFormat = Parser.parseColour(colourInput);
             isValidColour = Flower.isValidColour(colourInput);
 
             // check if colour is in our dictionary
             if (!isValidColour) {
-                System.out.println("This colour does not exist. " +
-                        "Type 'cancel' if you would like to exit the recommendation page");
+                System.out.println("This colour does not exist.");
+                Ui.printBreakLine();
+                System.out.println("Type 'cancel' if you would like to exit the recommendation page");
             }
         }
 
@@ -145,6 +192,12 @@ public class RecommendCommand extends Command{
         return Flower.stringToColour(colourInput);
     }
 
+    /**
+     * Asks user if they want to save the bouquet
+     * @param ui Ui to take input and print messages
+     * @param bouquetList List that contains all bouquets
+     * @param recommendedBouquet Bouquet to be saved
+     */
     private void askSaveBouquet(Ui ui, ArrayList<Bouquet> bouquetList,
                                 Bouquet recommendedBouquet) {
         logger.entering(RecommendCommand.class.getName(), "askSaveBouquet");
@@ -162,6 +215,32 @@ public class RecommendCommand extends Command{
             ui.printBouquetAdded(recommendedBouquet);
             assert !bouquetList.isEmpty() : "Bouquet list should not be empty";
         }
+
+        if (saveInput.equalsIgnoreCase("no")) {
+            ui.printBouquetNotAdded(recommendedBouquet);
+        }
+
         logger.exiting(RecommendCommand.class.getName(), "askSaveBouquet");
+    }
+
+    /**
+     * Asks user for size of bouquet
+     * @param ui Ui to take input and print messages
+     * @return size of bouquet in lower case string
+     */
+    private String askSize(Ui ui) {
+        logger.entering(RecommendCommand.class.getName(), "askSize");
+        String sizeInput = "placeHolder";
+        boolean isValidFormat = false;
+        boolean isValidInput = false;
+        while (!(isValidInput && isValidFormat)) {
+            sizeInput = ui.printAskSize().toLowerCase();
+            isValidFormat = Parser.parseSize(sizeInput);
+            isValidInput = (sizeInput.equalsIgnoreCase("small") ||
+                    sizeInput.equalsIgnoreCase("medium") ||
+                    sizeInput.equalsIgnoreCase("large"));
+        }
+        logger.exiting(RecommendCommand.class.getName(), "askSize");
+        return sizeInput.toLowerCase();
     }
 }

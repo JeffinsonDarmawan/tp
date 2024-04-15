@@ -60,22 +60,23 @@ public class FlowerDictionary {
         // [Fillers have yet to be implemented]
         add("Baby Breath", "White", new String[]{"Wedding", "Valentines", "Mothers Day"}, 1.00,
                 new String[]{"Innocence", "Kindness", "Care", "Humble"}, Flower.Type.MAIN_FLOWER);
-        add("Eucalyptus", "Green", new String[]{"Wedding"}, 1.50, new String[]{"Love", "Kindness"}
-                , Flower.Type.MAIN_FLOWER);
-        add("Dusty Miller", "Green", new String[]{}, 1.50, new String[]{}, Flower.Type.FILLER);
-        add("Pistacia", "Green", new String[]{}, 1.50, new String[]{}, Flower.Type.FILLER);
-        add("Pittosporum", "Green", new String[]{}, 1.50, new String[]{}, Flower.Type.FILLER);
-        add("Chamomile", "White", new String[]{}, 1.90, new String[]{}, Flower.Type.FILLER);
-        add("Astilbe", "Pink", new String[]{}, 2.80, new String[]{}, Flower.Type.FILLER);
-        add("Hypericum", "Red", new String[]{}, 2.00, new String[]{}, Flower.Type.FILLER);
-        add("Freesia", "White", new String[]{}, 1.90, new String[]{}, Flower.Type.FILLER);
-        add("Helichrysum", "Yellow", new String[]{}, 1.50, new String[]{}, Flower.Type.FILLER);
-        add("Limonium", "Red", new String[]{}, 1.80, new String[]{}, Flower.Type.FILLER);
-        add("Limonium", "Dark Crimson", new String[]{}, 1.80, new String[]{}, Flower.Type.FILLER);
-        add("Limonium Perezii", "Purple", new String[]{}, 1.80, new String[]{}, Flower.Type.FILLER);
-        add("Statice", "Blue", new String[]{}, 1.50, new String[]{}, Flower.Type.FILLER);
-        add("Statice", "Purple", new String[]{}, 1.50, new String[]{}, Flower.Type.FILLER);
-        add("Rice Flower", "Pink", new String[]{}, 1.80, new String[]{}, Flower.Type.FILLER);
+
+        add("Eucalyptus", "Green", new String[]{"Wedding"}, 1.5,
+                new String[]{"Love", "Kindness"}, Flower.Type.MAIN_FLOWER);
+        add("Dusty Miller", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Pistacia", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Pittosporum", "Green", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Chamomile", "White", new String[]{}, 1.9, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Astilbe", "Pink", new String[]{}, 2.8, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Hypericum", "Red", new String[]{}, 2.0, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Freesia", "White", new String[]{}, 1.9, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Helichrysum", "Yellow", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Limonium", "Red", new String[]{}, 1.8, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Limonium", "Dark Crimson", new String[]{}, 1.8, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Limonium Perezii", "Purple", new String[]{}, 1.8, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Statice", "Blue", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Statice", "Purple", new String[]{}, 1.5, new String[]{}, Flower.Type.FILLER_FLOWER);
+        add("Rice Flower", "Pink", new String[]{}, 1.8, new String[]{}, Flower.Type.FILLER_FLOWER);
     }
 
     /**
@@ -180,6 +181,15 @@ public class FlowerDictionary {
 
     public static ArrayList<Flower> getAllFlowers(){
         return flowerDict;
+    }
 
+    public static ArrayList<Flower> getFlowersByType(Flower.Type type) {
+        ArrayList<Flower> filteredFlowers = new ArrayList<>();
+        for (Flower flower : flowerDict) {
+            if (flower.getType().equals(type)) {
+                filteredFlowers.add(flower);
+            }
+        }
+        return filteredFlowers;
     }
 }

@@ -49,6 +49,18 @@ public class Bouquet {
     }
 
     /**
+     * Get total quantity of flowers in the bouquet
+     * @return int total quantity of flowers
+     */
+    public int totalNumberOfFlowers() {
+        int quantity = 0;
+        for (Flower flower : flowerHashMap.keySet()) {
+            quantity += flowerHashMap.get(flower);
+        }
+        return quantity;
+    }
+
+    /**
      * Checks if a flower exists in the bouquet.
      *
      * @param flowerName the flower to check for its existence

@@ -31,7 +31,7 @@ public class Flower {
     }
 
     public enum Type {
-        MAIN_FLOWER, FILLER
+        MAIN_FLOWER, FILLER_FLOWER
     }
 
     /**
@@ -172,7 +172,7 @@ public class Flower {
 
     /**
      * Gets the colour of the flower.
-     * @return The colour of the flower.
+     * @return The colour of the flower in lower case.
      */
     public String getColour (){
         return colourToString(colour);
@@ -197,6 +197,14 @@ public class Flower {
     public ArrayList<String> getMeanings() {
         return meanings;
     }
+    /**
+     * Gets type of flower in enum Type
+     * @return Type of flower
+     */
+    public Flower.Type getType() {
+        return type;
+    }
+
     /**
      * Generates a string representation of the Flower object.
      * @return A string representation of the Flower object.
@@ -272,10 +280,6 @@ public class Flower {
             finalMeaning = "-";
         }
         return finalMeaning;
-    }
-
-    public Type getType() {
-        return type;
     }
 
     @Override
