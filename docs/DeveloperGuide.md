@@ -1,8 +1,8 @@
 # Developer Guide
 
 ## Acknowledgements
-
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+Florizz implemented a third-party JTextUtil ASCII-Table library to create ASCII tables for the `help`, `compare` and `info`
+command. The library can be found at [ASCII-Table GitHub Page](https://github.com/freva/ascii-table).
 
 ## Design
 Florizz consists of four components, Ui, Logic, Model and Storage. These components are all called on by the Main component, Florizz.java, which simply handles the app initialisation.
@@ -227,8 +227,4 @@ Main Success Scenario (MSS):
 - 2a. There are less than 5 stalks of rose in the specified bouquet
     - 2a1. Florizz shows an error message
 
-      Use case ends. 
-
-**Acknowledgements**
-Florizz implemented a third-party JTextUtil ASCII-Table library to create ASCII tables for the `help`, `compare` and `info` 
-command. The library can be found at [ASCII-Table GitHub Page](https://github.com/freva/ascii-table).
+      Use case ends.

@@ -63,26 +63,26 @@ Code Contribution: [Jeffinson Darmawan RepoSense Report](https://nus-cs2113-ay23
       This feature required the implementation of a new command and the creation of a new class to handle the comparison of two flowers.
       It also uses an ASCII table to increase readability of the comparison results.
 
-**Enhancements:**
-1. Applying appropriate exceptions to ensure valid integer inputs in all commands involving integers 
+**Enhancements to Existing Features:**
+- Applying appropriate exceptions to ensure valid integer inputs in all commands involving integers 
 (Pull Request [#166](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/166)) 
-2. Added price information to bouquets (Pull Request [#65](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/65))
-3. Improving Parser class by applying FuzzyLogic.detectItem() 
+- Added price information to bouquets (Pull Request [#65](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/65))
+- Improving Parser class by applying FuzzyLogic.detectItem() 
 (Pull Request [#71](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/71))
-4. Wrote JUnit tests for `AddFlowerCommandTest`, `HelpTest`, `InfoCommandTest`, `ListOccasionCommandTest`, 
+- Wrote JUnit tests for `AddFlowerCommandTest`, `HelpTest`, `InfoCommandTest`, `ListOccasionCommandTest`, 
    `RemoveFlowerCommandTest`, `FuzzyLogicTest`, `ParserTest`, `CompareCommandTest`
    and wrote additional JUnit tests for `AddBouquetTest`,
    `DeleteBouquetTest` which increases classes coverage from 54% to 63% and lines coverage from 29% to 51%.
 
 **Documentation**
-1. Developer Guide
+- Developer Guide
 (Pull Request [#82](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/82), [#180](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/180))
    - Added UML diagrams and implementation details for `compare`, `remove` and `help`
-2. User Guide 
+- User Guide 
 (Pull Request [#106](https://github.com/AY2324S2-CS2113-T11-3/tp/pull/106))
    - Added documentation on `compare` and `Fuzzy Logic`
    - Updated documentation on `help`, `new`, `add` and `remove`
 
 **Tools**
-1. Integrated a third party JTextUtil ascii-table library to create ASCII tables for the `help`, `info` 
+-  Integrated a third party JTextUtil ascii-table library to create ASCII tables for the `help`, `info` 
 and `compare` commands. (Link to GitHub Page: [ASCII-Table GitHub Page](https://github.com/freva/ascii-table)).
