@@ -173,13 +173,17 @@ public class Ui {
                         , "bye")
         );
         System.out.println(AsciiTable.getTable(AsciiTable.BASIC_ASCII_NO_DATA_SEPARATORS, tableData, Arrays.asList(
-                new Column().header("No.").dataAlign(HorizontalAlign.CENTER).maxWidth(5, OverflowBehaviour.NEWLINE)
+                new Column().header("No.").dataAlign(HorizontalAlign.CENTER)
+                        .maxWidth(5, OverflowBehaviour.NEWLINE)
                         .with((TableData data) -> Integer.toString(data.getId())),
-                new Column().header("Command").dataAlign(HorizontalAlign.LEFT).maxWidth(48, OverflowBehaviour.NEWLINE)
+                new Column().header("Command").dataAlign(HorizontalAlign.LEFT)
+                        .maxWidth(48, OverflowBehaviour.NEWLINE)
                         .with(TableData::getCommand),
-                new Column().header("Explanation").dataAlign(HorizontalAlign.LEFT).maxWidth(40, OverflowBehaviour.NEWLINE)
+                new Column().header("Explanation").dataAlign(HorizontalAlign.LEFT)
+                        .maxWidth(40, OverflowBehaviour.NEWLINE)
                         .with(TableData::getExplanation),
-                new Column().header("Example").dataAlign(HorizontalAlign.LEFT).maxWidth(30, OverflowBehaviour.NEWLINE)
+                new Column().header("Example").dataAlign(HorizontalAlign.LEFT)
+                        .maxWidth(30, OverflowBehaviour.NEWLINE)
                         .with(TableData::getExample))));
         printBreakLine();
     }
